@@ -1,0 +1,15 @@
+*
+!Dockerfile
+!pyproject.toml
+!uv.lock
+!.python-version
+!src/
+!src/**
+!data/
+!data/documents/
+!data/documents/*.pdf
+!data/database/
+!data/database/app.db
+!data/database/schema.sql
+!data/database/seed_data.sql
+**/__pycache__/

@@ -1,0 +1,18 @@
+services:
+  assistant:
+    image: adan-assistant:local
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:?Set OPENROUTER_API_KEY in your shell or .env}
+      ROUTER_MODEL: ${ROUTER_MODEL:-baseten/mammoth-1:free}
+      TEXT_MODEL: ${TEXT_MODEL:-nvidia/nemotron-3.5-super-vl:free}
+      ROUTER_FALLBACK_MODEL: ${ROUTER_FALLBACK_MODEL:-nvidia/nemotron-3.5-super-vl:free}
+    volumes:
+      - assistant-cache:/app/.cache/adan
+volumes:
+  assistant-cache:

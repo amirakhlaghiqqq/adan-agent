@@ -1,0 +1,195 @@
+# CloudScale assistant
+
+A runnable LangGraph assistant for the [Adan task](TASK_SPECIFICATION.md). It answers
+policy questions from the two supplied PDFs, generates read-only SQLite queries,
+uses a real arithmetic/calendar calculator, and returns the answer with evidence
+and an execution trace through FastAPI.
+
+## Run locally
+
+Use Python 3.12, [uv](https://docs.astral.sh/uv/), and `pdftotext` (Ubuntu/Debian:
+`sudo apt-get install poppler-utils`). Run commands from the repository root.
+
+```bash
+uv sync --frozen
+cp .env.example .env
+```
+
+Set `OPENROUTER_API_KEY` in `.env` or export it in your shell. The example contains
+no credentials. Then start the application:
+
+```bash
+uv run uvicorn adan.api:app --host 127.0.0.1 --port 8000 --loop asyncio
+```
+
+Startup checks the database and creates it from the supplied SQL files only if
+it is missing. Existing databases are preserved. It extracts the policy PDFs,
+loads local FastEmbed embeddings, and creates or reopens a persistent Qdrant
+index. The first launch downloads the embedding model and can take a few minutes.
+
+Open <http://127.0.0.1:8000/docs> for the API explorer. Health is available at
+`GET /health` after startup finishes.
+
+```bash
+curl http://127.0.0.1:8000/api/v1/query \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"Which payment methods does CloudScale accept? Cite the policy.","input_context":[]}'
+```
+
+The request accepts `question` and optional `input_context` (a list of visible
+assumptions/instructions). Empty questions and oversized inputs return HTTP 422.
+Responses contain `answer`, `status`, `stop_reason`, `citations`, `route`, raw
+`retrieval_calls`/`database_calls`, `tool_calls`, exact `generator_contexts`,
+`guardrail_history`, `aggregation_artifacts`, and `execution_trace`.
+An interrupted or unavailable acquisition remains explicit in the trace. A
+captured system failure can return HTTP 200 with a qualified result, so inspect
+`status` and `stop_reason` as well as the HTTP status.
+
+Other useful requests:
+
+```json
+{"question":"List the three companies with the highest subscription monthly_rate, including plan names and raw rates."}
+{"question":"How many customers are in the database, and what is half that count?"}
+{"question":"For customer 1, explain their support tier and show their stored subscription plan and billing cycle. Cite the support policy."}
+{"question":"Delete all customers."}
+```
+
+## Models and configuration
+
+`.env.example` documents all settings. Default provider:
+`https://openrouter.ai/api/v1`.
+
+| Setting | Role |
+|---|---|
+| `ROUTER_MODEL` | `baseten/mammoth-1:free`, requested routing model |
+| `TEXT_MODEL` | `nvidia/nemotron-3.5-super-vl:free`, SQL, search rewriting, answers and verification |
+| `ROUTER_FALLBACK_MODEL` | Explicit Nemotron fallback; set empty to disable |
+| `DATABASE_PATH` / `DOCUMENTS_PATH` | Supplied source locations |
+| `INDEX_PATH` / `EMBEDDING_CACHE_PATH` | Generated local caches |
+| `QDRANT_URL` | Empty for embedded Qdrant; URL for a Qdrant server |
+| `MAX_*`, `*_TIMEOUT_SECONDS`, `TRANSIENT_RETRIES` | Bounded request work |
+
+During the live smoke run, OpenRouter rejected the Mammoth requests with HTTP 400.
+Nemotron handled routing through the configured fallback. Every routing attempt,
+configured model and fallback flag is recorded. The routing response consists of
+two validated Booleans; this adapter does not invent calibrated probabilities or
+implement the deferred Jev experiment.
+
+LangSmith tracing is optional and disabled in the example. Local traces work
+without a LangSmith account. Model cost stays unknown unless returned by the
+provider; the application does not infer zero cost from a model name.
+
+## Project layout
+
+The graph package, graph utilities, dependency declaration and `langgraph.json`
+follow the [LangGraph application structure](https://docs.langchain.com/oss/python/langgraph/application-structure).
+
+```text
+src/adan/
+  agent.py                 # graph construction and Agent Server factory
+  utils/state.py           # typed input/output/state and runtime context
+  utils/nodes.py           # routing, acquisition, tool loop, verification
+  api.py                   # FastAPI entrypoint
+  service.py               # application lifecycle and acquisition pipelines
+  models.py                # OpenRouter transport
+  prompts.py               # source-independent instructions
+  config.py / schemas.py   # settings and boundary validation
+  database.py              # schema, AST guard, read-only execution, safe seeding
+  calculator.py            # exact arithmetic and calendar operations
+  rag/index.py             # PDF cleanup/chunking and semantic Qdrant retrieval
+  rag/aggregation.py       # replaceable temporary evidence adapter
+tests/                     # offline tool/security and application integration tests
+scripts/smoke.py           # optional live API smoke run
+evals/                     # benchmark datasets; excluded from application image
+langgraph.json             # optional LangGraph dev/Studio entrypoint
+Dockerfile / docker-compose.yml
+pyproject.toml / uv.lock
+```
+
+```mermaid
+flowchart LR
+    API --> Coordinator
+    Coordinator --> Documents
+    Coordinator --> Database
+    Coordinator --> Generate
+    Documents --> Generate
+    Database --> Generate
+    Generate --> Tools
+    Tools --> Generate
+    Generate --> Verify
+    Verify -->|feedback, bounded| Generate
+    Verify --> Response
+```
+
+Hybrid acquisition runs the two source branches concurrently. The generator
+can then request more documents or database facts using the returned evidence.
+The aggregation implementation is explicitly `passthrough-v1-pending-design`;
+it is a transport adapter for this working version. Your replacement algorithm
+remains open. Raw retrieval and exact generator-visible context are retained.
+
+## Tests and live smoke run
+
+```bash
+uv run pytest -q
+uv run ruff check src tests scripts
+uv run ruff format --check src tests scripts
+```
+
+Offline tests use scripted model responses and mock embeddings for deterministic
+checks. They execute the actual graph, real SQLite guard/query path, PDF
+extraction, Qdrant storage, calculator and API. They require no API key or model
+download. They test application behavior and security, not LLM performance.
+
+With an API key set, run a small live API smoke check:
+
+```bash
+uv run python scripts/smoke.py --scenario all --output .cache/adan/live-smoke.json
+```
+
+The four scenarios cover document citations, a database join, SQL plus a real
+calculation, and a hybrid request. This is an operational smoke check, with no
+benchmark scoring. Detailed verification and limits are in
+[docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md).
+
+## Docker
+
+```bash
+docker compose up --build
+```
+
+Set the key in `.env` or the calling shell. The image contains only application
+code, the PDFs, and database/seed files. It runs as a non-root user, makes source
+data read-only, and persists generated embeddings/indexes in a named volume.
+It contains no `evals/`, tests, task descriptions, or credentials.
+
+The image and local command select asyncio explicitly, matching the successful
+smoke configuration. On this workstation, building required the configured
+proxy and host networking:
+
+```bash
+docker build --network=host --build-arg HTTP_PROXY --build-arg HTTPS_PROXY \
+  -t adan-assistant:local .
+```
+
+Proxy URLs used at runtime must be reachable inside the container. The container
+smoke used host networking and an existing embedding cache; ordinary Compose
+configuration was validated separately.
+
+## Optional LangGraph dev / Studio
+
+The FastAPI service above is the primary task interface. For graph inspection:
+
+```bash
+uv sync --frozen --group studio
+uv run --group studio langgraph dev --no-browser
+```
+
+The `cloudscale` graph takes the same question/context and returns `response`.
+Its per-run factory follows the [official runtime factory pattern](https://docs.langchain.com/langsmith/graph-rebuild).
+Schema/graph inspection does not load model credentials or embeddings. Each new
+query starts fresh; checkpoint resume/multi-turn conversation is outside this
+prototype's request contract. The factory reuses source clients in the process.
+
+Use a single process with embedded Qdrant. Stop FastAPI before executing Studio
+queries against the same `INDEX_PATH`, or set a different path. Use a Qdrant
+server for multiple worker processes; embedded storage has an exclusive lock.
