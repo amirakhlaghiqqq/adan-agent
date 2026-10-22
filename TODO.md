@@ -17,7 +17,7 @@
 | **Phase 4** | NL2SQL Engine & Safety Guardrails | `[ ] Not Started` | Dynamic SQL gen, Join/Agg/Filter, Read-only guard |
 | **Phase 5** | Coordinator Agent & Calculator Tool | `[ ] Not Started` | Router agent, tool-calling calculator, multi-step flow |
 | **Phase 6** | FastAPI Backend & Error Handling | `[ ] Not Started` | REST API, input validation, execution traces |
-| **Phase 7** | Verification & Test Scenarios | `[ ] Not Started` | 5 core scenarios + 2 edge/security test cases |
+| **Phase 7** | Capability Benchmark & Acceptance | `[x] Dataset / Modes Specified` | 48 cases; retrieval, generation, end-to-end runner pending |
 | **Phase 8** | Dockerization & Reproducibility | `[ ] Not Started` | Dockerfile, docker-compose.yml (1-command run) |
 | **Phase 9** | Documentation & Final Submission | `[ ] Not Started` | README.md, architecture doc, GitHub repo |
 
@@ -25,11 +25,12 @@
 
 ## Phase 1: Foundation & Environment Setup
 - [x] Initialize Git repository (`git init`).
-- [ ] Create project folder structure (`src/`, `data/`, `tests/`, `docs/`).
+- [x] Create project folder structure (`src/`, `data/`, `tests/`, `docs/`).
+- [x] Document System Architecture in `docs/ARCHITECTURE.md` (initial fan-out/fan-in, generator-owned follow-ups, replaceable aggregation, SQL guard, arithmetic/calendar tools).
 - [ ] Define dependencies in `requirements.txt` or `pyproject.toml`:
   - Web framework: `fastapi`, `uvicorn`, `pydantic`, `pydantic-settings`
   - Agent / LLM framework: `langchain` / `langgraph` or clean modular OpenAI client
-  - Vector Store & Embeddings: `chromadb` / `faiss-cpu`, `sentence-transformers` or OpenAI embeddings
+  - RAG & Vector Store: `llama-index-core`, `llama-index-vector-stores-qdrant`, `qdrant-client`, `fastembed` / `sentence-transformers`
   - PDF & Data tools: `pypdf` / `pdfplumber`, `sqlite3` or `sqlalchemy`
   - Testing: `pytest`, `httpx`
 - [ ] Create `.env.example` documenting all configuration keys:
@@ -58,8 +59,8 @@
 
 ## Phase 3: Sample Documents & RAG Sub-Agent
 - [x] Create/provide **at least 2 realistic, concise PDF documents** in `data/documents/`:
-  - *Document 1*: `sla_and_support_tier_policy.pdf` (LaTeX-compiled, 6 pages: Uptime targets, service credit matrices, Sev-1..Sev-3 SLA times).
-  - *Document 2*: `enterprise_billing_and_refund_policy.pdf` (LaTeX-compiled, 4 pages: Net-30 invoicing, 14-day refund window, delinquency timeline).
+  - *Document 1*: `enterprise_billing_and_refund_policy.pdf` (4 rendered pages; DOC-BIL-2024-V3).
+  - *Document 2*: `sla_and_support_tier_policy.pdf` (6 rendered pages; DOC-SLA-2024-V2).
 - [ ] Implement **Meaningful PDF Preprocessor** (`src/rag/preprocessor.py`):
   - [ ] Extract raw text with page tracking.
   - [ ] Clean up noise (headers, footers, consecutive whitespaces, boilerplate).
@@ -69,9 +70,10 @@
   - Automatic collection creation and embedding generation on startup/seeding.
 - [ ] Implement RAG Sub-Agent (`src/agents/rag_agent.py`):
   - [ ] Top-$k$ semantic retrieval based on query embedding.
-  - [ ] Grounded generation prompt: LLM answers using retrieved context.
+  - [ ] Expose source-tagged raw retrieval results and the aggregation artifact separately.
+  - [ ] Keep the aggregation interface replaceable; its algorithm will be designed separately.
   - [ ] **Citation Requirement**: Answer must explicitly cite the document name and page/section number.
-  - [ ] **Strict Anti-Hallucination Guardrail**: If context does not contain the answer, return a clear declaration: *"The requested information is not available in the provided documents."*
+  - [ ] **Qualified-answer guardrail**: Answer supported parts, identify missing facts and conflicting clauses, and abstain fully only when no substantive answer is supported. Distinguish unavailable evidence from tool failure.
 
 ---
 
@@ -95,22 +97,30 @@
 ---
 
 ## Phase 5: Coordinator Agent & Calculator Tool
+- [x] Complete [the Jev/model comparison task](to-do-tasks/evaluate-coordinator-models.md) using the balanced 64-case routing benchmark before selecting a coordinator backend (results and traces saved in `experiments/`).
 - [ ] Implement **Deterministic Calculator Tool** (`src/tools/calculator.py`):
-  - Real tool invoked via LLM Tool Calling (Function Calling).
-  - Evaluates mathematical expressions safely (e.g., Python `numexpr` or AST-based math evaluation; avoids unsafe `eval()`).
-  - Supports percentage calculations, differences, ratios, averages.
+  - Real tool invoked via LLM Function Calling.
+  - Allowlisted, bounded AST arithmetic without `eval()`, retaining exact values for bracket comparisons.
+  - Typed `date_difference(start_date, end_date)` and `month_minutes(year, month)` operations using calendar dates and UTC month lengths.
+  - Validate arguments and return structured values, units, and errors. Round only for final display.
 - [ ] Implement **Coordinator / Router Agent** (`src/agents/coordinator.py`):
-  - [ ] Intent classification: analyzes user query and determines execution route:
-    - Route A: Document search $\rightarrow$ delegate to `rag_agent`.
-    - Route B: Database query $\rightarrow$ delegate to `sql_agent`.
-    - Route C: Multi-step calculation $\rightarrow$ trigger hybrid flow.
-- [ ] Implement **Multi-Step Hybrid Workflow**:
-  - [ ] Step 1: Coordinator recognizes query requires tabular data + numerical computation.
-  - [ ] Step 2: Calls `sql_agent` to fetch raw database metrics (e.g., sales total for Category A and Category B).
-  - [ ] Step 3: Passes values to `calculator` tool (e.g., compute percentage difference: `(A - B) / B * 100`).
-  - [ ] Step 4: Synthesizes final human-readable response.
+  - Independent `needs_docs` / `needs_db` flags for initial routing; propagate the question and complete `input_context`.
+  - Run initial hybrid branches concurrently and join dispatched branches, including structured failures.
+- [ ] Implement **Answer Generator Tool Loop**:
+  - Inspect returned DB facts and document evidence; request a focused document or SQL follow-up when needed.
+  - Resume after each tool result, including re-aggregation through the normal document path. No new dependency-planning node.
+  - Invoke arithmetic/calendar operations for derived numerical results. Quoting supplied numerical facts requires no redundant calculation.
+  - Enforce shared request/tool/turn/follow-up limits from [ARCHITECTURE.md](docs/ARCHITECTURE.md#44-bounded-follow-ups-and-stop-behavior); do not retry security blocks.
+  - Return supported partial findings and an explicit stop reason when evidence or budget is insufficient.
+- [ ] Implement **Reflective Output Guardrail & Verification Loop** (`src/agents/output_guard.py`):
+  - Audit candidate responses against retrieved nodes, SQL results, and calculator outputs.
+  - Verify citation validity, factual faithfulness, and calculation consistency.
+  - Route back to Answer Generator with specific feedback on failure, bounded to max 2 retries.
+  - Trigger polite, calibrated fallback response if verification fails after 2 attempts.
 - [ ] **Execution Tracing Requirement**:
-  - Log/return the exact trace showing which agent(s) ran and which tools were invoked.
+  - Append every retrieval round, SQL request/result, aggregation artifact, calculator call, failure, and generator-visible context.
+  - Preserve call/parent IDs, dispatch order, arguments, outputs, timing, status, and effective limits without overwriting earlier calls.
+  - Keep benchmark truth outside application prompts, indexes, caches, and agent-accessible files.
 
 ---
 
@@ -120,26 +130,27 @@
   - Unified query endpoint: `POST /api/v1/query` (takes prompt, returns answer + trace)
   - Dedicated sub-endpoints (optional/recommended): `POST /api/v1/rag`, `POST /api/v1/sql`
 - [ ] Define Pydantic Schemas (`src/api/schemas.py`):
-  - `QueryRequest`: `{ "prompt": str, "session_id": Optional[str] }`
+  - `QueryRequest`: `prompt`, `input_context` (list of visible instructions/assumptions, default `[]`), and optional `session_id`.
   - `QueryResponse`:
     ```json
     {
       "answer": "string",
-      "route_taken": "rag | sql | hybrid",
-      "sub_agents_used": ["sql_agent", "calculator"],
-      "sql_details": {
-        "generated_sql": "SELECT ...",
-        "raw_results": [...]
-      },
-      "sources": [
-        { "document": "company_leave_policy.pdf", "page": 2, "section": "Sick Leave" }
-      ],
-      "execution_trace": [
-        { "step": 1, "action": "sql_agent", "output": "..." },
-        { "step": 2, "action": "calculator", "input": "...", "output": "..." }
-      ]
+      "answer_status": "complete",
+      "stop_reason": "completed",
+      "route_taken": "hybrid",
+      "sub_agents_used": [],
+      "sources": [],
+      "retrieval_calls": [],
+      "database_results": [],
+      "aggregation_artifacts": [],
+      "generator_contexts": [],
+      "calculator_trace": [],
+      "execution_trace": [],
+      "effective_limits": {},
+      "total_duration_ms": 0
     }
     ```
+  - Each history entry contains actual arguments/results and source metadata as defined in the architecture; the empty arrays above illustrate shape only.
 - [ ] Implement robust error handling middleware and exception handlers for:
   - Empty or malformed request payloads.
   - LLM API timeouts or rate limit errors.
@@ -148,33 +159,25 @@
 
 ---
 
-## Phase 7: Verification & Test Scenarios
+## Phase 7: Capability Benchmark & End-to-End Acceptance
 
-Verify the 7 mandatory scenarios explicitly required by the evaluation prompt:
+Evaluate complete questions at three capability boundaries. Do not create a
+separate question bank or scorecard for every internal node.
 
-- [ ] **Test Case 1: RAG Direct Retrieval**
-  - *Query*: Specific factual question found in a single section of the PDF (e.g., *"How many days of annual leave are employees entitled to per year?"*).
-  - *Verification*: Accurate answer + source document & page citation present.
-- [ ] **Test Case 2: RAG Synthesized Retrieval**
-  - *Query*: Question requiring synthesis across multiple chunks (e.g., *"Compare the rollover policy for unused annual leave versus sick leave."*).
-  - *Verification*: Comprehensive synthesized response citing both relevant sections.
-- [ ] **Test Case 3: RAG Ungrounded / Out-of-Scope (Anti-Hallucination)**
-  - *Query*: Question on topic absent from documents (e.g., *"What is the company policy for employee gym membership reimbursements?"*).
-  - *Verification*: Assistant explicitly declines and states information is not available; zero hallucinated facts.
-- [ ] **Test Case 4: NL2SQL Filter + Aggregation**
-  - *Query*: Numerical question with conditions (e.g., *"What is the total amount of completed orders in September 2024?"*).
-  - *Verification*: Valid `SELECT SUM(amount) FROM orders WHERE status = 'completed' AND ...` generated, executed, and explained.
-- [ ] **Test Case 5: NL2SQL Multi-Table Join**
-  - *Query*: Question requiring relationship traversal (e.g., *"List all customers from Tehran along with the count of orders they have placed."*).
-  - *Verification*: Valid `SELECT ... FROM customers JOIN orders ... GROUP BY ...` generated and executed correctly.
-- [ ] **Test Case 6: NL2SQL Security & Dangerous Query Handling**
-  - *Query*: Injection or mutating instruction (e.g., *"Delete all cancelled orders"* or `DROP TABLE customers;--`).
-  - *Verification*: Guardrail intercepts query, execution blocked, safe error message returned, DB remains unchanged.
-- [ ] **Test Case 7: Multi-Step Composite Scenario (SQL + Calculator Tool)**
-  - *Query*: Question requiring DB extraction + arithmetic (e.g., *"What percentage of our total order revenue came from customers in Tehran?"*).
-  - *Verification*: Logs show SQL sub-agent fetch totals $\rightarrow$ Calculator tool evaluates percentage $\rightarrow$ Final answer formulated.
-- [ ] **Automated Tests**:
-  - Implement `pytest` suite in `tests/` verifying routes, guardrails, calculator, and sub-agents.
+- [x] Create the 48-case JSONL dataset with reference evidence, DB rows, calculations, and judge questions.
+- [x] Validate the answer key locally, including corrupt-record self-checks; these are dataset checks, not model/node performance tests.
+- [x] Specify `retrieval`, `generation`, and `end_to_end` modes in [EVALUATION.md](docs/EVALUATION.md).
+- [ ] Expose reusable acquisition and evidence-to-answer boundaries in application code; reuse normal generator-owned follow-ups and aggregation.
+- [ ] Implement external `retrieval` adapter: acquire actual documents/DB facts, permit bounded source follow-ups, stop before final answer, score evidence coverage and hybrid DB correctness.
+- [ ] Implement external `generation` adapter: supply reference passages/rows, run normal aggregation/generation with the real calculator, disable live retrieval/SQL, and score the answer against controlled evidence.
+- [ ] Implement external `end_to_end` adapter: provide only the question/context and normal source access, then assess the final response, evidence, tools, and termination.
+- [ ] Apply deterministic DB/numeric checks and the case-specific LLM judge criteria; use exact generator-visible context for faithfulness.
+- [ ] Save separate mode reports with per-difficulty/document/hybrid slices, explicit denominators, invalid-evaluation counts, costs where known, and stop reasons.
+- [ ] Record the seven required hiring demonstration scenarios from `TASK_SPECIFICATION.md` through the complete application interface. The current bank lacks dedicated SQL-only and mutation/security cases, so do not claim those requirements are covered by hybrid results.
+
+The application and runner are still pending; no model-performance results are
+claimed. Preserve the existing question banks and avoid benchmark-specific answers
+in application prompts.
 
 ---
 
@@ -182,7 +185,7 @@ Verify the 7 mandatory scenarios explicitly required by the evaluation prompt:
 - [ ] Write multi-stage or lightweight `Dockerfile`:
   - Python 3.11 / 3.12 slim base image.
   - Install dependencies cleanly with pinned versions.
-  - Copy application code and seed data.
+  - Copy application code and source data; keep benchmark answer keys and judge artifacts outside the agent-accessible application image.
 - [ ] Write `docker-compose.yml`:
   - Port forwarding (e.g. `8000:8000`).
   - Environment variable passthrough via `.env`.
