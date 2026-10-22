@@ -1,3 +1,4 @@
+import asyncio
 import json
 from types import SimpleNamespace
 
@@ -30,3 +31,24 @@ async def test_server_graph_uses_same_application_without_nonserializable_inputs
     assert result["response"]["status"] == "complete"
     assert set(result) == {"response"}
     json.dumps(result, default=str)
+
+
+async def test_concurrent_runs_on_one_graph_keep_separate_runs(make_assistant):
+    """The Agent Server may reuse a compiled graph; each run needs its own `Run`."""
+    assistant, _ = make_assistant(
+        {
+            "coordinator": [
+                {"needs_docs": False, "needs_db": False},
+                {"needs_docs": False, "needs_db": False},
+            ],
+            "generate": [final("first"), final("second")],
+            "guard": [{"passed": True, "feedback": ""}, {"passed": True, "feedback": ""}],
+        }
+    )
+    graph = build_graph(services=assistant, external=True)
+    first, second = await asyncio.gather(
+        graph.ainvoke({"question": "first", "input_context": []}),
+        graph.ainvoke({"question": "second", "input_context": []}),
+    )
+    assert first["response"]["run_id"] != second["response"]["run_id"]
+    assert {first["response"]["answer"], second["response"]["answer"]} == {"first", "second"}
