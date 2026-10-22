@@ -1,0 +1,36 @@
+{
+  "candidate_id": "always_direct",
+  "case_id": "COORD-HYBRID-06-1",
+  "split": "test",
+  "trial": 1,
+  "input_hash": "sanity_zero_request",
+  "p_docs": 0.0,
+  "p_db": 0.0,
+  "threshold_docs": null,
+  "threshold_db": null,
+  "pred_needs_docs": false,
+  "pred_needs_db": false,
+  "predicted_route": "direct",
+  "expected_route": "hybrid",
+  "expected_needs_docs": true,
+  "expected_needs_db": true,
+  "is_route_correct": false,
+  "is_docs_correct": false,
+  "is_db_correct": false,
+  "status": "ok",
+  "total_duration_ms": 0.0,
+  "attempts": [],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.0
+  },
+  "cost": 0.0,
+  "fallback_used": false,
+  "fallback_reason": null,
+  "group_id": "hybrid-annual_refund",
+  "tags": [
+    "annual_refund",
+    "paraphrase_pair"
+  ]
+}

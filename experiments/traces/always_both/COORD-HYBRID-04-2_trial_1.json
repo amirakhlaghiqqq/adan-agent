@@ -1,0 +1,36 @@
+{
+  "candidate_id": "always_both",
+  "case_id": "COORD-HYBRID-04-2",
+  "split": "test",
+  "trial": 1,
+  "input_hash": "sanity_zero_request",
+  "p_docs": 1.0,
+  "p_db": 1.0,
+  "threshold_docs": null,
+  "threshold_db": null,
+  "pred_needs_docs": true,
+  "pred_needs_db": true,
+  "predicted_route": "hybrid",
+  "expected_route": "hybrid",
+  "expected_needs_docs": true,
+  "expected_needs_db": true,
+  "is_route_correct": true,
+  "is_docs_correct": true,
+  "is_db_correct": true,
+  "status": "ok",
+  "total_duration_ms": 0.0,
+  "attempts": [],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.0
+  },
+  "cost": 0.0,
+  "fallback_used": false,
+  "fallback_reason": null,
+  "group_id": "hybrid-downgrade",
+  "tags": [
+    "downgrade",
+    "paraphrase_pair"
+  ]
+}

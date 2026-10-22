@@ -1,0 +1,2109 @@
+{
+  "metadata": {
+    "run_timestamp": "2026-10-22T22:29:18.953976+00:00",
+    "config": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Coordinator Evaluation Configuration",
+      "description": "Provider and run configuration for coordinator decision model evaluation.",
+      "models": [
+        {
+          "id": "mammoth_decision",
+          "display_name": "BaseTen Mammoth-1 (Decision Model in .env)",
+          "adapter": "openrouter_decisions",
+          "base_url": "https://openrouter.ai/api/alpha/decisions",
+          "api_key_env": "OPENROUTER_API_KEY",
+          "model": "baseten/mammoth-1:free",
+          "is_probability_model": true,
+          "request_options": {}
+        },
+        {
+          "id": "elephant_decision",
+          "display_name": "BaseTen Elephant-1 (Alternative Decision Model)",
+          "adapter": "openrouter_decisions",
+          "base_url": "https://openrouter.ai/api/alpha/decisions",
+          "api_key_env": "OPENROUTER_API_KEY",
+          "model": "baseten/elephant-1:free",
+          "is_probability_model": true,
+          "request_options": {}
+        },
+        {
+          "id": "nemotron_llm_baseline",
+          "display_name": "Nvidia Nemotron 3.5 Super VL (Structured LLM Baseline in .env)",
+          "adapter": "chat_completions",
+          "base_url": "https://openrouter.ai/api/v1/chat/completions",
+          "api_key_env": "OPENROUTER_API_KEY",
+          "model": "nvidia/nemotron-3.5-super-vl:free",
+          "is_probability_model": false,
+          "request_options": {
+            "temperature": 0
+          }
+        }
+      ],
+      "benchmark_file": "evals/coordinator/benchmark.jsonl",
+      "rag_regression_file": "evals/rag/benchmark.jsonl",
+      "trials": 1,
+      "concurrency": 2,
+      "timeout_seconds": 30,
+      "max_transient_retries": 1,
+      "rate_limit_delay_seconds": 0.5,
+      "seed": 42,
+      "output_directory": "experiments"
+    },
+    "dataset_statistics": {
+      "total_cases": 64,
+      "splits": {
+        "development": 16,
+        "test": 48
+      },
+      "routes": {
+        "document": 16,
+        "database": 16,
+        "hybrid": 16,
+        "direct": 16
+      },
+      "groups": 32
+    },
+    "trials_per_case": 1
+  },
+  "calibration": {
+    "model": "baseten/mammoth-1:free",
+    "tau_docs": 0.5,
+    "tau_db": 0.5,
+    "details": {
+      "docs": {
+        "best_tau": 0.5,
+        "best_loss": 0,
+        "grid": [
+          {
+            "tau": 0.2,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.25,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.3,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.35,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.4,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.45,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.5,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.55,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.6,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.65,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.7,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.75,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.8,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          }
+        ]
+      },
+      "db": {
+        "best_tau": 0.5,
+        "best_loss": 0,
+        "grid": [
+          {
+            "tau": 0.2,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.25,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.3,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.35,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.4,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.45,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.5,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.55,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.6,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.65,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.7,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.75,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          },
+          {
+            "tau": 0.8,
+            "loss": 0,
+            "fn": 0,
+            "fp": 0,
+            "tp": 8,
+            "tn": 8
+          }
+        ]
+      }
+    },
+    "elephant_decision": {
+      "model": "baseten/elephant-1:free",
+      "tau_docs": 0.5,
+      "tau_db": 0.4,
+      "details": {
+        "docs": {
+          "best_tau": 0.5,
+          "best_loss": 0,
+          "grid": [
+            {
+              "tau": 0.2,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.25,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.3,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.35,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.4,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.45,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.5,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.55,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.6,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.65,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.7,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.75,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.8,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            }
+          ]
+        },
+        "db": {
+          "best_tau": 0.4,
+          "best_loss": 0,
+          "grid": [
+            {
+              "tau": 0.2,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.25,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.3,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.35,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.4,
+              "loss": 0,
+              "fn": 0,
+              "fp": 0,
+              "tp": 8,
+              "tn": 8
+            },
+            {
+              "tau": 0.45,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.5,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.55,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.6,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.65,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.7,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.75,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            },
+            {
+              "tau": 0.8,
+              "loss": 5,
+              "fn": 1,
+              "fp": 0,
+              "tp": 7,
+              "tn": 8
+            }
+          ]
+        }
+      }
+    }
+  },
+  "candidates": {
+    "mammoth_rag_regression_calibrated": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": "not_applicable",
+          "recall": "not_applicable",
+          "f1": "not_applicable"
+        },
+        "document": {
+          "tp": 36,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": "not_applicable",
+          "recall": "not_applicable",
+          "f1": "not_applicable"
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 36,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 48,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "tn": 36,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 511.96,
+        "p95": 843.06,
+        "mean": 580.7
+      },
+      "tokens": {
+        "total_input_tokens": 24512,
+        "total_output_tokens": 96,
+        "total_tokens": 24608,
+        "avg_tokens_per_decision": 512.7
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "mammoth_raw_dev": {
+      "planned_trials": 16,
+      "evaluated_trials": 16,
+      "valid_decisions": 16,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 4,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 4,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 4,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 4
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 560.39,
+        "p95": 2111.24,
+        "mean": 900.06
+      },
+      "tokens": {
+        "total_input_tokens": 7877,
+        "total_output_tokens": 32,
+        "total_tokens": 7909,
+        "avg_tokens_per_decision": 494.3
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 16
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "mammoth_raw_test_tau_0.5": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 12,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 538.42,
+        "p95": 780.56,
+        "mean": 599.65
+      },
+      "tokens": {
+        "total_input_tokens": 23923,
+        "total_output_tokens": 96,
+        "total_tokens": 24019,
+        "avg_tokens_per_decision": 500.4
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "mammoth_calibrated_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 12,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 538.42,
+        "p95": 780.56,
+        "mean": 599.65
+      },
+      "tokens": {
+        "total_input_tokens": 23923,
+        "total_output_tokens": 96,
+        "total_tokens": 24019,
+        "avg_tokens_per_decision": 500.4
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "nemotron_llm_dev": {
+      "planned_trials": 16,
+      "evaluated_trials": 16,
+      "valid_decisions": 15,
+      "valid_decision_rate": 0.9375,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 0.9375,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 4,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 3,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 4,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 4
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "tn": 7,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 5326.81,
+        "p95": 71720.2,
+        "mean": 15583.78
+      },
+      "tokens": {
+        "total_input_tokens": 6054,
+        "total_output_tokens": 5477,
+        "total_tokens": 11531,
+        "avg_tokens_per_decision": 768.7
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 0.9375
+      },
+      "status_counts": {
+        "ok": 15,
+        "error": 1
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "nemotron_llm_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 43,
+      "valid_decision_rate": 0.8958,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 0.8958,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 8,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 11,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 19,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 23,
+          "fp": 0,
+          "fn": 0,
+          "tn": 20,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 3671.17,
+        "p95": 84584.11,
+        "mean": 13117.81
+      },
+      "tokens": {
+        "total_input_tokens": 17644,
+        "total_output_tokens": 13787,
+        "total_tokens": 31431,
+        "avg_tokens_per_decision": 731.0
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 0.8958333333333334
+      },
+      "status_counts": {
+        "ok": 43,
+        "server_error": 5
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "mammoth_composite_fallback_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 12,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 24,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 538.42,
+        "p95": 780.56,
+        "mean": 599.65
+      },
+      "tokens": {
+        "total_input_tokens": 23923,
+        "total_output_tokens": 96,
+        "total_tokens": 24019,
+        "avg_tokens_per_decision": 500.4
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "sanity_always_documents_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 0.25,
+      "exact_route_accuracy_all_planned": 0.25,
+      "macro_f1": 0.4,
+      "per_route": {
+        "direct": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "document": {
+          "tp": 12,
+          "fp": 36,
+          "fn": 0,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        },
+        "database": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "hybrid": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 24,
+          "fn": 0,
+          "tn": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "needs_db": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 24,
+          "tn": 24,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        }
+      },
+      "missing_source_count": 24,
+      "missing_source_rate": 0.5,
+      "unnecessary_source_count": 24,
+      "unnecessary_source_rate": 0.5,
+      "latency_ms": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "mean": 0.0
+      },
+      "tokens": {
+        "total_input_tokens": 0,
+        "total_output_tokens": 0,
+        "total_tokens": 0,
+        "avg_tokens_per_decision": 0.0
+      },
+      "cost": {
+        "total_cost": 0.0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "sanity_always_both_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 0.25,
+      "exact_route_accuracy_all_planned": 0.25,
+      "macro_f1": 0.4,
+      "per_route": {
+        "direct": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "document": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "database": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 36,
+          "fn": 0,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        },
+        "document": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 24,
+          "fn": 0,
+          "tn": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 24,
+          "fn": 0,
+          "tn": 0,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 36,
+      "unnecessary_source_rate": 0.75,
+      "latency_ms": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "mean": 0.0
+      },
+      "tokens": {
+        "total_input_tokens": 0,
+        "total_output_tokens": 0,
+        "total_tokens": 0,
+        "avg_tokens_per_decision": 0.0
+      },
+      "cost": {
+        "total_cost": 0.0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "sanity_always_direct_test": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 0.25,
+      "exact_route_accuracy_all_planned": 0.25,
+      "macro_f1": 0.4,
+      "per_route": {
+        "direct": {
+          "tp": 12,
+          "fp": 36,
+          "fn": 0,
+          "precision": 0.25,
+          "recall": 1.0,
+          "f1": 0.4
+        },
+        "document": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "database": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "hybrid": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 12,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 12,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 24,
+          "tn": 24,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        },
+        "needs_db": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 24,
+          "tn": 24,
+          "precision": "not_applicable",
+          "recall": 0.0,
+          "f1": "not_applicable"
+        }
+      },
+      "missing_source_count": 36,
+      "missing_source_rate": 0.75,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 0.0,
+        "p95": 0.0,
+        "mean": 0.0
+      },
+      "tokens": {
+        "total_input_tokens": 0,
+        "total_output_tokens": 0,
+        "total_tokens": 0,
+        "avg_tokens_per_decision": 0.0
+      },
+      "cost": {
+        "total_cost": 0.0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "elephant_decision_raw_dev": {
+      "planned_trials": 16,
+      "evaluated_trials": 16,
+      "valid_decisions": 16,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 0.9375,
+      "exact_route_accuracy_all_planned": 0.9375,
+      "macro_f1": 0.9365,
+      "per_route": {
+        "direct": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 4,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.8,
+          "recall": 1.0,
+          "f1": 0.8889
+        },
+        "database": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 3,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 4,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 4,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 4,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 1,
+          "database": 0,
+          "hybrid": 3
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "tn": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 1,
+          "tn": 8,
+          "precision": 1.0,
+          "recall": 0.875,
+          "f1": 0.9333
+        }
+      },
+      "missing_source_count": 1,
+      "missing_source_rate": 0.0625,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 504.94,
+        "p95": 1340.29,
+        "mean": 635.3
+      },
+      "tokens": {
+        "total_input_tokens": 7877,
+        "total_output_tokens": 32,
+        "total_tokens": 7909,
+        "avg_tokens_per_decision": 494.3
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 16
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "elephant_decision_raw_test_tau_0.5": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 45,
+      "valid_decision_rate": 0.9375,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 0.9375,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 9,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 12,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 21,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 21,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 492.84,
+        "p95": 1146.53,
+        "mean": 580.06
+      },
+      "tokens": {
+        "total_input_tokens": 22432,
+        "total_output_tokens": 90,
+        "total_tokens": 22522,
+        "avg_tokens_per_decision": 500.5
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 0.9375
+      },
+      "status_counts": {
+        "ok": 45,
+        "rate_limit": 3
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "elephant_decision_calibrated_test": {
+      "planned_trials": 45,
+      "evaluated_trials": 45,
+      "valid_decisions": 45,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 1.0,
+      "exact_route_accuracy_all_planned": 1.0,
+      "macro_f1": 1.0,
+      "per_route": {
+        "direct": {
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "document": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "database": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "hybrid": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 9,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 12,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 12,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 12
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 21,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 24,
+          "fp": 0,
+          "fn": 0,
+          "tn": 21,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "missing_source_count": 0,
+      "missing_source_rate": 0.0,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 492.84,
+        "p95": 1146.53,
+        "mean": 580.06
+      },
+      "tokens": {
+        "total_input_tokens": 22432,
+        "total_output_tokens": 90,
+        "total_tokens": 22522,
+        "avg_tokens_per_decision": 500.5
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 45
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    },
+    "elephant_decision_rag_regression_calibrated": {
+      "planned_trials": 48,
+      "evaluated_trials": 48,
+      "valid_decisions": 48,
+      "valid_decision_rate": 1.0,
+      "exact_route_accuracy_valid": 0.9792,
+      "exact_route_accuracy_all_planned": 0.9792,
+      "macro_f1": 0.9714,
+      "per_route": {
+        "direct": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": "not_applicable",
+          "recall": "not_applicable",
+          "f1": "not_applicable"
+        },
+        "document": {
+          "tp": 36,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.973,
+          "recall": 1.0,
+          "f1": 0.9863
+        },
+        "database": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": "not_applicable",
+          "recall": "not_applicable",
+          "f1": "not_applicable"
+        },
+        "hybrid": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.9167,
+          "f1": 0.9565
+        }
+      },
+      "confusion_matrix": {
+        "direct": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "document": {
+          "direct": 0,
+          "document": 36,
+          "database": 0,
+          "hybrid": 0
+        },
+        "database": {
+          "direct": 0,
+          "document": 0,
+          "database": 0,
+          "hybrid": 0
+        },
+        "hybrid": {
+          "direct": 0,
+          "document": 1,
+          "database": 0,
+          "hybrid": 11
+        }
+      },
+      "flags": {
+        "needs_docs": {
+          "tp": 48,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "needs_db": {
+          "tp": 11,
+          "fp": 0,
+          "fn": 1,
+          "tn": 36,
+          "precision": 1.0,
+          "recall": 0.9167,
+          "f1": 0.9565
+        }
+      },
+      "missing_source_count": 1,
+      "missing_source_rate": 0.0208,
+      "unnecessary_source_count": 0,
+      "unnecessary_source_rate": 0.0,
+      "latency_ms": {
+        "p50": 496.9,
+        "p95": 1223.61,
+        "mean": 579.9
+      },
+      "tokens": {
+        "total_input_tokens": 24512,
+        "total_output_tokens": 96,
+        "total_tokens": 24608,
+        "avg_tokens_per_decision": 512.7
+      },
+      "cost": {
+        "total_cost": 0,
+        "cost_coverage": 1.0
+      },
+      "status_counts": {
+        "ok": 48
+      },
+      "fallback_count": 0,
+      "fallback_rate": 0.0
+    }
+  }
+}

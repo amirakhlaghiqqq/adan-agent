@@ -1,0 +1,36 @@
+{
+  "candidate_id": "always_documents",
+  "case_id": "COORD-DOCUMENT-04-2",
+  "split": "test",
+  "trial": 1,
+  "input_hash": "sanity_zero_request",
+  "p_docs": 1.0,
+  "p_db": 0.0,
+  "threshold_docs": null,
+  "threshold_db": null,
+  "pred_needs_docs": true,
+  "pred_needs_db": false,
+  "predicted_route": "document",
+  "expected_route": "document",
+  "expected_needs_docs": true,
+  "expected_needs_db": false,
+  "is_route_correct": true,
+  "is_docs_correct": true,
+  "is_db_correct": true,
+  "status": "ok",
+  "total_duration_ms": 0.0,
+  "attempts": [],
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost": 0.0
+  },
+  "cost": 0.0,
+  "fallback_used": false,
+  "fallback_reason": null,
+  "group_id": "document-credit_deadlines",
+  "tags": [
+    "credit_deadlines",
+    "paraphrase_pair"
+  ]
+}
