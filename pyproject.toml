@@ -8,11 +8,17 @@ version = "0.1.0"
 description = "CloudScale policy and database assistant built with LangGraph"
 requires-python = ">=3.12,<3.14"
 dependencies = [
-  "fastapi>=0.115,<1", "uvicorn[standard]>=0.34,<1",
-  "pydantic-settings>=2.8,<3", "langgraph>=1.0,<2",
-  "langchain-openai>=1.0,<2", "sqlglot>=26,<31",
-  "llama-index-core>=0.12,<1", "llama-index-vector-stores-qdrant>=0.6,<1",
-  "llama-index-embeddings-fastembed>=0.3,<1", "qdrant-client>=1.14,<2",
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+  "pydantic-settings>=2.8,<3",
+  "langgraph>=1.0,<2",
+  "langchain-openai>=1.0,<2",
+  "sqlglot>=26,<31",
+  "llama-index-core>=0.12,<1",
+  "llama-index-vector-stores-qdrant>=0.6,<1",
+  "llama-index-embeddings-fastembed>=0.3,<1",
+  "qdrant-client>=1.14,<2",
+  "fastembed>=0.7,<1",
 ]
 
 [dependency-groups]
