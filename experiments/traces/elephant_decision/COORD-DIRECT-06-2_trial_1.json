@@ -18,13 +18,13 @@
   "is_docs_correct": true,
   "is_db_correct": true,
   "status": "ok",
-  "total_duration_ms": 975.32,
+  "total_duration_ms": 1390.96,
   "attempts": [
     {
       "attempt": 1,
-      "started_at": "2026-10-22T22:30:51.049575+00:00",
-      "finished_at": "2026-10-22T22:30:52.024909+00:00",
-      "duration_ms": 975.3239040001063,
+      "started_at": "2026-10-22T22:31:08.617112+00:00",
+      "finished_at": "2026-10-22T22:31:10.008080+00:00",
+      "duration_ms": 1390.9552929999336,
       "status": "ok",
       "http_status": 200,
       "error": null,
@@ -83,7 +83,7 @@
           "output_tokens": 2,
           "cost": 0
         },
-        "id": "gen-dec-1792708251-jP4NFqd3xbD0817pPf2Y",
+        "id": "gen-dec-1792708269-tdDUHR74F3bdwAeQA6tr",
         "provider": "BaseTen"
       }
     }
