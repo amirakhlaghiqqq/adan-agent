@@ -29,9 +29,17 @@ class Documents:
     fingerprint = "test-index"
 
     def search(self, query):
-        return [{"chunk_id": "billing-p1-s1", "document_id": "DOC-BIL-2024-V3",
-                 "source_file": "enterprise_billing_and_refund_policy.pdf", "page_number": 1,
-                 "section": "1. Billing", "text": "Reference policy text for this test.", "score": 0.9}]
+        return [
+            {
+                "chunk_id": "billing-p1-s1",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "page_number": 1,
+                "section": "1. Billing",
+                "text": "Reference policy text for this test.",
+                "score": 0.9,
+            }
+        ]
 
 
 def tool(name, arguments, call_id="call-1"):
@@ -39,15 +47,28 @@ def tool(name, arguments, call_id="call-1"):
 
 
 def final(answer="There are 30 customers.", citations=None, status="complete"):
-    return tool("submit_answer", {"answer": answer, "citation_ids": citations or [],
-                                 "status": status, "missing_information": []}, "final")
+    return tool(
+        "submit_answer",
+        {
+            "answer": answer,
+            "citation_ids": citations or [],
+            "status": status,
+            "missing_information": [],
+        },
+        "final",
+    )
 
 
 @pytest.fixture
 def make_assistant():
     def make(steps, **settings):
         models = ScriptedModels(steps)
-        assistant = Assistant(Settings(_env_file=None, **settings), models=models,
-                              documents=Documents(), database=Database(Path("data/database/app.db")))
+        assistant = Assistant(
+            Settings(_env_file=None, **settings),
+            models=models,
+            documents=Documents(),
+            database=Database(Path("data/database/app.db")),
+        )
         return assistant, models
+
     return make
