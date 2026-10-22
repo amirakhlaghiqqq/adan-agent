@@ -1,7 +1,10 @@
 """AST validation plus SQLite authorization and a physically read-only connection."""
 
+import os
 import sqlite3
+import tempfile
 import time
+from contextlib import closing
 from pathlib import Path
 
 import sqlglot
@@ -12,6 +15,26 @@ class UnsafeSQL(ValueError):
     pass
 
 
+def ensure_database(path: Path, seed_directory: Path = Path("data/database")):
+    """Initialize only a missing destination; never reset an existing database."""
+    if path.exists():
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=".seed-", dir=path.parent)
+    os.close(descriptor)
+    try:
+        with closing(sqlite3.connect(temporary)) as connection:
+            connection.executescript((seed_directory / "schema.sql").read_text())
+            connection.executescript((seed_directory / "seed_data.sql").read_text())
+            connection.commit()
+        try:
+            os.link(temporary, path)
+        except FileExistsError:
+            pass  # Another startup initialized it; preserve that database.
+    finally:
+        os.unlink(temporary)
+
+
 class Database:
     def __init__(self, path: Path):
         self.path = path.resolve()
@@ -19,7 +42,7 @@ class Database:
             raise FileNotFoundError(
                 f"Database is missing: {path}; restore or seed the source first"
             )
-        with self.connect() as conn:
+        with closing(self.connect()) as conn:
             self.tables = {
                 r[0]
                 for r in conn.execute(

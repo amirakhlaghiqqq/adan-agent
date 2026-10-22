@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 from adan.calculator import calculate
-from adan.database import Database, UnsafeSQL
+from adan.database import Database, UnsafeSQL, ensure_database
 
 
 def test_exact_arithmetic_and_calendar_operations():
@@ -86,4 +86,13 @@ def test_database_guard_blocks_unsafe_sql_and_preserves_source(sql):
     original = path.read_bytes()
     with pytest.raises(UnsafeSQL):
         Database(path).query(sql)
+    assert path.read_bytes() == original
+
+
+def test_startup_seeds_a_missing_database_without_resetting_existing_data(tmp_path):
+    path = tmp_path / "new.db"
+    ensure_database(path)
+    assert Database(path).query("SELECT COUNT(*) FROM customers")["rows"] == [[30]]
+    original = path.read_bytes()
+    ensure_database(path)
     assert path.read_bytes() == original

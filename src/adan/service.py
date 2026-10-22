@@ -2,7 +2,7 @@ import asyncio
 import json
 
 from adan.config import Settings
-from adan.database import Database
+from adan.database import Database, ensure_database
 from adan.models import OpenRouterModels
 from adan.rag.aggregation import PassthroughAggregator
 from adan.runtime import LimitReached, Run
@@ -22,6 +22,7 @@ class Assistant:
     def from_settings(cls, settings=None):
         settings = settings or Settings()
         models = OpenRouterModels(settings)
+        ensure_database(settings.database_path)
         from llama_index.embeddings.fastembed import FastEmbedEmbedding
 
         from adan.rag.index import PolicyIndex
