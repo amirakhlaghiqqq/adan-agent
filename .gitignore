@@ -74,6 +74,10 @@ chroma_db/
 .cache/
 .langgraph_api/
 
+# Agent tooling (skills installed locally, not part of the deliverable)
+.agents/
+skills-lock.json
+
 # Operating System Files
 .DS_Store
 Thumbs.db
