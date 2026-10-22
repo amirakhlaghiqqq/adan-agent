@@ -9,6 +9,25 @@ This is a dataset and local answer-key validator. It does not call an answering
 system, execute an LLM judge, or produce model-performance scores. Difficulty is
 provisional until calibrated with real runs.
 
+## Evaluation modes
+
+The architecture defines three external evaluation modes using these same cases:
+
+| Mode | What runs | What is assessed |
+|---|---|---|
+| `retrieval` | Normal source acquisition, including hybrid SQL and generator-controlled follow-up searches; no final answer | Required document evidence and DB facts obtained |
+| `generation` | Reference passages and DB rows supplied to the normal aggregation/generator path; real calculator, no live retrieval or SQL | Answer quality with controlled available evidence |
+| `end_to_end` | Full ordinary application path with only question, visible context, and source access | Final response quality, actual evidence coverage, SQL facts, and tool use |
+
+These are capability-level assessments, not per-node test sets. The aggregation
+algorithm remains open; evaluation records its inputs and outputs without
+prescribing its design. Generation assessment includes aggregation and synthesis.
+
+See [the evaluation contract](../../docs/EVALUATION.md) for evidence injection,
+retrieval cutoffs, scoring boundaries, and report requirements. Runner and
+application implementations are pending; the validation commands below check
+the dataset, not these modes' model performance.
+
 ## Files and validation
 
 - `benchmark.jsonl`: UTF-8 JSON Lines, one complete case per line.
@@ -202,6 +221,7 @@ come from an actual run:
 |---|---|
 | `answer` | Final system answer. |
 | `retrieved_document_chunks` | Actual text, rank, document ID/path, and page/section metadata for retrieved chunks. |
+| `generator_contexts` | Exact context and tool messages supplied to each relevant generator turn; determines which evidence the model actually saw. |
 | `database_results` | Actual executed SQL, parameters, columns, and rows. |
 | `calculator_trace` | Actual calculator calls, arguments, and returned results. |
 | `citations` | Claim-linked citations from the answer. |
@@ -217,7 +237,11 @@ as `{ "criterion_id": "correctness", "score": 2, "reason": "..." }`; the
 completeness judge should additionally list covered and omitted `fact_id` values.
 Use only each criterion's declared inputs. Correctness uses independently
 curated reference facts. Faithfulness uses **actual retrieved context and visible
-input facts**, never hidden gold as a substitute for context the system missed.
+input facts actually delivered to the generator**, never hidden gold as a
+substitute for context the system missed. Use `generator_contexts` to establish
+visibility; a raw chunk or DB result lost before generation cannot justify a
+claim. In generation mode, supplied reference passages/rows are labeled fixtures;
+only content actually delivered to the generator supports faithfulness.
 A correct guess can therefore fail faithfulness; faithful repetition of an
 incomplete context can fail completeness.
 

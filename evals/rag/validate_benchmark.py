@@ -37,7 +37,7 @@ CRITERIA = {
 }
 RUNTIME_INPUTS = {
     "answer", "retrieved_document_chunks", "database_results", "calculator_trace",
-    "citations", "cited_source_passages",
+    "citations", "cited_source_passages", "generator_contexts",
 }
 
 
@@ -353,6 +353,7 @@ def validate_record(record, ctx):
         require(isinstance(score, dict) and {"0", "1", "2"} <= set(score) <= {"0", "1", "2", "not_applicable"}, f"{cid}: invalid scoring anchors")
         require(all(nonempty(s) for s in score.values()), f"{cid}: empty scoring anchor")
         if cid == "faithfulness":
+            require("generator_contexts" in judge["required_inputs"], "faithfulness requires exact generator-visible context")
             require(not (set(judge["required_inputs"]) & {"expected_answer", "required_answer_facts", "required_document_evidence", "expected_database_response", "expected_calculations"}), "faithfulness must not use hidden gold to justify claims")
     require(actual == required, "missing judge criteria")
 
@@ -411,6 +412,7 @@ def self_check(records, ctx, manifest):
     rejected("missing field", lambda: changed("E01", lambda r: r.pop("question")))
     rejected("incorrect flag type", lambda: changed("E01", lambda r: r.update(is_document_1_needed="true")))
     rejected("source flag mismatch", lambda: changed("E01", lambda r: r.update(is_document_2_needed=True)))
+    rejected("missing generator visibility", lambda: changed("E01", lambda r: next(j for j in r["llm_judge_questions"] if j["criterion_id"] == "faithfulness")["required_inputs"].remove("generator_contexts")))
     rejected("altered evidence", lambda: changed("E01", lambda r: r["required_document_evidence"][0]["alternatives"][0].update(text="Annual plans have a fabricated 99% discount.")))
     rejected("wrong PDF page", lambda: changed("E01", lambda r: r["required_document_evidence"][0]["alternatives"][0].update(page=4)))
     rejected("incorrect database rows", lambda: changed("X-M01", lambda r: r["expected_database_response"]["rows"][0].__setitem__(7, 9999)))
