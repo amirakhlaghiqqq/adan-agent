@@ -46,6 +46,8 @@ def _evaluate(expression: str) -> Fraction:
                 raise ValueError("Only numeric arithmetic is permitted")
             if abs(value) > MAX_VALUE:
                 raise ValueError("Result magnitude exceeds 1e100")
+            if max(value.numerator.bit_length(), value.denominator.bit_length()) > 4096:
+                raise ValueError("Exact rational representation exceeds the computation budget")
             return value
 
         return visit(tree.body)

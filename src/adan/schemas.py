@@ -1,6 +1,6 @@
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, field_validator
 
 
 class Contract(BaseModel):
@@ -75,8 +75,8 @@ class Calculate(Contract):
 
     operation: Literal["evaluate", "month_minutes", "date_difference"]
     expression: str | None = None
-    year: int | None = None
-    month: int | None = None
+    year: StrictInt | None = None
+    month: StrictInt | None = None
     start_date: str | None = None
     end_date: str | None = None
 

@@ -1,5 +1,7 @@
 import asyncio
 import json
+import time
+from datetime import UTC, datetime
 
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
 from langchain_core.utils.function_calling import convert_to_openai_tool
@@ -157,6 +159,7 @@ async def tools(state, runtime: Runtime[RunContext]):
     messages = []
     for call in state["messages"][-1].tool_calls:
         event = run.event("dispatch." + call["name"], call["args"])
+        started = time.monotonic()
         try:
             name = call["name"]
             if name not in TOOL_MODELS or name == "submit_answer":
@@ -183,6 +186,9 @@ async def tools(state, runtime: Runtime[RunContext]):
         except Exception as exc:
             output = _failure(run, call["name"], exc)
             event.update(status="error", output=output)
+        finally:
+            event["duration_ms"] = round((time.monotonic() - started) * 1000, 3)
+            event["finished_at"] = datetime.now(UTC).isoformat()
         messages.append(ToolMessage(json.dumps(output), tool_call_id=call["id"]))
     return {
         "messages": messages,

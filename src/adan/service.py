@@ -62,19 +62,25 @@ class Assistant:
             parent_id=parent_id,
         )
         chunks = []
-        for search in plan["queries"]:
-            found = await run.execute(
-                "search_documents",
-                {"query": search},
-                lambda q=search: asyncio.to_thread(self.documents.search, q),
-                tool=True,
-                parent_id=parent_id,
-                kind="retrieval_calls",
-            )
-            chunks.extend(found)
-        artifact = self.aggregator.build(run.question, run.input_context, chunks)
-        run.aggregation_artifacts.append(artifact)
-        run.chunks.extend(artifact["chunks"])
+        try:
+            for search in plan["queries"]:
+                found = await run.execute(
+                    "search_documents",
+                    {"query": search},
+                    lambda q=search: asyncio.to_thread(self.documents.search, q),
+                    tool=True,
+                    parent_id=parent_id,
+                    kind="retrieval_calls",
+                )
+                chunks.extend(found)
+        finally:
+            if chunks:
+                artifact = self.aggregator.build(run.question, run.input_context, chunks)
+                run.aggregation_artifacts.append(artifact)
+                run.chunks.extend(artifact["chunks"])
+        if not chunks:
+            artifact = self.aggregator.build(run.question, run.input_context, [])
+            run.aggregation_artifacts.append(artifact)
         return artifact
 
     async def query_database(self, request, run, *, parent_id=None):
