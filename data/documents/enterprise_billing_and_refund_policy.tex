@@ -1,0 +1,293 @@
+\documentclass[10pt,letterpaper]{article}
+
+% --- Core LaTeX Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage[letterpaper,margin=0.72in,top=0.65in,bottom=0.65in,headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{tcolorbox}
+\usepackage{caption}
+\usepackage{hyperref}
+
+% --- Professional Color Palette (Harmonized with DOC-SLA-2024-V2) ---
+\definecolor{primary}{RGB}{18, 52, 94}         % Deep Navy
+\definecolor{secondary}{RGB}{42, 92, 142}      % Slate Blue
+\definecolor{accent}{RGB}{242, 246, 252}       % Light Box Tint
+\definecolor{accentborder}{RGB}{185, 205, 228} % Box Border
+\definecolor{darkgray}{RGB}{35, 35, 35}        % Dark Charcoal Body Text
+\definecolor{tablehead}{RGB}{24, 60, 105}      % Table Header Fill
+\definecolor{rowalt}{RGB}{248, 250, 253}       % Alternating Table Row Fill
+
+% --- Typography and Paragraph Layout ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.2pt}
+\renewcommand{\baselinestretch}{0.98}
+\color{darkgray}
+
+% --- Section Headings Formatting ---
+\titleformat{\section}
+  {\color{primary}\large\bfseries}
+  {\thesection.}{0.5em}{}
+  [{\color{secondary}\titlerule[0.5pt]}]
+
+\titleformat{\subsection}
+  {\color{secondary}\small\bfseries}
+  {\thesubsection}{0.5em}{}
+
+\titlespacing*{\section}{0pt}{4pt}{1.5pt}
+\titlespacing*{\subsection}{0pt}{2.5pt}{1pt}
+
+% --- List Formatting ---
+\setlist{itemsep=0.8pt, topsep=1pt, parsep=0pt, leftmargin=1.3em}
+
+% --- Running Headers and Footers ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\color{secondary}\footnotesize\textbf{CloudScale Inc.} \textbar\ Enterprise Billing, Payment \& Refund Policy}
+\rhead{\color{secondary}\footnotesize Doc ID: \textbf{DOC-BIL-2024-V3}}
+\lfoot{\color{gray}\footnotesize Effective Date: February 1, 2024 \textbar\ Enterprise Commercial Policy}
+\rfoot{\color{gray}\footnotesize Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- Hyperlink Setup ---
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=secondary,
+  citecolor=secondary,
+  pdfauthor={CloudScale Inc. Finance and Operations},
+  pdftitle={CloudScale Inc. - Enterprise Billing, Payment and Refund Policy},
+  pdfsubject={Enterprise Billing Cycles, Net Terms, Refund Rules, Delinquency, and Tax Compliance},
+  pdfkeywords={CloudScale, Billing Policy, Net-30, Refunds, Late Payments, Grace Period, Taxes}
+}
+
+% --- Callout Box Styling ---
+\tcbset{
+  colback=accent,
+  colframe=accentborder,
+  arc=2.5pt,
+  boxrule=0.5pt,
+  left=6pt,
+  right=6pt,
+  top=3.5pt,
+  bottom=3.5pt
+}
+
+\begin{document}
+
+% ==============================================================================
+% DOCUMENT HEADER & METADATA
+% ==============================================================================
+\begin{center}
+  {\LARGE\bfseries\color{primary} CloudScale Inc.}\\[1.5pt]
+  {\Large\bfseries\color{secondary} Enterprise Billing, Payment \& Refund Policy}\\[1pt]
+  {\small\color{darkgray} Commercial Terms, Invoicing Guidelines, Cancellation Windows, Delinquency Escalation, and Tax Rules}
+\end{center}
+
+\vspace{-4pt}
+
+\begin{tcolorbox}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+  \textbf{Document ID:} & DOC-BIL-2024-V3 & \textbf{Effective Date:} & February 1, 2024 \\
+  \textbf{Version:} & 3.0 (Enterprise Active) & \textbf{Classification:} & Enterprise Customer Policy \\
+  \textbf{Target Audience:} & Finance, Procurement, Billing Admins & \textbf{Review Cycle:} & Annual (Next Review: February 2025)
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{-2pt}
+
+% ==============================================================================
+% SECTION 1: OVERVIEW & SUBSCRIPTION PLANS
+% ==============================================================================
+\section{Overview \& Subscription Plans}
+
+\subsection{Purpose and Scope}
+This Enterprise Billing, Payment and Refund Policy establishes the official commercial terms governing enterprise subscriptions, software licensing, cloud compute resources, and auxiliary professional services provided by CloudScale Inc. (``CloudScale''). This document uses simple, unambiguous English wording to enable direct, factual retrieval and reference by enterprise customers and automated audit tools.
+
+\subsection{Subscription Cycles and Billing Options}
+CloudScale offers two recurring subscription billing options for enterprise accounts:
+\begin{itemize}
+  \item \textbf{Monthly Billing Cycle:} Subscriptions are invoiced every 30 calendar days in advance. This option provides operational agility with no long-term contractual commitment.
+  \item \textbf{Annual Billing Cycle:} Subscriptions are prepaid in advance for a continuous 12-month period. Clients selecting the annual billing cycle receive an immediate \textbf{15\% upfront discount} relative to standard monthly rates across all compute tiers and base platform licenses.
+\end{itemize}
+
+\subsection{Automatic Subscription Renewal}
+All enterprise subscriptions renew automatically at the expiration of the active billing period to guarantee uninterrupted service:
+\begin{itemize}
+  \item \textbf{Monthly Plans:} Renew automatically every 30 days unless cancelled at least \textbf{48 hours} prior to the next billing date.
+  \item \textbf{Annual Plans:} Renew automatically for successive 12-month terms unless a written cancellation notice is received at least \textbf{30 calendar days} prior to the annual contract expiration anniversary date.
+\end{itemize}
+
+\subsection{Plan Upgrades, Downgrades, and Prorated Billing}
+\begin{itemize}
+  \item \textbf{Plan Upgrades:} Customers may upgrade subscription tiers or add compute nodes at any time. Upgrades take effect immediately. CloudScale assesses a prorated charge for the remaining days of the current billing cycle, charged immediately to the payment method on file.
+  \item \textbf{Plan Downgrades:} Reductions in computing capacity or tier downgrades take effect only at the start of the next billing cycle. Mid-term credits, cash refunds, or prorated reimbursements are not issued for capacity reductions made during an active cycle.
+\end{itemize}
+
+\subsection{Resource Metering and Overage Charges}
+Enterprise plans include baseline quotas for computing hours, NVMe storage, and network egress bandwidth. Resource usage beyond baseline quotas is metered on an hourly basis and billed as overage charges at the close of each calendar month at contracted standard rates.
+
+% ==============================================================================
+% SECTION 2: INVOICING, PAYMENT METHODS & NET TERMS
+% ==============================================================================
+\section{Invoicing, Payment Methods \& Net Terms}
+
+\subsection{Accepted Payment Methods}
+CloudScale accepts multiple verified payment methods to streamline corporate procurement:
+\begin{itemize}
+  \item \textbf{Credit Cards:} Visa, MasterCard, and American Express (Amex). Credit card payments are charged automatically on the invoice issuance date.
+  \item \textbf{ACH Direct Debit:} Automated Clearing House electronic bank debits are supported for corporate accounts held at US financial institutions.
+  \item \textbf{SEPA Direct Debit:} Single Euro Payments Area direct debits are available for corporate clients within the SEPA banking network.
+  \item \textbf{Wire Transfer:} Direct Fedwire and SWIFT bank wire transfers are accepted for all Net-30 accounts and for any annual invoice exceeding \$10,000 USD or 10,000 EUR.
+\end{itemize}
+
+\subsection{Supported Operating Currencies}
+CloudScale invoices and accepts settlement in two primary operating currencies:
+\begin{itemize}
+  \item \textbf{United States Dollar (USD, \$):} Applicable to accounts domiciled in North America and international regions outside the European Union.
+  \item \textbf{Euro (EUR):} Available to enterprise clients registered within European Union member states and designated European jurisdictions.
+\end{itemize}
+\textit{Policy Note: Currency selection is finalized during contract execution and remains fixed for the duration of the agreement.}
+
+\subsection{Enterprise Net-30 Payment Terms}
+Enterprise tier customers may apply for \textbf{Net-30 payment terms}, granting 30 calendar days from the invoice issuance date to settle balances. Approval requires satisfying three mandatory prerequisites:
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Commercial Credit Check:} Passing a formal corporate credit risk assessment approved by CloudScale Finance.
+  \item \textbf{Financial Documentation:} Submitting two consecutive years of audited financial statements or three verified commercial credit trade references.
+  \item \textbf{Minimum Contract Threshold:} An active contract with a Minimum Annual Contract Value (ACV) of at least \textbf{\$24,000 USD} (or 24,000 EUR).
+\end{enumerate}
+
+\subsection{Invoice Generation and Electronic Delivery}
+Invoices are generated on the 1st business day of each billing cycle and delivered electronically in PDF format to designated billing contacts. Detailed records are accessible anytime via the CloudScale Admin Console.
+
+\vspace{3pt}
+
+% ==============================================================================
+% SECTION 3: CANCELLATION & REFUND WINDOWS
+% ==============================================================================
+\section{Cancellation \& Refund Windows}
+
+\subsection{Cancellation Submission Process}
+Clients may initiate subscription cancellation via the CloudScale Admin Console (\url{https://console.cloudscale.io/billing}) or by emailing written notice to \texttt{billing@cloudscale.io}. Cancellation notices must be received at least 48 hours prior to the next billing date.
+
+\subsection{Annual Plans: 14-Day Money-Back Guarantee}
+CloudScale provides a \textbf{14-day money-back guarantee} for annual enterprise plans, subject to two strict requirements:
+\begin{itemize}
+  \item \textbf{Submission Window:} The refund request must be delivered in writing within \textbf{14 calendar days} of the initial service activation date.
+  \item \textbf{Usage Limit Requirement:} Total compute usage during the initial 14-day window must remain \textbf{under 50 computing hours}. If telemetry logs show 50 or more computing hours consumed, the annual subscription becomes strictly non-refundable.
+  \item \textbf{Post-14-Day Cancellations:} Requests submitted after the 14-day window are non-refundable. Platform access continues until the end of the paid 12-month term.
+\end{itemize}
+
+\subsection{Monthly Subscriptions Refund Policy}
+Monthly subscriptions are strictly \textbf{non-refundable} once the monthly cycle begins. Cancellation terminates future renewal charges, and services remain active until the end of the current 30-day period without partial or prorated refunds.
+
+\subsection{Non-Refundable Services}
+The following professional fees and third-party expenses are strictly non-refundable under all circumstances:
+\begin{itemize}
+  \item \textbf{Custom Onboarding \& Implementation:} Dedicated deployment engineering, custom setup packages, and architecture consulting.
+  \item \textbf{Domain Registrations \& SSL Certificates:} Domain purchases, custom SSL certificate procurement, and DNS routing setup fees.
+  \item \textbf{Data Migration Engineering:} Tailored database migration scripts, pipeline development, and dedicated engineering hours.
+  \item \textbf{Dedicated Technical Account Management (TAM):} Monthly retainer fees for designated account managers.
+\end{itemize}
+
+\subsection{Refund Processing Timeline}
+Approved refunds are credited back to the original payment method within \textbf{5 to 10 business days}. Bank processing times may introduce additional settlement delays.
+
+% ==============================================================================
+% SECTION 4: LATE PAYMENTS, GRACE PERIOD & ACCOUNT SUSPENSION
+% ==============================================================================
+\section{Late Payments, Grace Period \& Account Suspension}
+
+CloudScale maintains an automated, transparent escalation procedure for overdue enterprise accounts to ensure continuous operation while mitigating credit exposure:
+\begin{itemize}
+  \item \textbf{Day 1 (Due Date Passes):} The invoice becomes past due. The account automatically enters a \textbf{7-day grace period}. During this 7-day period, full platform access and compute services continue with zero service degradation.
+  \item \textbf{Day 3 \& Day 6:} Automated payment retry attempts are executed against primary and backup payment methods on file.
+  \item \textbf{Day 8 (Email Overdue Warning):} Upon expiration of the 7-day grace period, CloudScale transmits an automated formal \textbf{Email Warning} to the primary account owner and billing administrator stating the account is delinquent.
+  \item \textbf{Day 14 Overdue (Read-Only Suspension):} If payment is not settled by Day 14, the account is transitioned to \textbf{Read-Only Suspension}. Platform write permissions, new computing workloads, and API data write calls are blocked. Users retain access to view, query, and export stored data.
+  \item \textbf{Day 30 Overdue (Late Fee Assessment):} A final default notice is dispatched, and a monthly late fee of \textbf{1.5\%} (or statutory limit) is assessed on the outstanding balance.
+  \item \textbf{Day 45 Overdue (Account Termination):} If outstanding balances remain unpaid on Day 45, the account is formally terminated, and all active cloud computing workloads are immediately shut down.
+  \item \textbf{Days 46 to 60 (15-Day Recovery Hold):} Following termination, CloudScale maintains an account on a \textbf{15-day recovery hold}. During these 15 calendar days, the customer may restore full environment configurations and data by settling all unpaid invoices and accrued late fees in full.
+  \item \textbf{Day 61 (Permanent Data Deletion):} Upon expiration of the 15-day recovery hold on Day 61, all customer configurations, databases, snapshots, and API keys are \textbf{permanently and irreversibly destroyed}.
+\end{itemize}
+
+\newpage
+
+% Delinquency Table
+\noindent
+{\centering
+\small
+\begin{tabularx}{\linewidth}{@{}l l >{\raggedright\arraybackslash}p{4.2cm} >{\raggedright\arraybackslash}X@{}}
+\toprule
+\rowcolor{tablehead}
+\color{white}\textbf{Overdue Day} & \color{white}\textbf{Account Status} & \color{white}\textbf{Operational Impact} & \color{white}\textbf{Notification \& Required Action} \\
+\midrule
+\rowcolor{rowalt}
+\textbf{Days 1--7} & 7-Day Grace Period & Full platform access; no service disruption & Automated payment retries executed on Days 3 and 6. \\
+\textbf{Day 8} & Overdue Warning & Full service continues & Formal email overdue warning dispatched. \\
+\rowcolor{rowalt}
+\textbf{Day 14} & Read-Only Suspension & Write operations \& new workloads suspended; read-only active & Immediate payment required to reactivate full write access. \\
+\textbf{Day 30} & Default Notice & Read-only active; 1.5\% late penalty fee assessed & Formal notice of contractual default issued. \\
+\rowcolor{rowalt}
+\textbf{Day 45} & Account Termination & All compute workloads shut down & Account enters 15-day recovery hold. \\
+\textbf{Days 46--60} & 15-Day Recovery Hold & Data and configs preserved; reactivation possible & Final opportunity to settle balance and restore environment. \\
+\rowcolor{rowalt}
+\textbf{Day 61} & Permanent Deletion & All customer data, backups, and virtual assets purged & Irreversible data purge; recovery technically impossible. \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Delinquency Escalation Schedule and System Actions}
+\label{tab:delinquency}
+\par}
+
+\vspace{3pt}
+
+% ==============================================================================
+% SECTION 5: CHARGEBACKS, DISPUTE FEES & TAXES
+% ==============================================================================
+\section{Chargebacks, Dispute Fees \& Taxes}
+
+\subsection{Bank Chargebacks and Dispute Policy}
+Enterprise clients agree to contact CloudScale Billing Support at \texttt{billing@cloudscale.io} to investigate billing discrepancies before initiating a chargeback or payment dispute with their bank or card issuer.
+\begin{itemize}
+  \item \textbf{Administrative Chargeback Fee:} A \textbf{\$25 USD administrative fee} is assessed against the account for any unjustified bank chargeback or dispute initiated without prior notice or contrary to this policy.
+  \item \textbf{Immediate Administrative Suspension:} Any account associated with an active chargeback dispute is placed on immediate administrative suspension pending dispute resolution.
+  \item \textbf{Reinstatement Requirements:} To reinstate a suspended account after a chargeback dispute, the client must pay the original invoice total, the \$25 administrative fee, and any third-party bank dispute fees incurred by CloudScale.
+\end{itemize}
+
+\subsection{Sales Tax and Value-Added Tax (VAT) Regulations}
+All fees quoted and billed by CloudScale are exclusive of applicable taxes, statutory levies, and customs duties:
+\begin{itemize}
+  \item \textbf{United States Sales Tax:} CloudScale collects applicable state and local sales taxes based on the customer's registered primary billing address, compliant with state economic nexus standards.
+  \item \textbf{European Union VAT:} VAT is assessed based on the customer's EU member state standard rate. Enterprise customers possessing a verified EU VAT Identification Number are invoiced under the \textbf{VAT reverse-charge mechanism (0\% VAT)}.
+\end{itemize}
+
+\subsection{Tax Exemption Certificate Requirements}
+Entities qualifying for tax exemption (including non-profit organizations, educational establishments, and governmental agencies) must transmit a valid, state-issued \textbf{Tax Exemption Certificate} to \texttt{tax@cloudscale.io} prior to invoice generation. Taxes assessed on invoices generated prior to formal certificate review and verification cannot be credited or refunded retrospectively.
+
+\subsection{Billing Support Directory}
+Enterprise customers may contact our billing, payment, and finance teams through the following verified channels:
+\begin{itemize}
+  \item \textbf{Billing Console:} \url{https://console.cloudscale.io/billing}
+  \item \textbf{Billing Inquiries \& Dispute Resolution:} \texttt{billing@cloudscale.io}
+  \item \textbf{Tax Exemption \& Compliance Desk:} \texttt{tax@cloudscale.io}
+  \item \textbf{Enterprise Phone Support:} +1 (800) 555-0199 (Monday--Friday, 8:00 AM to 6:00 PM EST)
+\end{itemize}
+
+\vspace{3pt}
+\begin{tcolorbox}
+\footnotesize
+\textbf{Corporate Governance \& Compliance Statement:} This policy represents the complete agreement between CloudScale Inc. and the customer regarding enterprise billing and payments. CloudScale reserves the right to update this policy with a 30-day prior written notice. Continued use of platform services following the effective date of modifications constitutes acceptance.
+\end{tcolorbox}
+
+\end{document}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "sources": {
+    "document_1": {
+      "path": "data/documents/enterprise_billing_and_refund_policy.pdf",
+      "document_id": "DOC-BIL-2024-V3",
+      "version": "3.0",
+      "effective_date": "2024-02-01",
+      "page_count": 4,
+      "sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a"
+    },
+    "document_2": {
+      "path": "data/documents/sla_and_support_tier_policy.pdf",
+      "document_id": "DOC-SLA-2024-V2",
+      "version": "2.0",
+      "effective_date": "2024-01-15",
+      "page_count": 6,
+      "sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e"
+    },
+    "database": {
+      "path": "data/database/app.db",
+      "version": "supplied-snapshot-2026-10-22",
+      "table_counts": {
+        "customers": 30,
+        "subscriptions": 30,
+        "incident_tickets": 20
+      },
+      "sha256": "e872a1ad27117cdb8bcb88291222f52ca83aa694c5597cc06d0eb1a66794843c"
+    },
+    "database_schema": {
+      "path": "data/database/schema.sql",
+      "version": "supplied-snapshot-2026-10-22",
+      "sha256": "3b3027c170f69437d76693df430ffd1727165d00d836fd6108ac38056724f9a6"
+    },
+    "database_seed": {
+      "path": "data/database/seed_data.sql",
+      "version": "supplied-snapshot-2026-10-22",
+      "sha256": "6f54ba7b742f5aa711f64a7359595aa5c705ab9a623e0b97072196396f63b1c7"
+    },
+    "document_questions": {
+      "path": "evals/rag/questions.md",
+      "version": "draft-2026-10-22",
+      "sha256": "4c8dc1391795781252237284c4c3941ccc71f1f03dc8c5c2640497e53431b565"
+    },
+    "hybrid_questions": {
+      "path": "evals/rag/hybrid_questions.md",
+      "version": "draft-2026-10-22",
+      "sha256": "3b2b8842914396b090536b0aa4a469d8e09704c58411fd51e32e396d1df19133"
+    }
+  }
+}

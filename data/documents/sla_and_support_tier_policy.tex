@@ -1,0 +1,347 @@
+\documentclass[10pt,letterpaper]{article}
+
+% --- Core LaTeX Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage[letterpaper,margin=1in,headheight=14pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{tcolorbox}
+\usepackage{caption}
+\usepackage{hyperref}
+
+% --- Professional Color Palette ---
+\definecolor{primary}{RGB}{18, 52, 94}         % Deep Navy
+\definecolor{secondary}{RGB}{42, 92, 142}      % Slate Blue
+\definecolor{accent}{RGB}{242, 246, 252}       % Light Box Tint
+\definecolor{accentborder}{RGB}{185, 205, 228} % Box Border
+\definecolor{darkgray}{RGB}{35, 35, 35}        % Dark Charcoal Body Text
+\definecolor{tablehead}{RGB}{24, 60, 105}      % Table Header Fill
+\definecolor{rowalt}{RGB}{248, 250, 253}       % Alternating Table Row Fill
+
+% --- Typography and Paragraph Layout ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.2pt}
+\renewcommand{\baselinestretch}{0.96}
+\color{darkgray}
+
+% --- Section Headings Formatting ---
+\titleformat{\section}
+  {\color{primary}\large\bfseries}
+  {\thesection.}{0.4em}{}
+  [{\color{secondary}\titlerule[0.5pt]}]
+
+\titleformat{\subsection}
+  {\color{secondary}\normalsize\bfseries}
+  {\thesubsection}{0.4em}{}
+
+\titlespacing*{\section}{0pt}{4pt}{2pt}
+\titlespacing*{\subsection}{0pt}{2.5pt}{1pt}
+
+% --- Running Headers and Footers ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\color{secondary}\footnotesize\textbf{CloudScale Inc.} \textbar\ Service Level Agreement (SLA) \& Support Tier Policy}
+\rhead{\color{secondary}\footnotesize Doc ID: \textbf{DOC-SLA-2024-V2}}
+\lfoot{\color{gray}\footnotesize CloudScale Customer Agreement \textbar\ Public Customer-Facing Policy}
+\rfoot{\color{gray}\footnotesize Page \textbf{\thepage} of \textbf{\pageref{LastPage}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- Caption Styling ---
+\captionsetup[table]{font=small,labelfont={bf,color=primary},skip=2.5pt}
+
+% --- Hyperlink Setup ---
+\hypersetup{
+  colorlinks=true,
+  linkcolor=primary,
+  urlcolor=secondary,
+  citecolor=secondary,
+  pdfauthor={CloudScale Inc. Operations and Legal},
+  pdftitle={CloudScale Inc. - Service Level Agreement (SLA) and Support Tier Policy},
+  pdfsubject={B2B SaaS Platform Infrastructure, Managed Database, and API SLA},
+  pdfkeywords={CloudScale, SLA, Support Tiers, Uptime, Service Credits, Incident Response}
+}
+
+% --- Callout Box Styling ---
+\tcbset{
+  colback=accent,
+  colframe=accentborder,
+  arc=2.5pt,
+  boxrule=0.5pt,
+  left=6pt,
+  right=6pt,
+  top=3pt,
+  bottom=3pt
+}
+
+\begin{document}
+
+% ==============================================================================
+% PAGE 1: HEADER, SECTION 1 (PURPOSE & SCOPE), SECTION 2 (SUBSCRIPTION TIERS)
+% ==============================================================================
+\begin{center}
+  {\LARGE\bfseries\color{primary} CloudScale Inc.}\\[1.5pt]
+  {\Large\bfseries\color{secondary} Service Level Agreement (SLA) \& Support Tier Policy}\\[1pt]
+  {\small\color{darkgray} Enterprise Cloud Infrastructure, Managed Database Engine, and Developer API Platform}
+\end{center}
+
+\vspace{-4pt}
+
+\begin{tcolorbox}
+\begin{tabularx}{\linewidth}{@{}l X l X@{}}
+  \textbf{Document ID:} & DOC-SLA-2024-V2 & \textbf{Effective Date:} & January 15, 2024 \\
+  \textbf{Version:} & 2.0 (Supersedes DOC-SLA-2023-V1) & \textbf{Classification:} & Public Customer Policy \\
+  \textbf{Target Systems:} & Infrastructure, Database, API & \textbf{Review Cycle:} & Annual (Next Review: January 2025)
+\end{tabularx}
+\end{tcolorbox}
+
+\vspace{-2pt}
+
+\section{Purpose \& Scope}
+This Service Level Agreement (``SLA'') and Support Tier Policy establishes the binding performance standards, availability commitments, and technical support response standards provided by CloudScale Inc. (``CloudScale'') to its customers. The objective is to provide clear, measurable operational benchmarks and transparent compensation rules so that organizations running production workloads can plan and operate with complete certainty.
+
+\subsection{Covered Services (In-Scope Components)}
+This SLA governs the operational uptime, availability, and technical support for three core platform systems:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Cloud Infrastructure:} Scalable virtual compute instances, software-defined virtual private clouds (VPCs), edge load balancers, persistent block storage volumes, and distributed object storage.
+  \item \textbf{Managed Database Engine:} High-availability managed PostgreSQL clusters and distributed cache nodes, including automated failover, cluster synchronization, and continuous transactional backups.
+  \item \textbf{CloudScale API Platform:} Public REST API endpoints, GraphQL queries and mutations, incoming/outgoing webhook dispatch engines, and customer identity/authentication microservices.
+\end{enumerate}
+
+\subsection{Out-of-Scope Systems \& Applicability}
+This policy does not cover customer-developed application software, custom scripts running inside virtual instances, external third-party software packages, client-managed external DNS configurations, or third-party downstream APIs.
+
+This policy applies to all active customer accounts in good standing governed by a signed CloudScale Master Services Agreement (MSA) or an active online subscription plan.
+
+\section{Subscription Tiers}
+CloudScale offers three subscription tiers designed to match different workload maturity, scalability, and operational support requirements:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=1.5pt]
+  \item \textbf{Starter Tier:} Created for individual developers, sandbox testing, and non-production proofs of concept. Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response time SLAs, and are entirely excluded from service credit eligibility.
+  \item \textbf{Professional Tier:} Engineered for growing commercial businesses, standard production web platforms, and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call coverage for critical outages, and eligibility for financial service credits if availability targets are missed.
+  \item \textbf{Enterprise Tier:} Architected for mission-critical enterprise systems requiring continuous availability, massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our highest availability commitment of 99.99\% uptime.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% PAGE 2: SECTION 3 (AVAILABILITY & UPTIME) & SECTION 4 (SERVICE CREDITS)
+% ==============================================================================
+\section{Service Availability \& Uptime Commitments}
+
+\subsection{Monthly Availability Commitments}
+CloudScale measures service availability monthly across each calendar month. The uptime target represents the percentage of scheduled minutes during which covered services remain reachable, responsive, and error-free.
+
+\vspace{1pt}
+{\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\linewidth}{@{}l c c X@{}}
+\toprule
+\rowcolor{tablehead}
+\color{white}\textbf{Subscription Tier} & \color{white}\textbf{Monthly Uptime Target} & \color{white}\textbf{Max Allowed Downtime (30-day mo.)} & \color{white}\textbf{High-Availability Architecture} \\
+\midrule
+\rowcolor{rowalt}
+\textbf{Starter} & 99.00\% & 7 hours, 12 minutes (432.0 min) & Shared cluster infrastructure \\
+\textbf{Professional} & 99.90\% & 43 minutes, 12 seconds (43.2 min) & High-availability Multi-AZ cluster \\
+\rowcolor{rowalt}
+\textbf{Enterprise} & 99.99\% & 4 minutes, 19 seconds (4.32 min) & Multi-Region active-active failover \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Service Availability Commitments and Maximum Allowable Monthly Downtime}
+\label{tab:uptime-targets}
+\par}
+
+\subsection{Definition of Downtime and Calculation Formula}
+\textbf{Downtime} is defined as any continuous period of one (1) minute or more where covered platform services are completely inaccessible across all availability zones, or where the HTTP server error rate (HTTP 5xx responses) exceeds five percent (5.0\%) across all valid customer API requests. The \textbf{Monthly Uptime Percentage} is calculated using the following standard formula:
+\begin{equation*}
+\text{Monthly Uptime Percentage} = \left( \frac{\text{Total Scheduled Minutes in Month} - \text{Downtime Minutes}}{\text{Total Scheduled Minutes in Month}} \right) \times 100
+\end{equation*}
+Service availability is measured by automated synthetic probes executing health checks every sixty (60) seconds from five external global regions (US-East, US-West, EU-Central, AP-East, and AU-Southeast).
+
+\subsection{Scheduled Maintenance Policy}
+Maintenance is required to apply security patches, upgrade operating systems, and perform hardware maintenance:
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Advance Notice Period:} CloudScale will provide a mandatory minimum of \textbf{forty-eight (48) hours advance written notice} prior to any scheduled maintenance. Notice is published on the status portal (\url{https://status.cloudscale.io}) and emailed to account administrators.
+  \item \textbf{Standard Window:} Scheduled maintenance is conducted during off-peak hours on Sundays between 01:00 UTC and 05:00 UTC.
+  \item \textbf{Monthly Cap:} Scheduled maintenance shall not exceed four (4) cumulative hours in any single calendar month. Any maintenance beyond 4 hours, or conducted without 48 hours notice, counts as Downtime.
+  \item \textbf{Emergency Maintenance:} In critical situations (e.g., zero-day security vulnerabilities), CloudScale may conduct emergency maintenance with at least one (1) hour advance notice or immediate post-incident notice.
+\end{itemize}
+
+\section{Service Credit Structure}
+
+\subsection{Eligibility Overview \& Starter Exclusion}
+If CloudScale fails to meet its monthly uptime commitment, eligible customers may request a Service Credit. Service Credits represent a percentage discount credited against future monthly invoices.
+
+\textbf{Starter Tier Exclusion:} The Starter tier is expressly excluded from receiving service credits. Starter tier customers receive \textbf{0\% service credits} under all circumstances.
+
+\subsection{Service Credit Brackets}
+Service credit percentages are determined by the customer subscription tier and actual monthly uptime achieved:
+
+\vspace{1pt}
+{\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\linewidth}{@{}l c c X@{}}
+\toprule
+\rowcolor{tablehead}
+\color{white}\textbf{Monthly Uptime \%} & \color{white}\textbf{Enterprise Credit} & \color{white}\textbf{Professional Credit} & \color{white}\textbf{Application Mechanism} \\
+\midrule
+\rowcolor{rowalt}
+$99.90\%$ to $< 99.99\%$ & 10\% of Monthly Fee & SLA Target Met (0\%) & Applied to subsequent billing invoice \\
+$99.00\%$ to $< 99.90\%$ & 25\% of Monthly Fee & 10\% of Monthly Fee & Applied to subsequent billing invoice \\
+\rowcolor{rowalt}
+$98.00\%$ to $< 99.00\%$ & 50\% of Monthly Fee & 25\% of Monthly Fee & Applied to subsequent billing invoice \\
+$95.00\%$ to $< 98.00\%$ & 50\% of Monthly Fee & 50\% of Monthly Fee & Applied to subsequent billing invoice \\
+\rowcolor{rowalt}
+$< 95.00\%$ & 100\% of Monthly Fee & 100\% of Monthly Fee & Maximum allowable monthly credit \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Service Credit Compensation Brackets by Subscription Tier}
+\label{tab:credit-brackets}
+\par}
+
+\subsection{Claim Submission Procedure and 30-Day Window}
+Customers must strictly follow this procedure to submit a service credit claim:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Filing Window:} Claims must be submitted within \textbf{thirty (30) calendar days} following the end of the calendar month during which downtime occurred. Claims filed after 30 calendar days are permanently forfeited.
+  \item \textbf{Submission Channel:} Claims must be submitted via email to \url{billing-credits@cloudscale.io} or through the CloudScale billing portal ticket system.
+  \item \textbf{Required Documentation:} Claims must include: (a) Account ID and Organization Name; (b) exact dates, start times, and duration of the outage; (c) specific impacted service endpoints; and (d) customer-side error logs or traceroute data.
+\end{enumerate}
+
+\subsection{Credit Rules and Maximum Limitations}
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Monthly Cap:} Total service credits issued in any single calendar month shall not exceed 100\% of the customer's monthly recurring fee for that month.
+  \item \textbf{Non-Refundable:} Service credits cannot be exchanged for cash refunds, wire transfers, or credit card chargebacks.
+  \item \textbf{Sole Financial Remedy:} Service credits constitute the customer's sole and exclusive financial remedy for downtime.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% PAGE 3: SECTION 5 (SUPPORT INCIDENTS, RESPONSE TIMES, COMMUNICATION)
+% ==============================================================================
+\section{Support Incident Severity Levels \& Response Times}
+
+\subsection{Incident Severity Definitions}
+CloudScale categorizes technical support incidents into four clearly defined severity categories:
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Severity 1 (Critical):} Complete production outage, total loss of database services, or primary API failure affecting all end-users. No workaround exists. Critical business operations are completely halted.
+  \item \textbf{Severity 2 (Major):} Core platform functionality is significantly degraded, API latency increases $>300\%$ over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput is degraded.
+  \item \textbf{Severity 3 (Minor):} Non-critical software defects, localized errors affecting minor endpoints, or cosmetic portal bugs. Production systems remain operational without material impairment.
+  \item \textbf{Severity 4 (General Guidance):} Administrative questions, setup guidance, documentation inquiries, or enhancement requests. Zero impact on production systems.
+\end{itemize}
+
+\subsection{Response Time Matrix}
+Initial response time is defined as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer.
+
+\vspace{1pt}
+{\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\linewidth}{@{}l p{3.2cm} X X X@{}}
+\toprule
+\rowcolor{tablehead}
+\color{white}\textbf{Severity Level} & \color{white}\textbf{Operational Impact} & \color{white}\textbf{Starter Tier} & \color{white}\textbf{Professional Tier} & \color{white}\textbf{Enterprise Tier} \\
+\midrule
+\rowcolor{rowalt}
+\textbf{Severity 1 (Critical)} & Total production outage & Community Support (No SLA) & $\le$ \textbf{2 Hours} (24/7/365) & $\le$ \textbf{30 Minutes} (24/7 Dedicated) \\
+\textbf{Severity 2 (Major)} & Core features impaired & Community Support (No SLA) & $\le$ \textbf{6 Hours} (Business Hours) & $\le$ \textbf{2 Hours} (24/7/365) \\
+\rowcolor{rowalt}
+\textbf{Severity 3 (Minor)} & Non-critical defect / bug & Community Support (No SLA) & $\le$ \textbf{24 Hours} (Business Days) & $\le$ \textbf{12 Hours} (24/5 Business) \\
+\textbf{Severity 4 (Guidance)} & General inquiry / request & Community Support (No SLA) & $\le$ \textbf{48 Hours} (Business Days) & $\le$ \textbf{24 Hours} (Business Days) \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Support Severity Levels and Guaranteed Initial Response Times}
+\label{tab:response-matrix}
+\par}
+
+\subsection{Ongoing Incident Communication Cadence}
+During an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Severity 1 Incidents:} Enterprise customers receive status updates every \textbf{30 minutes}; Professional customers receive updates every \textbf{2 hours}.
+  \item \textbf{Severity 2 Incidents:} Enterprise customers receive status updates every \textbf{2 hours}; Professional customers receive updates every \textbf{6 hours}.
+\end{itemize}
+
+\subsection{Support Access Channels by Subscription Tier}
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Starter Tier:} Self-service Knowledge Base, API documentation, and peer Community Forum (\url{https://forum.cloudscale.io}).
+  \item \textbf{Professional Tier:} Web Support Portal and email (\url{support@cloudscale.io}). Hours: Monday through Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.
+  \item \textbf{Enterprise Tier:} 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels, Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3 SRE escalation.
+\end{itemize}
+
+\newpage
+
+% ==============================================================================
+% PAGE 4: SECTION 6 (EXCLUSIONS), SECTION 7 (GOVERNANCE), SECTION 8 (SIGN-OFF)
+% ==============================================================================
+\section{Exclusions \& Limitations}
+The following circumstances are expressly excluded from the calculation of Downtime and are not eligible for Service Credits:
+\begin{enumerate}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Client Misconfigurations:} Unavailability caused by client configuration errors, invalid custom code, improper database queries, customer firewall misconfigurations, or expired SSL/TLS certificates uploaded by the client.
+  \item \textbf{Unauthorized Modifications:} System disruptions resulting from customer actions that violate CloudScale documentation, unapproved administrative overrides, or unsupported third-party software installations.
+  \item \textbf{Third-Party Internet \& External Outages:} Outages caused by external internet service providers (ISPs), public BGP routing disruptions, upstream transit carrier failures, or client telecommunication lines outside CloudScale's core data center edge.
+  \item \textbf{Force Majeure Events:} Unforeseeable events beyond CloudScale's reasonable control, including natural catastrophes (floods, earthquakes, severe storms), war, civil disturbance, national electrical grid failure, or government sanctions.
+  \item \textbf{Beta \& Pre-Release Services:} Features, APIs, or products explicitly designated as ``Beta'', ``Preview'', ``Experimental'', or ``Early Access'', which are offered ``as-is'' without performance guarantees.
+  \item \textbf{Resource Quota Violations \& Rate Throttling:} Service degradation or rejected requests resulting from customer traffic exceeding agreed contractual quotas or unthrottled client loops triggering automated rate limiters.
+  \item \textbf{Properly Announced Scheduled Maintenance:} Maintenance executed within designated windows adhering to the mandatory 48-hour advance notification requirement.
+  \item \textbf{Account Suspensions:} Outages caused by account suspension or termination due to overdue unpaid invoices or material violations of CloudScale's Acceptable Use Policy (AUP).
+\end{enumerate}
+
+\section{Document Governance \& Contact Directory}
+
+\subsection{Policy Governance and Official Contact Directory}
+This policy is maintained by the CloudScale Technical Operations and Customer Success Committees, and is formally reviewed on an annual basis. Any revisions will be communicated to customers in writing at least thirty (30) calendar days prior to taking effect.
+\begin{itemize}[leftmargin=1.5em, itemsep=0.5pt, topsep=1pt]
+  \item \textbf{Standard Technical Support:} \url{support@cloudscale.io} \textbar\ Mon--Fri, 08:00--20:00 US Eastern Time
+  \item \textbf{Billing \& SLA Credit Claims:} \url{billing-credits@cloudscale.io} \textbar\ Mon--Fri, 09:00--17:00 US Eastern Time
+  \item \textbf{Enterprise Priority Hotline (24/7/365):} +1 (800) 555-0199 (Enterprise PIN Required)
+  \item \textbf{Global Infrastructure Status Portal:} \url{https://status.cloudscale.io} (Continuous 24/7/365 Automated Monitoring)
+\end{itemize}
+
+\subsection{Document Revision History}
+\vspace{1pt}
+{\centering
+\small
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\linewidth}{@{}l l p{3.2cm} X@{}}
+\toprule
+\rowcolor{tablehead}
+\color{white}\textbf{Version} & \color{white}\textbf{Effective Date} & \color{white}\textbf{Approver / Owner} & \color{white}\textbf{Summary of Significant Changes} \\
+\midrule
+\rowcolor{rowalt}
+\textbf{v1.0} & January 10, 2023 & VP of Infrastructure & Initial official release of CloudScale SLA and Support Policy. \\
+\textbf{v1.5} & August 15, 2023 & Head of Customer Success & Added Managed Database SLA and codified 30-day claim window. \\
+\rowcolor{rowalt}
+\textbf{v2.0} & January 15, 2024 & Technical Ops Committee & Reduced Enterprise Sev-1 response to 30 mins; added 48-hr maintenance notice; defined tiered credit brackets. \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Document Revision and Audit History}
+\label{tab:revision-history}
+\par}
+
+\section{Customer Acknowledgment \& Policy Sign-Off}
+This policy constitutes an operational schedule to the CloudScale Master Services Agreement. By subscribing to CloudScale services, the customer agrees to the performance thresholds, response times, and remedy limitations established herein.
+
+\vspace{2pt}
+
+\begin{tcolorbox}[colback=white,colframe=accentborder]
+\small
+\textbf{CloudScale Inc. Operations Sign-off:}\\[2pt]
+\begin{tabularx}{\linewidth}{@{}X X@{}}
+\textbf{Approved By:} Marcus Vance, VP of Technical Operations & \textbf{Date:} January 15, 2024 \\
+\textbf{Supervised By:} Sarah Jenkins, Head of Customer Success & \textbf{Document Reference:} DOC-SLA-2024-V2
+\end{tabularx}
+\end{tcolorbox}
+
+\end{document}
+
