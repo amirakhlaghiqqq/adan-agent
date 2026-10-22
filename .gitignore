@@ -71,6 +71,8 @@ htmlcov/
 # Vector DB & Local Caches
 chroma_db/
 .chroma/
+.cache/
+.langgraph_api/
 
 # Operating System Files
 .DS_Store

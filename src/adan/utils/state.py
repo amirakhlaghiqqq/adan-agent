@@ -11,6 +11,10 @@ class InputState(TypedDict):
     input_context: list[str]
 
 
+class OutputState(TypedDict):
+    response: dict
+
+
 class AgentState(InputState, total=False):
     messages: Annotated[list[AnyMessage], add_messages]
     route: dict

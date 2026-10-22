@@ -1,0 +1,6 @@
+{
+  "$schema": "https://langgra.ph/schema.json",
+  "dependencies": ["."],
+  "graphs": {"cloudscale": "./src/adan/agent.py:make_graph"},
+  "env": ".env"
+}
