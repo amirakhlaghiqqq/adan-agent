@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Coordinator Evaluation Configuration",
+  "description": "Provider and run configuration for coordinator decision model evaluation.",
+  "models": [
+    {
+      "id": "mammoth_decision",
+      "display_name": "BaseTen Mammoth-1 (Decision Model in .env)",
+      "adapter": "openrouter_decisions",
+      "base_url": "https://openrouter.ai/api/alpha/decisions",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model": "baseten/mammoth-1:free",
+      "is_probability_model": true,
+      "request_options": {}
+    },
+    {
+      "id": "elephant_decision",
+      "display_name": "BaseTen Elephant-1 (Alternative Decision Model)",
+      "adapter": "openrouter_decisions",
+      "base_url": "https://openrouter.ai/api/alpha/decisions",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model": "baseten/elephant-1:free",
+      "is_probability_model": true,
+      "request_options": {}
+    },
+    {
+      "id": "nemotron_llm_baseline",
+      "display_name": "Nvidia Nemotron 3.5 Super VL (Structured LLM Baseline in .env)",
+      "adapter": "chat_completions",
+      "base_url": "https://openrouter.ai/api/v1/chat/completions",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model": "nvidia/nemotron-3.5-super-vl:free",
+      "is_probability_model": false,
+      "request_options": {
+        "temperature": 0
+      }
+    }
+  ],
+  "benchmark_file": "evals/coordinator/benchmark.jsonl",
+  "rag_regression_file": "evals/rag/benchmark.jsonl",
+  "trials": 1,
+  "concurrency": 2,
+  "timeout_seconds": 30,
+  "max_transient_retries": 1,
+  "rate_limit_delay_seconds": 0.5,
+  "seed": 42,
+  "output_directory": "experiments"
+}
