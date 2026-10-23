@@ -4,7 +4,6 @@
 **Artifact Directory:** [`experiments/`](file:///home/amir/Desktop/Projects/Adan/experiments)  
 **Evaluator Engine:** [`evals/coordinator/runner.py`](file:///home/amir/Desktop/Projects/Adan/evals/coordinator/runner.py)  
 **Configuration:** [`evals/coordinator/config.json`](file:///home/amir/Desktop/Projects/Adan/evals/coordinator/config.json)  
-**Task Reference:** [`to-do-tasks/evaluate-coordinator-models.md`](file:///home/amir/Desktop/Projects/Adan/to-do-tasks/evaluate-coordinator-models.md) & [`TODO.md`](file:///home/amir/Desktop/Projects/Adan/TODO.md)
 
 ---
 

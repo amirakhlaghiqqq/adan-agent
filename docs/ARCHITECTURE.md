@@ -107,7 +107,7 @@ decision_input = {
 #### Why a Single Decision Model?
 - **Ultra-low latency**: Executes in a single non-autoregressive forward pass ($\sim 20\text{--}30\text{ms}$), compared to $500\text{--}1,500\text{ms}$ for generative token-by-token LLMs.
 - **Atomic combinatorial reasoning**: Evaluates the `AND`, `OR`, and `NEITHER` relationships in a single semantic evaluation without network roundtrip multiplication.
-- **Calibrated thresholding (planned)**: Continuous probability outputs ($p_{\text{docs}}, p_{\text{db}} \in [0, 1]$) would allow threshold calibration (e.g., $p \ge 0.35$ for high-recall document checking). The Jev/model comparison remains open in [TODO.md](../TODO.md).
+- **Calibrated thresholding (planned)**: Continuous probability outputs ($p_{\text{docs}}, p_{\text{db}} \in [0, 1]$) would allow threshold calibration (e.g., $p \ge 0.35$ for high-recall document checking). The Jev/model comparison remains planned.
 
 $$\text{Decision Vector} = \begin{bmatrix} p_{\text{docs}} \\ p_{\text{db}} \end{bmatrix} \xrightarrow{\tau_{\text{docs}}, \tau_{\text{db}}} \begin{pmatrix} \text{needs\_docs} \in \{\text{True}, \text{False}\} \\ \text{needs\_db} \in \{\text{True}, \text{False}\} \end{pmatrix}$$
 
@@ -555,5 +555,5 @@ validator exist. The application, external evaluation runner, and replacement
 aggregation algorithm remain to be implemented. This specification does not
 claim measured model performance.
 
-Continue with [TODO.md](../TODO.md). Keep retrieval, generation, and end-to-end
+Keep retrieval, generation, and end-to-end
 reports separate as defined in [EVALUATION.md](EVALUATION.md).
