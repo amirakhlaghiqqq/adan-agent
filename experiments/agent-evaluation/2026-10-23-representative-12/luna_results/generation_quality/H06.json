@@ -1,0 +1,34 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "correctness",
+      "score": 0,
+      "reason": "The response provides no factual answer to the question."
+    },
+    {
+      "criterion_id": "completeness",
+      "score": 0,
+      "reason": "No required answer fact is covered."
+    },
+    {
+      "criterion_id": "citation_precision",
+      "score": null,
+      "reason": "No policy claim or citation is supplied to evaluate."
+    },
+    {
+      "criterion_id": "citation_coverage",
+      "score": null,
+      "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+    },
+    {
+      "criterion_id": "relevance",
+      "score": 0,
+      "reason": "The refusal does not address the question."
+    },
+    {
+      "criterion_id": "uncertainty",
+      "score": 0,
+      "reason": "It unnecessarily refuses rather than answering supported portions and identifying actual gaps."
+    }
+  ]
+}

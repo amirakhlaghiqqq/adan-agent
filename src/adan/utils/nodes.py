@@ -8,6 +8,7 @@ to go next. Nodes never raise for expected failures: they record the failure on 
 import asyncio
 import json
 import time
+from copy import deepcopy
 from datetime import UTC, datetime
 from typing import Literal
 
@@ -81,6 +82,42 @@ def _failure(run, stage, exc):
     }
     run.failures.append(failure)
     return failure
+
+
+def _generation_contract(run):
+    """Expose the remaining acquisition budget and the current citation vocabulary."""
+    remaining = {
+        name: max(0, getattr(run.settings, "max_" + kind) - run.counts[kind])
+        for name, kind in (
+            ("search_documents", "document_followups"),
+            ("query_database", "database_followups"),
+        )
+    }
+    citation_ids = sorted({chunk["chunk_id"] for chunk in run.chunks})
+    definitions = []
+    for definition in TOOLS:
+        name = definition["function"]["name"]
+        if name in remaining and remaining[name] == 0:
+            continue
+        definition = deepcopy(definition)
+        if name == "submit_answer":
+            citations = definition["function"]["parameters"]["properties"]["citation_ids"]
+            if citation_ids:
+                citations["items"]["enum"] = citation_ids
+            else:
+                citations["maxItems"] = 0
+        definitions.append(definition)
+    instructions = (
+        "\nRuntime constraints:\n"
+        + json.dumps({"remaining_followups": remaining, "valid_citation_ids": citation_ids})
+        + "\nUse exact chunk IDs in citation_ids; document/page/section labels belong inline. "
+        "When evidence cannot be acquired within these limits, submit the supported parts "
+        "as partial or insufficient_evidence with specific missing_information. "
+        "A failed acquisition is not proof that a fact is absent. "
+        "The source scope and schema are navigation aids; policy conclusions require "
+        "retrieved source text."
+    )
+    return instructions, definitions
 
 
 async def coordinator(
@@ -180,7 +217,10 @@ async def generate(
         if run.stop_reason != "completed":
             return Command(goto="finalize")
         await run.reserve("turns", run.settings.max_generator_turns, "max_generator_turns")
-        system = SystemMessage(GENERATOR + "\nEvidence:\n" + run.serialized_evidence())
+        constraints, definitions = _generation_contract(run)
+        system = SystemMessage(
+            GENERATOR + constraints + "\nEvidence:\n" + run.serialized_evidence()
+        )
         history = state.get("messages") or [
             HumanMessage(
                 json.dumps(
@@ -192,16 +232,43 @@ async def generate(
             history = [*history, HumanMessage("Verification feedback: " + state["feedback"])]
         messages = [system, *history]
         run.generator_contexts.append(
-            {"turn": run.counts["turns"], "messages": [visible_message(m) for m in messages]}
+            {
+                "turn": run.counts["turns"],
+                "messages": [visible_message(m) for m in messages],
+                "tools": definitions,
+            }
         )
-        ai = await run.model("generate", messages, tools=TOOLS)
-        if ai.invalid_tool_calls:
-            raise ValueError("Model returned malformed tool arguments")
-        final_calls = [call for call in ai.tool_calls if call["name"] == "submit_answer"]
+        ai = await run.model("generate", messages, tools=definitions)
+        try:
+            if ai.invalid_tool_calls:
+                raise ValueError("Model returned malformed tool arguments; use valid JSON objects")
+            final_calls = [call for call in ai.tool_calls if call["name"] == "submit_answer"]
+            if final_calls:
+                if len(ai.tool_calls) != 1:
+                    raise ValueError("submit_answer must be the only tool call in its turn")
+                candidate = SubmitAnswer.model_validate(final_calls[0]["args"]).model_dump()
+        except ValueError as exc:
+            failure = _failure(run, "generate", exc)
+            feedback = (
+                "Correct the tool arguments: " + failure["error"] + ". "
+                "submit_answer requires answer, citation_ids (an array of exact chunk IDs, "
+                "or []), status, and missing_information (an array)."
+            )
+            # Do not replay malformed JSON to the provider. Valid tool calls must
+            # each receive a response, including when a submission was rejected.
+            correction = (
+                []
+                if ai.invalid_tool_calls
+                else [
+                    ai,
+                    *[ToolMessage(feedback, tool_call_id=call["id"]) for call in ai.tool_calls],
+                ]
+            )
+            return Command(
+                update={"messages": [*history, *correction], "feedback": feedback},
+                goto="generate",
+            )
         if final_calls:
-            if len(ai.tool_calls) != 1:
-                raise ValueError("submit_answer must be the only tool call in its turn")
-            candidate = SubmitAnswer.model_validate(final_calls[0]["args"]).model_dump()
             return Command(
                 update={
                     "messages": [
@@ -269,6 +336,19 @@ async def tools(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
                 function = getattr(run.services, name)
                 output = await function(next(iter(args.values())), run, parent_id=event["event_id"])
             event.update(status="ok", output=output)
+        except LimitReached as exc:
+            if str(exc) in {"max_document_followups", "max_database_followups"}:
+                output = {
+                    "status": "restricted",
+                    "reason": str(exc),
+                    "instruction": "This source's follow-up budget is exhausted. Submit supported "
+                    "parts with specific missing_information; failed acquisition does not prove "
+                    "that a fact is absent.",
+                }
+                event.update(status="restricted", output=output)
+            else:
+                output = _failure(run, call["name"], exc)
+                event.update(status="error", output=output)
         except Exception as exc:
             output = _failure(run, call["name"], exc)
             event.update(status="error", output=output)
@@ -298,7 +378,11 @@ async def guard(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
         if unknown:
             verdict = {
                 "passed": False,
-                "feedback": "Remove unsupported citation IDs: " + ", ".join(unknown),
+                "feedback": "Unknown citation IDs: "
+                + ", ".join(sorted(unknown))
+                + ". Use only these exact retrieved chunk IDs in citation_ids: "
+                + json.dumps(sorted(visible_ids))
+                + ". Keep document/page/section labels inline in the answer.",
             }
         else:
             verdict = await run.model(
@@ -309,6 +393,7 @@ async def guard(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
                         json.dumps(
                             {
                                 "candidate": candidate,
+                                "evidence": run.evidence(),
                                 "generator_contexts": run.generator_contexts,
                                 "tool_outputs": [
                                     {"name": c["name"], "output": c.get("output")}

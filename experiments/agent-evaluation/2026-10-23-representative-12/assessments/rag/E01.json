@@ -1,0 +1,160 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "E01",
+    "question": "What upfront discount does CloudScale offer for annual Enterprise subscriptions, and how long is the prepaid term?",
+    "difficulty": "easy",
+    "category": "document",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 1.0,
+    "database_score": "NOT_APPLICABLE",
+    "aggregation_score": 1.0,
+    "generate_score": 1.0,
+    "tools_score": "NOT_APPLICABLE",
+    "guard_score": 1.0,
+    "finalize_score": 1,
+    "run_id": "24d5fe3d-1c08-4cab-8728-8b2a92c74906",
+    "status": "complete",
+    "stop_reason": "completed",
+    "duration_ms": 22579.269,
+    "model_calls": 7,
+    "tool_calls": 5,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "failures": "[]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 1.0,
+    "all_evidence_success_at_5": 1,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 1.0,
+    "all_evidence_success_at_10": 1,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 1.0,
+    "all_evidence_success_at_20": 1,
+    "context_precision_at_20": 0.07142857142857142,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/E01.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 2,
+    "judge_completeness": 2,
+    "judge_citation_precision": 2,
+    "judge_citation_coverage": 2,
+    "judge_relevance": 2,
+    "judge_uncertainty": 2,
+    "judge_faithfulness": 2,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.2,
+        "ndcg": 1.0,
+        "returned_count": 5,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.1,
+        "ndcg": 1.0,
+        "returned_count": 10,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.07142857142857142,
+        "ndcg": 1.0,
+        "returned_count": 14,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [],
+        "execution_accuracy": null,
+        "reference_value_coverage": null
+      },
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 2,
+          "reason": "Correctly states the 15% discount relative to standard monthly rates and continuous 12-month prepaid term, consistent with DOC-BIL-2024-V3 §1.2."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 2,
+          "reason": "Covers E01-F01 (15% relative to monthly rates), F02 (continuous 12 months), and F03 (prepaid in advance)."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": 2,
+          "reason": "The cited DOC-BIL-2024-V3 page 1, §1.2 passage explicitly supports both the 15% discount and prepaid 12-month term."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": 2,
+          "reason": "Both material policy claims have a supporting DOC-BIL-2024-V3 page 1, §1.2 citation."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 2,
+          "reason": "Directly answers the discount and prepaid-term questions without unrelated policy exposition."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 2,
+          "reason": "Answers the supported terms directly and does not invent a separate discount against an already-discounted annual price or refuse unnecessarily."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": 2,
+      "reason": "The answer’s 15% discount and continuous 12-month prepaid term are both supported by the visible DOC-BIL-2024-V3 §1.2 passage, with a matching citation."
+    },
+    "guard": [
+      {
+        "candidate_index": 0,
+        "supported": true,
+        "reason": "Accept: both requested terms are directly supported by the visible policy passage, and the cited chunk ID matches that passage."
+      }
+    ],
+    "raw_luna_guard": [
+      {
+        "candidate_index": 0,
+        "supported": true,
+        "reason": "Accept: both requested terms are directly supported by the visible policy passage, and the cited chunk ID matches that passage."
+      }
+    ],
+    "guard_citation_checks": [
+      {
+        "candidate_index": 0,
+        "unknown_ids": []
+      }
+    ],
+    "observed_scores_before_exclusion": {}
+  }
+}

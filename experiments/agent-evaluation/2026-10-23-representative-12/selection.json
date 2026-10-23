@@ -1,0 +1,80 @@
+{
+  "requested_size": 12,
+  "free_models_only": true,
+  "basis": "Purposive coverage of both datasets, all four routes, difficulty, answerability, hybrid SQL, arithmetic, multi-customer aggregation, and dates; not a statistically representative random estimate. Selected after an initial collection had begun; no selection by score.",
+  "initial_collection_directory": "experiments/agent-evaluation/2026-10-23-compose",
+  "initial_saved_runs": 33,
+  "reused_responses": [
+    "rag:E01",
+    "rag:E08",
+    "rag:M10",
+    "rag:H06"
+  ],
+  "cases": [
+    {
+      "suite": "rag",
+      "question_id": "E01",
+      "reason": "Easy billing-policy lookup"
+    },
+    {
+      "suite": "rag",
+      "question_id": "E08",
+      "reason": "Easy support response target and coverage"
+    },
+    {
+      "suite": "rag",
+      "question_id": "M10",
+      "reason": "Exact SLA credit-bracket boundaries"
+    },
+    {
+      "suite": "rag",
+      "question_id": "H06",
+      "reason": "Unanswerable exact overage pricing; avoid invention"
+    },
+    {
+      "suite": "rag",
+      "question_id": "X-E01",
+      "reason": "Hybrid customer lookup and monthly cancellation policy"
+    },
+    {
+      "suite": "rag",
+      "question_id": "X-M01",
+      "reason": "Hybrid leap-year month uptime and credit calculation"
+    },
+    {
+      "suite": "rag",
+      "question_id": "X-H01",
+      "reason": "Hard multi-customer cohort, per-customer credits and sum"
+    },
+    {
+      "suite": "rag",
+      "question_id": "X-H04",
+      "reason": "Hard policy comparison with multiple calendar deadlines"
+    },
+    {
+      "suite": "coordinator",
+      "question_id": "COORD-DOCUMENT-07-1",
+      "reason": "Document route despite database keyword"
+    },
+    {
+      "suite": "coordinator",
+      "question_id": "COORD-DATABASE-08-1",
+      "reason": "Database-only filtered highest-rate cohort"
+    },
+    {
+      "suite": "coordinator",
+      "question_id": "COORD-HYBRID-08-1",
+      "reason": "Hybrid route with credit, currency and tax uncertainty"
+    },
+    {
+      "suite": "coordinator",
+      "question_id": "COORD-DIRECT-07-2",
+      "reason": "Direct route despite SQL keyword; outside assistant scope"
+    }
+  ],
+  "judge_backend": "luna_subagents",
+  "judge_model": "gpt-6-luna",
+  "nemotron_judge_results_included": false,
+  "agent_repeated_for_judge_switch": false,
+  "antigravity_judge_results_included": false
+}

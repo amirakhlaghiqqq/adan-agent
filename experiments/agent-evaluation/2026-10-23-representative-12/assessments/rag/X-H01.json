@@ -1,0 +1,265 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "X-H01",
+    "question": "Using the snapshot, find all active, paid Enterprise customers with positive recorded downtime in February 2024. For each, return its billing cycle, monthly downtime, uptime, applicable credit percentage, and credit amount; also return the total credit. On March 15, 2024, each asks for a cash refund of unused subscription time instead. Explain the refund treatment for the monthly and annual members using their recorded activation dates.",
+    "difficulty": "hard",
+    "category": "hybrid",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 0.6,
+    "database_score": 0.5,
+    "aggregation_score": 1.0,
+    "generate_score": 0.0,
+    "tools_score": "NOT_RUN",
+    "guard_score": "NOT_RUN",
+    "finalize_score": 1,
+    "run_id": "20ecfc52-9b32-4153-b2bc-66e2ee6c7e21",
+    "status": "partial",
+    "stop_reason": "max_database_followups",
+    "duration_ms": 34401.353,
+    "model_calls": 12,
+    "tool_calls": 5,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "failures": "[{\"stage\": \"query_database\", \"error_type\": \"ValueError\", \"error\": \"SQLite query failed: no such column: i.incident_id\"}, {\"stage\": \"query_database\", \"error_type\": \"LimitReached\", \"error\": \"max_database_followups\"}]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 0.6,
+    "all_evidence_success_at_5": 0,
+    "context_precision_at_5": 0.6,
+    "evidence_recall_at_10": 0.6,
+    "all_evidence_success_at_10": 0,
+    "context_precision_at_10": 0.42857142857142855,
+    "evidence_recall_at_20": 0.6,
+    "all_evidence_success_at_20": 0,
+    "context_precision_at_20": 0.42857142857142855,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": 0.0,
+    "response_file": "runs/rag/X-H01.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 0,
+    "judge_completeness": 0,
+    "judge_citation_precision": null,
+    "judge_citation_coverage": null,
+    "judge_relevance": 0,
+    "judge_uncertainty": 0,
+    "judge_source_attribution": 0,
+    "judge_unsupported_financial_claims": 2,
+    "judge_faithfulness": null,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 0.6,
+        "all_evidence_success": 0,
+        "context_precision": 0.6,
+        "ndcg": 0.6843515475204855,
+        "returned_count": 5,
+        "covered_requirements": [
+          "X-H01-R01",
+          "X-H01-R04",
+          "X-H01-R05"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 0.6,
+        "all_evidence_success": 0,
+        "context_precision": 0.42857142857142855,
+        "ndcg": 0.6843515475204855,
+        "returned_count": 7,
+        "covered_requirements": [
+          "X-H01-R01",
+          "X-H01-R04",
+          "X-H01-R05"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 0.6,
+        "all_evidence_success": 0,
+        "context_precision": 0.42857142857142855,
+        "ndcg": 0.6843515475204855,
+        "returned_count": 7,
+        "covered_requirements": [
+          "X-H01-R01",
+          "X-H01-R04",
+          "X-H01-R05"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [
+          {
+            "calculation_id": "C01",
+            "target": "scheduled_minutes",
+            "expected": 41760,
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "uptime_percentage",
+            "expected": "99.664751",
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "credit_percentage",
+            "expected": 25,
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "credit_amount",
+            "expected": "1050.00",
+            "matched": false
+          },
+          {
+            "calculation_id": "C02",
+            "target": "scheduled_minutes",
+            "expected": 41760,
+            "matched": false
+          },
+          {
+            "calculation_id": "C02",
+            "target": "uptime_percentage",
+            "expected": "99.904215",
+            "matched": false
+          },
+          {
+            "calculation_id": "C02",
+            "target": "credit_percentage",
+            "expected": 10,
+            "matched": false
+          },
+          {
+            "calculation_id": "C02",
+            "target": "credit_amount",
+            "expected": "240.00",
+            "matched": false
+          },
+          {
+            "calculation_id": "C03",
+            "target": "scheduled_minutes",
+            "expected": 41760,
+            "matched": false
+          },
+          {
+            "calculation_id": "C03",
+            "target": "uptime_percentage",
+            "expected": "99.784483",
+            "matched": false
+          },
+          {
+            "calculation_id": "C03",
+            "target": "credit_percentage",
+            "expected": 25,
+            "matched": false
+          },
+          {
+            "calculation_id": "C03",
+            "target": "credit_amount",
+            "expected": "450.00",
+            "matched": false
+          },
+          {
+            "calculation_id": "C04",
+            "target": "value",
+            "expected": "1740.00",
+            "matched": false
+          }
+        ],
+        "execution_accuracy": null,
+        "reference_value_coverage": 0.0
+      },
+      "database_projection": [
+        {
+          "columns": [
+            "customer_id",
+            "company_name",
+            "billing_cycle",
+            "monthly_rate"
+          ],
+          "exact_multiset_match": false,
+          "truncated": false
+        },
+        {
+          "columns": [
+            "customer_id",
+            "company_name",
+            "billing_cycle",
+            "monthly_rate"
+          ],
+          "exact_multiset_match": false,
+          "truncated": false
+        }
+      ],
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 0,
+          "reason": "The response supplies no answer to the requested database and policy conclusions."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 0,
+          "reason": "No required answer facts are covered."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": null,
+          "reason": "No policy claim or citation is supplied to evaluate."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": null,
+          "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 0,
+          "reason": "The refusal does not address the question."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 0,
+          "reason": "It refuses instead of answering supported parts or identifying specific missing information."
+        },
+        {
+          "criterion_id": "source_attribution",
+          "score": 0,
+          "reason": "No facts, assumptions, rules, or calculations are attributed."
+        },
+        {
+          "criterion_id": "unsupported_financial_claims",
+          "score": 2,
+          "reason": "No unsupported financial conclusion is made."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": null,
+      "reason": "This is a stop-reason response with no material factual answer claims to assess."
+    },
+    "database_facts": {
+      "score": 1,
+      "reason": "The second query acquired Vanguard Media Group’s annual billing cycle and 40 minutes of February downtime, but the other two eligible customers, their rates and activation dates, and the requested credit computations and total are absent."
+    },
+    "observed_scores_before_exclusion": {
+      "tools_score": 0
+    }
+  }
+}

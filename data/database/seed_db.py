@@ -8,10 +8,9 @@ row counts, and runs demonstration queries covering filtering, aggregations,
 multi-table joins, and business metric calculations.
 """
 
-import sys
 import sqlite3
+import sys
 from pathlib import Path
-
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "app.db"
@@ -68,14 +67,14 @@ def init_database():
 
     # Execute schema
     print("Applying schema.sql...")
-    with open(SCHEMA_PATH, "r", encoding="utf-8") as f:
+    with open(SCHEMA_PATH, encoding="utf-8") as f:
         schema_sql = f.read()
     cursor.executescript(schema_sql)
     print("Schema applied successfully.")
 
     # Execute seed data
     print("Applying seed_data.sql...")
-    with open(SEED_PATH, "r", encoding="utf-8") as f:
+    with open(SEED_PATH, encoding="utf-8") as f:
         seed_sql = f.read()
     cursor.executescript(seed_sql)
     conn.commit()
@@ -101,8 +100,12 @@ def validate_records(conn):
 
     # Assertions
     assert counts["customers"] >= 25, f"Expected >= 25 customers, found {counts['customers']}"
-    assert counts["subscriptions"] >= 25, f"Expected >= 25 subscriptions, found {counts['subscriptions']}"
-    assert counts["incident_tickets"] >= 15, f"Expected >= 15 incident tickets, found {counts['incident_tickets']}"
+    assert (
+        counts["subscriptions"] >= 25
+    ), f"Expected >= 25 subscriptions, found {counts['subscriptions']}"
+    assert (
+        counts["incident_tickets"] >= 15
+    ), f"Expected >= 15 incident tickets, found {counts['incident_tickets']}"
     print("All row count assertions PASSED.\n")
     return counts
 
@@ -183,7 +186,16 @@ def run_sample_queries(conn):
     """
     cursor.execute(q3)
     rows_q3 = cursor.fetchall()
-    headers_q3 = ["ID", "Company Name", "Tier", "Region", "Plan", "Cycle", "Monthly Rate", "Payment Status"]
+    headers_q3 = [
+        "ID",
+        "Company Name",
+        "Tier",
+        "Region",
+        "Plan",
+        "Cycle",
+        "Monthly Rate",
+        "Payment Status",
+    ]
     print(format_table(headers_q3, rows_q3))
     print(f"Returned {len(rows_q3)} records.\n")
 
@@ -209,7 +221,9 @@ def run_sample_queries(conn):
         t.tier,
         PRINTF('$%.2f', t.tier_monthly_revenue) AS enterprise_revenue,
         PRINTF('$%.2f', o.total_company_revenue) AS total_revenue,
-        PRINTF('%.2f%%', (t.tier_monthly_revenue * 100.0) / o.total_company_revenue) AS revenue_share_pct
+        PRINTF(
+            '%.2f%%', (t.tier_monthly_revenue * 100.0) / o.total_company_revenue
+        ) AS revenue_share_pct
     FROM tier_totals t, overall_total o
     WHERE t.tier = 'Enterprise';
     """
@@ -240,7 +254,15 @@ def run_sample_queries(conn):
     """
     cursor.execute(q5)
     rows_q5 = cursor.fetchall()
-    headers_q5 = ["ID", "Company Name", "Tier", "Tickets", "Total Downtime (m)", "SLA Breaches", "Latest Incident"]
+    headers_q5 = [
+        "ID",
+        "Company Name",
+        "Tier",
+        "Tickets",
+        "Total Downtime (m)",
+        "SLA Breaches",
+        "Latest Incident",
+    ]
     print(format_table(headers_q5, rows_q5))
     print(f"Returned {len(rows_q5)} records.\n")
 

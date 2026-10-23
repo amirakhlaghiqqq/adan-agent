@@ -1,0 +1,160 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "M10",
+    "question": "Assuming all other eligibility and filing requirements are met, what credit percentages apply to Enterprise and Professional customers at exactly 99.90% monthly uptime and at exactly 98.50%? How are those credits delivered, and can they be cashed out?",
+    "difficulty": "medium",
+    "category": "document",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 0.5,
+    "database_score": "NOT_APPLICABLE",
+    "aggregation_score": 1.0,
+    "generate_score": 1.0,
+    "tools_score": "NOT_APPLICABLE",
+    "guard_score": 0.0,
+    "finalize_score": 1,
+    "run_id": "8d43e792-d7ac-4751-ac1f-bc08c32734a4",
+    "status": "partial",
+    "stop_reason": "completed",
+    "duration_ms": 22714.044,
+    "model_calls": 7,
+    "tool_calls": 5,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "failures": "[]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 0.5,
+    "all_evidence_success_at_5": 0,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 0.5,
+    "all_evidence_success_at_10": 0,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 0.5,
+    "all_evidence_success_at_20": 0,
+    "context_precision_at_20": 0.0625,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/M10.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 2,
+    "judge_completeness": 1,
+    "judge_citation_precision": 2,
+    "judge_citation_coverage": 2,
+    "judge_relevance": 1,
+    "judge_uncertainty": 1,
+    "judge_faithfulness": 2,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 0.5,
+        "all_evidence_success": 0,
+        "context_precision": 0.2,
+        "ndcg": 0.6131471927654584,
+        "returned_count": 5,
+        "covered_requirements": [
+          "M10-R01"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 0.5,
+        "all_evidence_success": 0,
+        "context_precision": 0.1,
+        "ndcg": 0.6131471927654584,
+        "returned_count": 10,
+        "covered_requirements": [
+          "M10-R01"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 0.5,
+        "all_evidence_success": 0,
+        "context_precision": 0.0625,
+        "ndcg": 0.6131471927654584,
+        "returned_count": 16,
+        "covered_requirements": [
+          "M10-R01"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [],
+        "execution_accuracy": null,
+        "reference_value_coverage": null
+      },
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 2,
+          "reason": "The four percentages and future-invoice mechanism match the supplied table; the answer correctly says credits are not cashable and does not exceed the stated cap."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 1,
+          "reason": "Gives all four percentage outcomes, invoice application, and no cash conversion, but omits the required 100% monthly-fee cap."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": 2,
+          "reason": "The cited SLA pages 2–3 §4.2 support the bracket outcomes and invoice application; §4.4 supports the non-cash rule and cap."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": 2,
+          "reason": "The externally verifiable bracket, delivery, and cash-conversion claims are cited to the relevant SLA sections."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 1,
+          "reason": "Answers the requested outcomes, but adds an unsupported ambiguity caveat about 99.90% even though the table labels the boundary and supplies a specific bracket."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 1,
+          "reason": "The answer correctly qualifies cash conversion, but wrongly says the policy does not address cash-out and asserts the boundary is ambiguous despite the explicit 99.90% to <99.99% row."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": 2,
+      "reason": "The uptime brackets support the stated credit percentages, including Enterprise 10% and Professional 0% at exactly 99.90%, and the credit-to-future-invoice treatment. The answer appropriately says the policy is silent on cash-out."
+    },
+    "guard": [
+      {
+        "candidate_index": 0,
+        "supported": false,
+        "reason": "Reject: the answer calls the 99.90% bracket boundary ambiguous even though the visible table explicitly gives Enterprise 99.90% to <99.99% and Professional SLA Target Met (0%). The main percentages and invoice application are otherwise supported, but this material false claim undermines acceptance."
+      }
+    ],
+    "raw_luna_guard": [
+      {
+        "candidate_index": 0,
+        "supported": false,
+        "reason": "Reject: the answer calls the 99.90% bracket boundary ambiguous even though the visible table explicitly gives Enterprise 99.90% to <99.99% and Professional SLA Target Met (0%). The main percentages and invoice application are otherwise supported, but this material false claim undermines acceptance."
+      }
+    ],
+    "guard_citation_checks": [
+      {
+        "candidate_index": 0,
+        "unknown_ids": []
+      }
+    ],
+    "observed_scores_before_exclusion": {}
+  }
+}

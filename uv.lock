@@ -46,10 +46,7 @@ dependencies = [
     { name = "langchain-openai" },
     { name = "langgraph" },
     { name = "llama-index-core" },
-    { name = "llama-index-embeddings-fastembed" },
     { name = "llama-index-embeddings-openai-like" },
-    { name = "llama-index-readers-docling" },
-    { name = "llama-index-tools-mcp" },
     { name = "llama-index-vector-stores-qdrant" },
     { name = "pydantic-settings" },
     { name = "python-dotenv" },
@@ -78,10 +75,7 @@ requires-dist = [
     { name = "langchain-openai", specifier = ">=1.0,<2" },
     { name = "langgraph", specifier = ">=1.0,<2" },
     { name = "llama-index-core", specifier = ">=0.12,<1" },
-    { name = "llama-index-embeddings-fastembed", specifier = ">=0.3,<1" },
     { name = "llama-index-embeddings-openai-like", specifier = ">=0.4,<1" },
-    { name = "llama-index-readers-docling", specifier = ">=0.5,<1" },
-    { name = "llama-index-tools-mcp", specifier = ">=0.6.0" },
     { name = "llama-index-vector-stores-qdrant", specifier = ">=0.6,<1" },
     { name = "pydantic-settings", specifier = ">=2.8,<3" },
     { name = "python-dotenv", specifier = ">=1.0,<2" },
@@ -1631,18 +1625,6 @@ wheels = [
 ]
 
 [[package]]
-name = "llama-index-embeddings-fastembed"
-version = "0.7.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "llama-index-core" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9d/80/a7bcd8cb0d9d41466103b6dbf114a13ab77b411c44b5536ae3f0ccac550c/llama_index_embeddings_fastembed-0.7.0.tar.gz", hash = "sha256:11ebb16c64f4d2f57c12f9c72292e08818cd342e48d32edaa010a4ab469e891f", size = 4117, upload-time = "2026-08-29T15:35:18.168Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/fa/ca77873380cd0b06289077b1a400c70cc7efa82407434a772312d0bef385/llama_index_embeddings_fastembed-0.7.0-py3-none-any.whl", hash = "sha256:74db8146a84a42721fb5a1a17626dccc25db5b169f5073b5f73310bea4a7a151", size = 3760, upload-time = "2026-08-29T15:35:17.288Z" },
-]
-
-[[package]]
 name = "llama-index-embeddings-openai"
 version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1678,35 +1660,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/70/ac/ffc116bac024cb0a54b4d28ca9b421e9a08f408c1fcc0039a36de2c0c97b/llama_index_instrumentation-0.6.0.tar.gz", hash = "sha256:b185c4e28a7f32899c27649cc2e2d7d54267fa2ff0cd43cbe2b5212bae98fe3a", size = 56517, upload-time = "2026-08-29T15:33:16.861Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/02/b5/332eb32835360125fa1c90a4b81c58831c48dded5b8426d44e9acd4bf328/llama_index_instrumentation-0.6.0-py3-none-any.whl", hash = "sha256:9588618b271e6c74e58dc81542ea022547c427f036e7cacb655865c4982610bb", size = 16445, upload-time = "2026-08-29T15:33:15.766Z" },
-]
-
-[[package]]
-name = "llama-index-readers-docling"
-version = "0.5.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "docling" },
-    { name = "docling-core" },
-    { name = "llama-index-core" },
-    { name = "numpy" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/b0/6b2a825cd1923f88754a5887ad33adce45836509896577f16e1c238f0c6e/llama_index_readers_docling-0.5.0.tar.gz", hash = "sha256:0e593571c15019dbd36167aee8b86bfafa4f1c74871a8b1339e5b7345f4243ba", size = 4936, upload-time = "2026-08-31T16:01:23.639Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/70/38/031a4de7760828940de96819256292039908b3d51f9e6825e4d0130a1bf4/llama_index_readers_docling-0.5.0-py3-none-any.whl", hash = "sha256:5cac74c9fb8e7c10c19f763fd8902ae01a8a22b214e4fe7c1ba743f23e89238a", size = 4386, upload-time = "2026-08-31T16:01:22.86Z" },
-]
-
-[[package]]
-name = "llama-index-tools-mcp"
-version = "0.6.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "llama-index-core" },
-    { name = "mcp" },
-    { name = "pydantic" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/a7/8c/02bcfccc7d27c7553375fc2184f5dc24b1cf1b81037d17ea379edd7d34a2/llama_index_tools_mcp-0.6.0.tar.gz", hash = "sha256:5a0661765b9b5ba8364e3875134dd291db063450fd344e8ab3b10b7bb05c56d9", size = 13776, upload-time = "2026-08-31T16:10:10.482Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/55/29/afdb57cf15d23c378a8b8d14f6086e18393a3d266319a95a2a668431c09b/llama_index_tools_mcp-0.6.0-py3-none-any.whl", hash = "sha256:9661e87fac9383c4b0754fcceed4fcce827c3581c03be6de1621f67e48e77abc", size = 14915, upload-time = "2026-08-31T16:10:09.67Z" },
 ]
 
 [[package]]
@@ -1877,44 +1830,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/55/79/de6c16cc902f4fc372236926b0ce2ab7845268dcc30fb2fbb7f71b418631/marshmallow-3.26.2.tar.gz", hash = "sha256:bbe2adb5a03e6e3571b573f42527c6fe926e17467833660bebd11593ab8dfd57", size = 222095, upload-time = "2025-12-22T06:53:53.309Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/be/2f/5108cb3ee4ba6501748c4908b908e55f42a5b66245b4cfe0c99326e1ef6e/marshmallow-3.26.2-py3-none-any.whl", hash = "sha256:013fa8a3c4c276c24d26d84ce934dc964e2aa794345a0f8c7e5a7191482c8a73", size = 50964, upload-time = "2025-12-22T06:53:51.801Z" },
-]
-
-[[package]]
-name = "mcp"
-version = "2.3.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "anyio" },
-    { name = "httpx2" },
-    { name = "jsonschema" },
-    { name = "mcp-types" },
-    { name = "opentelemetry-api" },
-    { name = "pydantic" },
-    { name = "pyjwt", extra = ["crypto"] },
-    { name = "python-multipart" },
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
-    { name = "sse-starlette" },
-    { name = "starlette" },
-    { name = "typing-extensions" },
-    { name = "typing-inspection" },
-    { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9d/8d/e0d339616f4810e9051d4aba6887afab289ab1f81875fe908b606cdfd0e3/mcp-2.3.0.tar.gz", hash = "sha256:8b147a50441cf059dc88c684e0aeed3687f0aa0f39c6cde7b90330effd2b34d8", size = 4171955, upload-time = "2026-10-02T22:06:56.091Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/d7/4a2878f128df729db3ca04e71bfce26405cc2e0c9ebe19c592feeb4c61b9/mcp-2.3.0-py3-none-any.whl", hash = "sha256:dd0c44c089d16453e8ae31a3877a0054d7a2314caaa81f5e0541b9b1734b2377", size = 368664, upload-time = "2026-10-02T22:06:52.119Z" },
-]
-
-[[package]]
-name = "mcp-types"
-version = "2.3.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pydantic" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9e/2d/7c251e34207f6c51000312fc8839111ac45cfe02023f90b44e7f1051dd8e/mcp_types-2.3.0.tar.gz", hash = "sha256:d1e46549edb35ee19a94940fcee6d1addd7e589ab7ea92dda83f5d84781fc362", size = 65898, upload-time = "2026-10-02T22:06:57.863Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ce/48/32583066b155bb5d4507e7887dc88ee23118cc4de8e2a12870c49719e2a8/mcp_types-2.3.0-py3-none-any.whl", hash = "sha256:968efdbdaedfab06adae40d378a34395f1090c5921d4be3c9cde283aaf76d91d", size = 69108, upload-time = "2026-10-02T22:06:54.099Z" },
 ]
 
 [[package]]
@@ -2749,11 +2664,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/50/ca/44de4e75f8aadc457f0634be3b542815078ded46dca30efb960edeecad6e/pyjwt-2.15.1-py3-none-any.whl", hash = "sha256:42d59d631f7768a1028a64c7ff581a9bf7519804daf91fc5b6c56e30eec5e193", size = 33860, upload-time = "2026-09-28T18:40:41.429Z" },
 ]
 
-[package.optional-dependencies]
-crypto = [
-    { name = "cryptography" },
-]
-
 [[package]]
 name = "pylatexenc"
 version = "2.11"
@@ -2855,15 +2765,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/74/26/2fbeedb218a787a5eea551c7532cac4e009f83d689dd2faa0d0353473f86/python_dotenv-1.2.4.tar.gz", hash = "sha256:f0d53e69935a851c0dcc78f3ab7aaccd8cabef0b92382b576b824212902873c0", size = 60824, upload-time = "2026-10-01T05:36:10Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/60/d1/38f3a3405989a89ac18390803e70c6ad7c7760da4f9b83cbeca0c44a0c72/python_dotenv-1.2.4-py3-none-any.whl", hash = "sha256:42269a8a5b3fd54ffa6f3d84b18abed50064717576b4ecf03dc4a55d8aa04fdc", size = 23266, upload-time = "2026-10-01T05:36:08.633Z" },
-]
-
-[[package]]
-name = "python-multipart"
-version = "0.0.32"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/5b/42/55c32bb9b12693c092ad250a0e82edb5b31ddeda6eb772de5f308b3804ad/python_multipart-0.0.32.tar.gz", hash = "sha256:be54b7f3fa167bb83e4fcd936b887b708f4e57fe75911c02aebf53efaf8d938e", size = 46881, upload-time = "2026-06-04T16:18:58.647Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e1/04/e8135ebd1ad02c56ec633277529b2602ff99ff634be76cdba5744cf554fd/python_multipart-0.0.32-py3-none-any.whl", hash = "sha256:ff6d3f776f16878c894e52e107296ffc890e913c611b1a4ec6c44e2821fe2e23", size = 30042, upload-time = "2026-06-04T16:18:57.319Z" },
 ]
 
 [[package]]

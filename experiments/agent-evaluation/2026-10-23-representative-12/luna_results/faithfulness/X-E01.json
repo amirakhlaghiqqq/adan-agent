@@ -1,0 +1,1 @@
+{"criterion_id": "faithfulness", "score": null, "reason": "The delivered answer only reports that generation stopped with an error and that the conclusions remain unverified; it makes no material factual claims, so the not-applicable anchor applies."}

@@ -1,0 +1,140 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "H06",
+    "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+    "difficulty": "hard",
+    "category": "document",
+    "reference_answerability": "not_answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 1.0,
+    "database_score": "NOT_APPLICABLE",
+    "aggregation_score": 1.0,
+    "generate_score": 0.0,
+    "tools_score": "NOT_APPLICABLE",
+    "guard_score": "NOT_RUN",
+    "finalize_score": 1,
+    "run_id": "9fca6c1c-a749-4ac5-ab2a-6a4493ee1755",
+    "status": "partial",
+    "stop_reason": "max_document_followups",
+    "duration_ms": 21522.357,
+    "model_calls": 8,
+    "tool_calls": 8,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "failures": "[{\"stage\": \"search_documents\", \"error_type\": \"LimitReached\", \"error\": \"max_document_followups\"}]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 1.0,
+    "all_evidence_success_at_5": 1,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 1.0,
+    "all_evidence_success_at_10": 1,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 1.0,
+    "all_evidence_success_at_20": 1,
+    "context_precision_at_20": 0.0625,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/H06.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 0,
+    "judge_completeness": 0,
+    "judge_citation_precision": null,
+    "judge_citation_coverage": null,
+    "judge_relevance": 0,
+    "judge_uncertainty": 0,
+    "judge_faithfulness": null,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.2,
+        "ndcg": 1.0,
+        "returned_count": 5,
+        "covered_requirements": [
+          "H06-R01"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.1,
+        "ndcg": 1.0,
+        "returned_count": 10,
+        "covered_requirements": [
+          "H06-R01"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.0625,
+        "ndcg": 1.0,
+        "returned_count": 16,
+        "covered_requirements": [
+          "H06-R01"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [],
+        "execution_accuracy": null,
+        "reference_value_coverage": null
+      },
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 0,
+          "reason": "The response provides no factual answer to the question."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 0,
+          "reason": "No required answer fact is covered."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": null,
+          "reason": "No policy claim or citation is supplied to evaluate."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": null,
+          "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 0,
+          "reason": "The refusal does not address the question."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 0,
+          "reason": "It unnecessarily refuses rather than answering supported portions and identifying actual gaps."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": null,
+      "reason": "This is a stop-reason response with no material factual answer claims to assess."
+    },
+    "observed_scores_before_exclusion": {}
+  }
+}

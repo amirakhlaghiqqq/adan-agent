@@ -1,0 +1,34 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "correctness",
+      "score": 2,
+      "reason": "Correctly gives Enterprise Severity 1 initial response as ≤30 minutes with 24/7 dedicated coverage; this is an initial-response commitment, not resolution."
+    },
+    {
+      "criterion_id": "completeness",
+      "score": 2,
+      "reason": "Covers all required facts: ≤30-minute response, 24/7 dedicated support, and response rather than resolution."
+    },
+    {
+      "criterion_id": "citation_precision",
+      "score": 2,
+      "reason": "Cited DOC-SLA-2024-V2 page 4 §5.2 supports the response commitment; §§5.3–5.4 and p.1 §2 support the added update and channel claims."
+    },
+    {
+      "criterion_id": "citation_coverage",
+      "score": 2,
+      "reason": "The response-time and coverage claims are tied to the cited SLA sections; its ancillary claims also include citations."
+    },
+    {
+      "criterion_id": "relevance",
+      "score": 1,
+      "reason": "Answers the question, but adds several unrequested comparisons, update cadence, and caveats."
+    },
+    {
+      "criterion_id": "uncertainty",
+      "score": 2,
+      "reason": "States the supported commitment and identifies no unresolved conflict; the additional calendar-day caveat is cautious but not materially misleading."
+    }
+  ]
+}

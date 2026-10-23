@@ -1,0 +1,160 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "E08",
+    "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+    "difficulty": "easy",
+    "category": "document",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 1.0,
+    "database_score": "NOT_APPLICABLE",
+    "aggregation_score": 1.0,
+    "generate_score": 1.0,
+    "tools_score": "NOT_APPLICABLE",
+    "guard_score": 1.0,
+    "finalize_score": 1,
+    "run_id": "a4c69231-391e-4742-b8fa-69a0778e1919",
+    "status": "partial",
+    "stop_reason": "completed",
+    "duration_ms": 38234.526,
+    "model_calls": 8,
+    "tool_calls": 5,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "failures": "[]",
+    "provider_429_attempts": 1,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 1.0,
+    "all_evidence_success_at_5": 1,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 1.0,
+    "all_evidence_success_at_10": 1,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 1.0,
+    "all_evidence_success_at_20": 1,
+    "context_precision_at_20": 0.07142857142857142,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/E08.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 2,
+    "judge_completeness": 2,
+    "judge_citation_precision": 2,
+    "judge_citation_coverage": 2,
+    "judge_relevance": 1,
+    "judge_uncertainty": 2,
+    "judge_faithfulness": 2,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.2,
+        "ndcg": 1.0,
+        "returned_count": 5,
+        "covered_requirements": [
+          "E08-R01"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.1,
+        "ndcg": 1.0,
+        "returned_count": 10,
+        "covered_requirements": [
+          "E08-R01"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.07142857142857142,
+        "ndcg": 1.0,
+        "returned_count": 14,
+        "covered_requirements": [
+          "E08-R01"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [],
+        "execution_accuracy": null,
+        "reference_value_coverage": null
+      },
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 2,
+          "reason": "Correctly gives Enterprise Severity 1 initial response as ≤30 minutes with 24/7 dedicated coverage; this is an initial-response commitment, not resolution."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 2,
+          "reason": "Covers all required facts: ≤30-minute response, 24/7 dedicated support, and response rather than resolution."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": 2,
+          "reason": "Cited DOC-SLA-2024-V2 page 4 §5.2 supports the response commitment; §§5.3–5.4 and p.1 §2 support the added update and channel claims."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": 2,
+          "reason": "The response-time and coverage claims are tied to the cited SLA sections; its ancillary claims also include citations."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 1,
+          "reason": "Answers the question, but adds several unrequested comparisons, update cadence, and caveats."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 2,
+          "reason": "States the supported commitment and identifies no unresolved conflict; the additional calendar-day caveat is cautious but not materially misleading."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": 2,
+      "reason": "The response-time value, around-the-clock Enterprise coverage, response-time definition, access channels, and update cadence are supported by the visible SLA passages and cited sections."
+    },
+    "guard": [
+      {
+        "candidate_index": 0,
+        "supported": true,
+        "reason": "Accept: the requested Enterprise Severity 1 response time and 24/7 dedicated availability are directly supported; the additional tier, definition, and update claims are also supported by visible cited passages."
+      }
+    ],
+    "raw_luna_guard": [
+      {
+        "candidate_index": 0,
+        "supported": true,
+        "reason": "Accept: the requested Enterprise Severity 1 response time and 24/7 dedicated availability are directly supported; the additional tier, definition, and update claims are also supported by visible cited passages."
+      }
+    ],
+    "guard_citation_checks": [
+      {
+        "candidate_index": 0,
+        "unknown_ids": []
+      }
+    ],
+    "observed_scores_before_exclusion": {}
+  }
+}

@@ -1,0 +1,1807 @@
+{
+  "backend": "luna_subagents",
+  "model": "gpt-6-luna",
+  "job_sha256": "f06f403d80fcfca4b4d4f7ee8d8d9261d711480402e84ea19c66414b128d1f05",
+  "request": {
+    "question_id": "X-H04",
+    "stage": "generation_quality",
+    "inputs": {
+      "criteria": [
+        {
+          "rubric": {
+            "criterion_id": "correctness",
+            "stage": "generation",
+            "question": "For X-H04 (Zenith: late renewal notice and claim boundary), are all material conclusions consistent with required_answer_facts, the independent reference evidence, and visible assumptions? In particular check: Zenith is Enterprise.; Its cycle is annual.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "required_document_evidence",
+              "expected_database_response",
+              "expected_calculations",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Wrong conclusion or material factual error.",
+              "1": "Partly correct with a material imprecision.",
+              "2": "All material conclusions agree with the reference facts and visible assumptions."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "X-H04-F01",
+                "fact": "Zenith is Enterprise."
+              },
+              {
+                "fact_id": "X-H04-F02",
+                "fact": "Its cycle is annual."
+              },
+              {
+                "fact_id": "X-H04-F03",
+                "fact": "Recorded renewal date is 2024-08-30."
+              },
+              {
+                "fact_id": "X-H04-F04",
+                "fact": "March downtime is 20 minutes."
+              },
+              {
+                "fact_id": "X-H04-F05",
+                "fact": "Monthly fee is 3200 currency units."
+              },
+              {
+                "fact_id": "X-H04-F06",
+                "fact": "March uptime is 99.955197%."
+              },
+              {
+                "fact_id": "X-H04-F07",
+                "fact": "Enterprise credit is 10%."
+              },
+              {
+                "fact_id": "X-H04-F08",
+                "fact": "The nominal credit is 320.00 currency units."
+              },
+              {
+                "fact_id": "X-H04-F09",
+                "fact": "August 10 is 20 calendar days before August 30."
+              },
+              {
+                "fact_id": "X-H04-F10",
+                "fact": "The notice misses the annual-specific 30-day requirement."
+              },
+              {
+                "fact_id": "X-H04-F11",
+                "fact": "General cancellation wording says 48 hours."
+              },
+              {
+                "fact_id": "X-H04-F12",
+                "fact": "Do not guarantee that the general clause overrides the annual clause."
+              },
+              {
+                "fact_id": "X-H04-F13",
+                "fact": "Seek Billing confirmation for the late annual notice."
+              },
+              {
+                "fact_id": "X-H04-F14",
+                "fact": "April 30 is 30 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F15",
+                "fact": "The independent April 30 filing is timely under the supplied date convention."
+              },
+              {
+                "fact_id": "X-H04-F16",
+                "fact": "May 1 is 31 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F17",
+                "fact": "The independent May 1 claim is permanently forfeited."
+              },
+              {
+                "fact_id": "X-H04-F18",
+                "fact": "A valid accepted claim yields a future-invoice credit."
+              },
+              {
+                "fact_id": "X-H04-F19",
+                "fact": "The credit cannot be cashed out."
+              }
+            ],
+            "required_document_evidence": [
+              {
+                "requirement_id": "X-H04-R01",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "B1.3",
+                    "source_id": "document_1",
+                    "document_id": "DOC-BIL-2024-V3",
+                    "path": "data/documents/enterprise_billing_and_refund_policy.pdf",
+                    "page": 1,
+                    "section": "1.3",
+                    "text": "1.3 Automatic Subscription Renewal\nAll enterprise subscriptions renew automatically at the expiration of the active billing period to guarantee uninterrupted\nservice:\n• Monthly Plans: Renew automatically every 30 days unless cancelled at least 48 hours prior to the next billing\n   date.\n• Annual Plans: Renew automatically for successive 12-month terms unless a written cancellation notice is received\n   at least 30 calendar days prior to the annual contract expiration anniversary date."
+                  }
+                ]
+              },
+              {
+                "requirement_id": "X-H04-R02",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "B3.1",
+                    "source_id": "document_1",
+                    "document_id": "DOC-BIL-2024-V3",
+                    "path": "data/documents/enterprise_billing_and_refund_policy.pdf",
+                    "page": 2,
+                    "section": "3.1",
+                    "text": "3.1 Cancellation Submission Process\n Clients may initiate subscription cancellation via the CloudScale Admin Console (https://console.cloudscale.io/\n billing) or by emailing written notice to billing@cloudscale.io. Cancellation notices must be received at least 48\n hours prior to the next billing date."
+                  }
+                ]
+              },
+              {
+                "requirement_id": "X-H04-R03",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "S3.2",
+                    "source_id": "document_2",
+                    "document_id": "DOC-SLA-2024-V2",
+                    "path": "data/documents/sla_and_support_tier_policy.pdf",
+                    "page": 2,
+                    "section": "3.2",
+                    "text": "3.2 Definition of Downtime and Calculation Formula\nDowntime is defined as any continuous period of one (1) minute or more where covered platform services\nare completely inaccessible across all availability zones, or where the HTTP server error rate (HTTP 5xx\nresponses) exceeds five percent (5.0%) across all valid customer API requests. The Monthly Uptime\nPercentage is calculated using the following standard formula:\n                                    \u0012                                                         \u0013\n                                       Total Scheduled Minutes in Month − Downtime Minutes\n     Monthly Uptime Percentage =                                                                × 100\n                                                   Total Scheduled Minutes in Month\nService availability is measured by automated synthetic probes executing health checks every sixty (60)\nseconds from five external global regions (US-East, US-West, EU-Central, AP-East, and AU-Southeast)."
+                  }
+                ]
+              },
+              {
+                "requirement_id": "X-H04-R04",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "S4.2",
+                    "source_id": "document_2",
+                    "document_id": "DOC-SLA-2024-V2",
+                    "path": "data/documents/sla_and_support_tier_policy.pdf",
+                    "page": 3,
+                    "section": "4.2, Table 2",
+                    "text": "Monthly Uptime %         Enterprise Credit       Professional Credit\n                                                                        Application Mechanism\n99.90% to < 99.99%        10% of Monthly Fee     SLA Target Met (0%)    Applied to subsequent billing invoice\n99.00% to < 99.90%        25% of Monthly Fee      10% of Monthly Fee    Applied to subsequent billing invoice\n98.00% to < 99.00%        50% of Monthly Fee      25% of Monthly Fee    Applied to subsequent billing invoice\n95.00% to < 98.00%        50% of Monthly Fee      50% of Monthly Fee    Applied to subsequent billing invoice\n< 95.00%                 100% of Monthly Fee     100% of Monthly Fee    Maximum allowable monthly credit\n                      Table 2: Service Credit Compensation Brackets by Subscription Tier"
+                  }
+                ]
+              },
+              {
+                "requirement_id": "X-H04-R05",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "S4.3",
+                    "source_id": "document_2",
+                    "document_id": "DOC-SLA-2024-V2",
+                    "path": "data/documents/sla_and_support_tier_policy.pdf",
+                    "page": 3,
+                    "section": "4.3",
+                    "text": "4.3 Claim Submission Procedure and 30-Day Window\nCustomers must strictly follow this procedure to submit a service credit claim:\n1. Filing Window: Claims must be submitted within thirty (30) calendar days following the end of the\n   calendar month during which downtime occurred. Claims filed after 30 calendar days are permanently\n   forfeited.\n2. Submission Channel: Claims must be submitted via email to billing-credits@cloudscale.io or\n   through the CloudScale billing portal ticket system.\n3. Required Documentation: Claims must include: (a) Account ID and Organization Name; (b) exact\n   dates, start times, and duration of the outage; (c) specific impacted service endpoints; and (d) customer-side\n   error logs or traceroute data."
+                  }
+                ]
+              },
+              {
+                "requirement_id": "X-H04-R06",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "S4.4",
+                    "source_id": "document_2",
+                    "document_id": "DOC-SLA-2024-V2",
+                    "path": "data/documents/sla_and_support_tier_policy.pdf",
+                    "page": 3,
+                    "section": "4.4",
+                    "text": "4.4 Credit Rules and Maximum Limitations\n• Monthly Cap: Total service credits issued in any single calendar month shall not exceed 100% of the\n   customer’s monthly recurring fee for that month.\n• Non-Refundable: Service credits cannot be exchanged for cash refunds, wire transfers, or credit card\n  chargebacks.\n• Sole Financial Remedy: Service credits constitute the customer’s sole and exclusive financial remedy\n  for downtime."
+                  }
+                ]
+              }
+            ],
+            "expected_database_response": {
+              "source_id": "database",
+              "reference_sql": "SELECT c.customer_id, c.company_name, c.tier, c.region,\n       c.status AS account_status, s.subscription_id,\n       s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date,\n       s.payment_status, i.ticket_id, i.severity, i.downtime_minutes,\n       i.reported_at, i.resolved_at, i.status AS incident_status,\n       i.sla_breached\nFROM customers AS c\nJOIN subscriptions AS s ON s.customer_id = c.customer_id\nLEFT JOIN incident_tickets AS i\n  ON i.customer_id = c.customer_id\n AND substr(i.reported_at, 1, 7) = :month\nWHERE c.company_name = :company_name\nORDER BY s.subscription_id, i.ticket_id;",
+              "parameters": {
+                "company_name": "Zenith Cloud Robotics",
+                "month": "2024-03"
+              },
+              "columns": [
+                "customer_id",
+                "company_name",
+                "tier",
+                "region",
+                "account_status",
+                "subscription_id",
+                "billing_cycle",
+                "monthly_rate",
+                "start_date",
+                "renewal_date",
+                "payment_status",
+                "ticket_id",
+                "severity",
+                "downtime_minutes",
+                "reported_at",
+                "resolved_at",
+                "incident_status",
+                "sla_breached"
+              ],
+              "rows": [
+                [
+                  7,
+                  "Zenith Cloud Robotics",
+                  "Enterprise",
+                  "Asia Pacific",
+                  "active",
+                  7,
+                  "annual",
+                  3200.0,
+                  "2023-08-30",
+                  "2024-08-30",
+                  "paid",
+                  7,
+                  "Severity 2",
+                  20,
+                  "2024-03-02T09:00:00Z",
+                  "2024-03-02T09:20:00Z",
+                  "resolved",
+                  0
+                ]
+              ],
+              "order_matters": false,
+              "comparison": "Compare semantic facts; equivalent read-only SQL, projections containing all requested facts, and immaterial row/column reordering are acceptable. Reference SQL text is not an exact-match target."
+            },
+            "expected_calculations": [
+              {
+                "calculation_id": "C01",
+                "operation": "monthly_sla_credit",
+                "inputs": {
+                  "customer_id": 7,
+                  "month": "2024-03",
+                  "tier": "Enterprise",
+                  "monthly_rate": 3200.0,
+                  "downtime_minutes": 20
+                },
+                "formula": "uptime = (scheduled_minutes - downtime_minutes) / scheduled_minutes * 100; choose the tier bracket using unrounded uptime; credit = monthly_rate * credit_percentage / 100",
+                "expected_results": {
+                  "scheduled_minutes": 44640,
+                  "uptime_percentage": "99.955197",
+                  "credit_percentage": 10,
+                  "credit_amount": "320.00"
+                },
+                "units": {
+                  "scheduled_minutes": "minutes",
+                  "uptime_percentage": "percent",
+                  "credit_percentage": "percent of monthly fee",
+                  "credit_amount": "currency units"
+                },
+                "tolerances": {
+                  "scheduled_minutes": 0,
+                  "uptime_percentage": 1e-06,
+                  "credit_percentage": 0,
+                  "credit_amount": 0.01
+                }
+              },
+              {
+                "calculation_id": "C02",
+                "operation": "calendar_day_difference",
+                "inputs": {
+                  "start_date": "2024-08-10",
+                  "end_date": "2024-08-30",
+                  "database_date_field": "renewal_date"
+                },
+                "formula": "end_date - start_date in calendar days",
+                "purpose": "Compare 20 days of notice with the annual-specific minimum of 30 days.",
+                "expected_result": 20,
+                "unit": "calendar days",
+                "tolerance": 0
+              },
+              {
+                "calculation_id": "C03",
+                "operation": "calendar_day_difference",
+                "inputs": {
+                  "start_date": "2024-03-31",
+                  "end_date": "2024-04-30"
+                },
+                "formula": "end_date - start_date in calendar days",
+                "purpose": "Independent April 30 claim is within 30 days after affected month end.",
+                "expected_result": 30,
+                "unit": "calendar days",
+                "tolerance": 0
+              },
+              {
+                "calculation_id": "C04",
+                "operation": "calendar_day_difference",
+                "inputs": {
+                  "start_date": "2024-03-31",
+                  "end_date": "2024-05-01"
+                },
+                "formula": "end_date - start_date in calendar days",
+                "purpose": "Independent May 1 claim is beyond 30 days after affected month end.",
+                "expected_result": 31,
+                "unit": "calendar days",
+                "tolerance": 0
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "completeness",
+            "stage": "generation",
+            "question": "For X-H04, identify every required_answer_facts fact_id covered and omitted. Does the answer cover all parts of Zenith: late renewal notice and claim boundary, including Zenith is Enterprise.; Its cycle is annual.?",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "No required answer facts covered.",
+              "1": "Some but not all required facts covered.",
+              "2": "All required facts covered; equivalent wording is accepted."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "X-H04-F01",
+                "fact": "Zenith is Enterprise."
+              },
+              {
+                "fact_id": "X-H04-F02",
+                "fact": "Its cycle is annual."
+              },
+              {
+                "fact_id": "X-H04-F03",
+                "fact": "Recorded renewal date is 2024-08-30."
+              },
+              {
+                "fact_id": "X-H04-F04",
+                "fact": "March downtime is 20 minutes."
+              },
+              {
+                "fact_id": "X-H04-F05",
+                "fact": "Monthly fee is 3200 currency units."
+              },
+              {
+                "fact_id": "X-H04-F06",
+                "fact": "March uptime is 99.955197%."
+              },
+              {
+                "fact_id": "X-H04-F07",
+                "fact": "Enterprise credit is 10%."
+              },
+              {
+                "fact_id": "X-H04-F08",
+                "fact": "The nominal credit is 320.00 currency units."
+              },
+              {
+                "fact_id": "X-H04-F09",
+                "fact": "August 10 is 20 calendar days before August 30."
+              },
+              {
+                "fact_id": "X-H04-F10",
+                "fact": "The notice misses the annual-specific 30-day requirement."
+              },
+              {
+                "fact_id": "X-H04-F11",
+                "fact": "General cancellation wording says 48 hours."
+              },
+              {
+                "fact_id": "X-H04-F12",
+                "fact": "Do not guarantee that the general clause overrides the annual clause."
+              },
+              {
+                "fact_id": "X-H04-F13",
+                "fact": "Seek Billing confirmation for the late annual notice."
+              },
+              {
+                "fact_id": "X-H04-F14",
+                "fact": "April 30 is 30 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F15",
+                "fact": "The independent April 30 filing is timely under the supplied date convention."
+              },
+              {
+                "fact_id": "X-H04-F16",
+                "fact": "May 1 is 31 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F17",
+                "fact": "The independent May 1 claim is permanently forfeited."
+              },
+              {
+                "fact_id": "X-H04-F18",
+                "fact": "A valid accepted claim yields a future-invoice credit."
+              },
+              {
+                "fact_id": "X-H04-F19",
+                "fact": "The credit cannot be cashed out."
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_precision",
+            "stage": "generation",
+            "question": "For X-H04 (Zenith: late renewal notice and claim boundary), does each attached document/page/section citation support its particular policy claim? Inspect the cited source text rather than accepting matching page labels.",
+            "required_inputs": [
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No cited claim–source pairs are supported.",
+              "1": "Some cited pairs are supported.",
+              "2": "All cited pairs are supported by the actual cited page/section.",
+              "not_applicable": "No citations; assess citation coverage separately."
+            }
+          },
+          "inputs": {
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted.",
+            "citations": [],
+            "cited_source_passages": []
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_coverage",
+            "stage": "generation",
+            "question": "For X-H04, does every externally verifiable policy claim about Zenith: late renewal notice and claim boundary have a valid supporting PDF citation? Exclude facts explicitly supplied in the question and separately attributed DB/calculator results.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No externally verifiable policy claim has a valid citation.",
+              "1": "Some policy claims have valid citations.",
+              "2": "All externally verifiable policy claims have valid supporting citations.",
+              "not_applicable": "No externally verifiable policy claims are made."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted.",
+            "citations": [],
+            "cited_source_passages": []
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "relevance",
+            "stage": "generation",
+            "question": "Does the answer directly address X-H04: Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal. without unrelated policy exposition?",
+            "required_inputs": [
+              "question",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Answer does not address the request.",
+              "1": "Useful answer mixed with distracting unrelated content.",
+              "2": "Focused on the request."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "uncertainty",
+            "stage": "generation",
+            "question": "For X-H04, does the answer handle these case-specific gaps and pitfalls appropriately: Treat general 48-hour language as a guaranteed annual override.; Treat May 1 as timely or let the earlier hypothetical filing rescue the independent late filing.? Answer supported parts and avoid both fabrication and unnecessary refusal.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answerability",
+              "missing_information",
+              "prohibited_claims",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Fabricates missing facts, asserts unjustified certainty, or refuses an answerable request.",
+              "1": "Identifies only some limitations or gives vague qualifications.",
+              "2": "Answers supported parts, identifies relevant gaps/conflicts, and avoids unnecessary refusal."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "answerability": "answerable",
+            "missing_information": [],
+            "prohibited_claims": [
+              "Treat general 48-hour language as a guaranteed annual override.",
+              "Treat May 1 as timely or let the earlier hypothetical filing rescue the independent late filing."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "X-H04-F01",
+                "fact": "Zenith is Enterprise."
+              },
+              {
+                "fact_id": "X-H04-F02",
+                "fact": "Its cycle is annual."
+              },
+              {
+                "fact_id": "X-H04-F03",
+                "fact": "Recorded renewal date is 2024-08-30."
+              },
+              {
+                "fact_id": "X-H04-F04",
+                "fact": "March downtime is 20 minutes."
+              },
+              {
+                "fact_id": "X-H04-F05",
+                "fact": "Monthly fee is 3200 currency units."
+              },
+              {
+                "fact_id": "X-H04-F06",
+                "fact": "March uptime is 99.955197%."
+              },
+              {
+                "fact_id": "X-H04-F07",
+                "fact": "Enterprise credit is 10%."
+              },
+              {
+                "fact_id": "X-H04-F08",
+                "fact": "The nominal credit is 320.00 currency units."
+              },
+              {
+                "fact_id": "X-H04-F09",
+                "fact": "August 10 is 20 calendar days before August 30."
+              },
+              {
+                "fact_id": "X-H04-F10",
+                "fact": "The notice misses the annual-specific 30-day requirement."
+              },
+              {
+                "fact_id": "X-H04-F11",
+                "fact": "General cancellation wording says 48 hours."
+              },
+              {
+                "fact_id": "X-H04-F12",
+                "fact": "Do not guarantee that the general clause overrides the annual clause."
+              },
+              {
+                "fact_id": "X-H04-F13",
+                "fact": "Seek Billing confirmation for the late annual notice."
+              },
+              {
+                "fact_id": "X-H04-F14",
+                "fact": "April 30 is 30 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F15",
+                "fact": "The independent April 30 filing is timely under the supplied date convention."
+              },
+              {
+                "fact_id": "X-H04-F16",
+                "fact": "May 1 is 31 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F17",
+                "fact": "The independent May 1 claim is permanently forfeited."
+              },
+              {
+                "fact_id": "X-H04-F18",
+                "fact": "A valid accepted claim yields a future-invoice credit."
+              },
+              {
+                "fact_id": "X-H04-F19",
+                "fact": "The credit cannot be cashed out."
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "source_attribution",
+            "stage": "generation",
+            "question": "For X-H04 (Zenith: late renewal notice and claim boundary), are stored customer/incident attributes distinguished from visible hypothetical assumptions, policy rules from each PDF, and calculations? Check especially: Treat general 48-hour language as a guaranteed annual override.; Treat May 1 as timely or let the earlier hypothetical filing rescue the independent late filing.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "database_results",
+              "retrieved_document_chunks",
+              "calculator_trace",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Materially conflates stored facts, user assumptions, policy rules, and derived results.",
+              "1": "Attribution is partly clear but contains a material conflation.",
+              "2": "Clearly distinguishes DB facts, visible assumptions, PDF rules, and calculated conclusions."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "database_results": [
+              {
+                "sql": "SELECT c.company_name, c.tier, c.region, s.plan_name, s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date, GROUP_CONCAT(i.ticket_id || '|' || i.downtime_minutes || '|' || i.reported_at || '|' || i.resolved_at || '|' || i.status || '|' || i.sla_breached) AS tickets\nFROM customers c\nJOIN subscriptions s ON c.customer_id = s.customer_id\nLEFT JOIN incident_tickets i ON c.customer_id = i.customer_id AND i.reported_at >= '2024-03-01' AND i.reported_at < '2024-04-01'\nWHERE c.company_name = 'Zenith Cloud Robotics'\nGROUP BY c.customer_id;",
+                "parameters": {},
+                "columns": [
+                  "company_name",
+                  "tier",
+                  "region",
+                  "plan_name",
+                  "billing_cycle",
+                  "monthly_rate",
+                  "start_date",
+                  "renewal_date",
+                  "tickets"
+                ],
+                "rows": [
+                  [
+                    "Zenith Cloud Robotics",
+                    "Enterprise",
+                    "Asia Pacific",
+                    "Enterprise Robotics Orchestrator",
+                    "annual",
+                    3200.0,
+                    "2023-08-30",
+                    "2024-08-30",
+                    "7|20|2024-03-02T09:00:00Z|2024-03-02T09:20:00Z|resolved|0"
+                  ]
+                ],
+                "truncated": false
+              },
+              {
+                "sql": "SELECT c.company_name, c.tier, c.region, s.plan_name, s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date, GROUP_CONCAT(i.ticket_id || '|' || i.downtime_minutes || '|' || i.reported_at || '|' || i.resolved_at || '|' || i.status || '|' || i.sla_breached) AS tickets\nFROM customers c\nJOIN subscriptions s ON c.customer_id = s.customer_id\nLEFT JOIN incident_tickets i ON c.customer_id = i.customer_id AND i.reported_at >= '2024-03-01' AND i.reported_at < '2024-04-01'\nWHERE c.company_name = 'Zenith Cloud Robotics'\nGROUP BY c.customer_id;",
+                "parameters": {},
+                "columns": [
+                  "company_name",
+                  "tier",
+                  "region",
+                  "plan_name",
+                  "billing_cycle",
+                  "monthly_rate",
+                  "start_date",
+                  "renewal_date",
+                  "tickets"
+                ],
+                "rows": [
+                  [
+                    "Zenith Cloud Robotics",
+                    "Enterprise",
+                    "Asia Pacific",
+                    "Enterprise Robotics Orchestrator",
+                    "annual",
+                    3200.0,
+                    "2023-08-30",
+                    "2024-08-30",
+                    "7|20|2024-03-02T09:00:00Z|2024-03-02T09:20:00Z|resolved|0"
+                  ]
+                ],
+                "truncated": false
+              }
+            ],
+            "retrieved_document_chunks": [
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "1.2 Subscription Cycles and Billing Options",
+                "node_id": "67d097c8-5bea-5282-8291-8016371081b7",
+                "chunk_id": "67d097c8-5bea-5282-8291-8016371081b7",
+                "section": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 573,
+                "token_count_approx": 105,
+                "chunk_index": 2,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 1.2 Subscription Cycles and Billing Options\n\nCloudScale offers two recurring subscription billing options for enterprise accounts:\n\n- Monthly Billing Cycle: Subscriptions are invoiced every 30 calendar days in advance. This option provides operational agility with no long-term contractual commitment.\n- Annual Billing Cycle: Subscriptions are prepaid in advance for a continuous 12-month period. Clients selecting the annual billing cycle receive an immediate 15% upfront discount relative to standard monthly rates across all compute tiers and base platform licenses.",
+                "score": 0.8657112586476006,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 1146.2154170003487,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "1.3 Automatic Subscription Renewal",
+                "node_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+                "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+                "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 489,
+                "token_count_approx": 94,
+                "chunk_index": 3,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 1.3 Automatic Subscription Renewal\n\nAll enterprise subscriptions renew automatically at the expiration of the active billing period to guarantee uninterrupted service:\n\n- Monthly Plans: Renew automatically every 30 days unless cancelled at least 48 hours prior to the next billing date.\n- Annual Plans: Renew automatically for successive 12-month terms unless a written cancellation notice is received at least 30 calendar days prior to the annual contract expiration anniversary date.",
+                "score": 0.7723768907731091,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 1146.2154170003487,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "3. Cancellation & Refund Windows / 3.3 Monthly Subscriptions Refund Policy",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "3.3 Monthly Subscriptions Refund Policy",
+                "node_id": "c9d163e2-5d47-5a7b-a268-e470d6b1fc1c",
+                "chunk_id": "c9d163e2-5d47-5a7b-a268-e470d6b1fc1c",
+                "section": "3. Cancellation & Refund Windows / 3.3 Monthly Subscriptions Refund Policy",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 280,
+                "token_count_approx": 50,
+                "chunk_index": 12,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.3 Monthly Subscriptions Refund Policy\n\nMonthly subscriptions are strictly non-refundable once the monthly cycle begins. Cancellation terminates future renewal charges, and services remain active until the end of the current 30-day period without partial or prorated refunds.",
+                "score": 0.5877313751326672,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 1146.2154170003487,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "1.1 Purpose and Scope",
+                "node_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+                "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+                "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 436,
+                "token_count_approx": 73,
+                "chunk_index": 1,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 1.1 Purpose and Scope\n\nThis Enterprise Billing, Payment and Refund Policy establishes the official commercial terms governing enterprise subscriptions, software licensing, cloud compute resources, and auxiliary professional services provided by CloudScale Inc. (\"CloudScale\"). This document uses simple, unambiguous English wording to enable direct, factual retrieval and reference by enterprise customers and automated audit tools.",
+                "score": 0.5849224605191623,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 1146.2154170003487,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.3 Ongoing Incident Communication Cadence",
+                "node_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 434,
+                "token_count_approx": 78,
+                "chunk_index": 34,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.3 Ongoing Incident Communication Cadence\n\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n\n- Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional customers receive updates every 2 hours.\n- Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers receive updates every 6 hours.",
+                "score": 0.5118589717379982,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 1146.2154170003487,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+                "page_number": 3,
+                "page_numbers": [
+                  3
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "4.4 Credit Rules and Maximum Limitations",
+                "node_id": "625c2699-fd77-5575-8145-178f5ab09673",
+                "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+                "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 429,
+                "token_count_approx": 85,
+                "chunk_index": 31,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 4.4 Credit Rules and Maximum Limitations\n\n- Monthly Cap: Total service credits issued in any single calendar month shall not exceed 100% of the customer's monthly recurring fee for that month.\n- Non-Refundable: Service credits cannot be exchanged for cash refunds, wire transfers, or credit card chargebacks.\n- Sole Financial Remedy: Service credits constitute the customer's sole and exclusive financial remedy for downtime.",
+                "score": 0.7420267256168801,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 400.6037860017386,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "3. Service Availability & Uptime Commitments / 3.3 Scheduled Maintenance Policy",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "3.3 Scheduled Maintenance Policy",
+                "node_id": "bdc84a33-0d33-5025-9d3d-1b1beac788d2",
+                "chunk_id": "bdc84a33-0d33-5025-9d3d-1b1beac788d2",
+                "section": "3. Service Availability & Uptime Commitments / 3.3 Scheduled Maintenance Policy",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 948,
+                "token_count_approx": 173,
+                "chunk_index": 27,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.3 Scheduled Maintenance Policy\n\nMaintenance is required to apply security patches, upgrade operating systems, and perform hardware maintenance:\n\n- Advance Notice Period: CloudScale will provide a mandatory minimum of forty-eight (48) hours advance written notice prior to any scheduled maintenance. Notice is published on the status portal (https://status.cloudscale.io) and emailed to account administrators.\n- Standard Window: Scheduled maintenance is conducted during off-peak hours on Sundays between 01:00 UTC and 05:00 UTC.\n- Monthly Cap: Scheduled maintenance shall not exceed four (4) cumulative hours in any single calendar month. Any maintenance beyond 4 hours, or conducted without 48 hours notice, counts as Downtime.\n- Emergency Maintenance: In critical situations (e.g., zero-day security vulnerabilities), CloudScale may conduct emergency maintenance with at least one (1) hour advance notice or immediate post-incident notice.",
+                "score": 0.7250866758695285,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 400.6037860017386,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "3.2 Definition of Downtime and Calculation Formula",
+                "node_id": "216f7d1e-f6f8-5eaf-b38f-8170d4afe144",
+                "chunk_id": "216f7d1e-f6f8-5eaf-b38f-8170d4afe144",
+                "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 943,
+                "token_count_approx": 170,
+                "chunk_index": 26,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.2 Definition of Downtime and Calculation Formula\n\nDowntime is defined as any continuous period of one (1) minute or more where covered platform services are completely inaccessible across all availability zones, or where the HTTP server error rate (HTTP 5xx responses) exceeds five percent (5.0%) across all valid customer API requests. The Monthly Uptime Percentage is calculated using the following standard formula:\n\n$$\\text{Monthly Uptime Percentage} = \\left(\\frac{\\text{Total Scheduled Minutes in Month} - \\text{Downtime Minutes}}{\\text{Total Scheduled Minutes in Month}}\\right) \\times 100\n\nFormula: Monthly Uptime Percentage = ((Total Scheduled Minutes in Month - Downtime Minutes) / Total Scheduled Minutes in Month) * 100$$\n\nService availability is measured by automated synthetic probes executing health checks every sixty (60) seconds from five external global regions (US-East, US-West, EU-Central, AP-East, and AU-Southeast).",
+                "score": 0.5,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 400.6037860017386,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "1.1 Covered Services (In-Scope Components)",
+                "node_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+                "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+                "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 732,
+                "token_count_approx": 113,
+                "chunk_index": 22,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 1.1 Covered Services (In-Scope Components)\n\nThis SLA governs the operational uptime, availability, and technical support for three core platform systems:\n\n1. Cloud Infrastructure: Scalable virtual compute instances, software-defined virtual private clouds (VPCs), edge load balancers, persistent block storage volumes, and distributed object storage.\n2. Managed Database Engine: High-availability managed PostgreSQL clusters and distributed cache nodes, including automated failover, cluster synchronization, and continuous transactional backups.\n3. CloudScale API Platform: Public REST API endpoints, GraphQL queries and mutations, incoming/outgoing webhook dispatch engines, and customer identity/authentication microservices.",
+                "score": 0.4593221036331343,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 400.6037860017386,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+                "page_number": 3,
+                "page_numbers": [
+                  3
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "4.3 Claim Submission Procedure and 30-Day Window",
+                "node_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+                "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+                "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 730,
+                "token_count_approx": 141,
+                "chunk_index": 30,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 4.3 Claim Submission Procedure and 30-Day Window\n\nCustomers must strictly follow this procedure to submit a service credit claim:\n\n1. Filing Window: Claims must be submitted within thirty (30) calendar days following the end of the calendar month during which downtime occurred. Claims filed after 30 calendar days are permanently forfeited.\n2. Submission Channel: Claims must be submitted via email to billing-credits@cloudscale.io or through the CloudScale billing portal ticket system.\n3. Required Documentation: Claims must include: (a) Account ID and Organization Name; (b) exact dates, start times, and duration of the outage; (c) specific impacted service endpoints; and (d) customer-side error logs or traceroute data.",
+                "score": 0.42639250977052984,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 400.6037860017386,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+                "node_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+                "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+                "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 617,
+                "token_count_approx": 89,
+                "chunk_index": 20,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "## CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy\n\nEnterprise Cloud Infrastructure, Managed Database Engine, and Developer API Platform\n\n| Document ID:    | DOC-SLA-2024-V2                   | Effective Date:   | January 15, 2024                     |\n|-----------------|-----------------------------------|-------------------|--------------------------------------|\n| Version:        | 2.0 (Supersedes DOC-SLA- 2023-V1) | Classification:   | Public Customer Policy               |\n| Target Systems: | Infrastructure, Database, API     | Review Cycle:     | Annual (Next Review: Jan- uary 2025) |",
+                "score": 0.28104346582730544,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 439.72697500066715,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "3.1 Cancellation Submission Process",
+                "node_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+                "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+                "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 305,
+                "token_count_approx": 52,
+                "chunk_index": 10,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.1 Cancellation Submission Process\n\nClients may initiate subscription cancellation via the CloudScale Admin Console (https://console.cloudscale.io/ billing) or by emailing written notice to billing@cloudscale.io. Cancellation notices must be received at least 48 hours prior to the next billing date.",
+                "score": 0.8048101959297393,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 948.1732320018637,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-BIL-2024-V3",
+                "version": "3.0",
+                "effective_date": "February 1, 2024",
+                "classification": "Enterprise Customer Policy",
+                "review_cycle": "Annual (Next Review: February 2025)",
+                "target_audience": "Finance, Procurement, Billing Admins",
+                "document_id": "DOC-BIL-2024-V3",
+                "source_file": "enterprise_billing_and_refund_policy.pdf",
+                "file_path": "/app/data/documents/enterprise_billing_and_refund_policy.pdf",
+                "source_sha256": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+                "header_path": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-BIL-2024-V3",
+                "clause_title": "3.2 Annual Plans: 14-Day Money-Back Guarantee",
+                "node_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+                "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+                "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 693,
+                "token_count_approx": 132,
+                "chunk_index": 11,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.2 Annual Plans: 14-Day Money-Back Guarantee\n\nCloudScale provides a 14-day money-back guarantee for annual enterprise plans, subject to two strict requirements:\n\n- Submission Window: The refund request must be delivered in writing within 14 calendar days of the initial service activation date.\n- Usage Limit Requirement: Total compute usage during the initial 14-day window must remain under 50 computing hours. If telemetry logs show 50 or more computing hours consumed, the annual subscription becomes strictly non-refundable.\n- Post-14-Day Cancellations: Requests submitted after the 14-day window are non-refundable. Platform access continues until the end of the paid 12-month term.",
+                "score": 0.6025214940514004,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 948.1732320018637,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+                "page_number": 2,
+                "page_numbers": [
+                  2,
+                  3
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "4.2 Service Credit Brackets",
+                "node_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+                "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+                "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 1632,
+                "token_count_approx": 174,
+                "chunk_index": 29,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 4.2 Service Credit Brackets\n\nService credit percentages are determined by the customer subscription tier and actual monthly uptime achieved:\n\nTable 2: Service Credit Compensation Brackets by Subscription Tier\n\n| Monthly Uptime %                                                                     | Enterprise Credit                                                                               | Professional Credit                                                                              | Application Mechanism                                                                                                                                                                    |\n|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| 99.90% to < 99.99% 99.00% to < 99.90% 98.00% to < 99.00% 95.00% to < 98.00% < 95.00% | 10% of Monthly Fee 25% of Monthly Fee 50% of Monthly Fee 50% of Monthly Fee 100% of Monthly Fee | SLA Target Met (0%) 10% of Monthly Fee 25% of Monthly Fee 50% of Monthly Fee 100% of Monthly Fee | Applied to subsequent billing invoice Applied to subsequent billing invoice Applied to subsequent billing invoice Applied to subsequent billing invoice Maximum allowable monthly credit |",
+                "score": 0.8662223208812235,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 407.4275869970734,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "4.1 Eligibility Overview & Starter Exclusion",
+                "node_id": "00627fcc-426c-5712-a522-be036515415c",
+                "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+                "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 418,
+                "token_count_approx": 76,
+                "chunk_index": 28,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 4.1 Eligibility Overview & Starter Exclusion\n\nIf CloudScale fails to meet its monthly uptime commitment, eligible customers may request a Service Credit. Service Credits represent a percentage discount credited against future monthly invoices.\n\nStarter Tier Exclusion: The Starter tier is expressly excluded from receiving service credits. Starter tier customers receive 0% service credits under all circumstances.",
+                "score": 0.4888597104522937,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 407.4275869970734,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "6. Exclusions & Limitations",
+                "page_number": 5,
+                "page_numbers": [
+                  5
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "6. Exclusions & Limitations",
+                "node_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+                "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+                "section": "6. Exclusions & Limitations",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 1833,
+                "token_count_approx": 298,
+                "chunk_index": 36,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "## 6. Exclusions & Limitations\n\nThe following circumstances are expressly excluded from the calculation of Downtime and are not eligible for Service Credits:\n\n1. Client Misconfigurations: Unavailability caused by client configuration errors, invalid custom code, improper database queries, customer firewall misconfigurations, or expired SSL/TLS certificates uploaded by the client.\n2. Unauthorized Modifications: System disruptions resulting from customer actions that violate CloudScale documentation, unapproved administrative overrides, or unsupported third-party software installations.\n3. Third-Party Internet & External Outages: Outages caused by external internet service providers (ISPs), public BGP routing disruptions, upstream transit carrier failures, or client telecommunication lines outside CloudScale's core data center edge.\n4. Force Majeure Events: Unforeseeable events beyond CloudScale's reasonable control, including natural catastrophes (floods, earthquakes, severe storms), war, civil disturbance, national electrical grid failure, or government sanctions.\n5. Beta & Pre-Release Services: Features, APIs, or products explicitly designated as \"Beta\", \"Preview\", \"Experimental\", or \"Early Access\", which are offered \"as-is\" without performance guarantees.\n6. Resource Quota Violations & Rate Throttling: Service degradation or rejected requests resulting from customer traffic exceeding agreed contractual quotas or unthrottled client loops triggering automated rate limiters.\n7. Properly Announced Scheduled Maintenance: Maintenance executed within designated windows adhering to the mandatory 48-hour advance notification requirement.\n8. Account Suspensions: Outages caused by account suspension or termination due to overdue unpaid invoices or material violations of CloudScale's Acceptable Use Policy (AUP).",
+                "score": 0.32443166332386764,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 407.4275869970734,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.2 Response Time Matrix",
+                "node_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 1164,
+                "token_count_approx": 225,
+                "chunk_index": 33,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.2 Response Time Matrix\n\nInitial response time is defined as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer.\n\nTable 3: Support Severity Levels and Guaranteed Initial Response Times\n\n| Severity Level        | Operational Impact          | Starter Tier                 | Professional Tier            | Enterprise Tier               |\n|-----------------------|-----------------------------|------------------------------|------------------------------|-------------------------------|\n| Severity 1 (Critical) | Total production out- age   | Community Sup- port (No SLA) | ≤ 2 Hours (24/7/365)         | ≤ 30 Minutes (24/7 Dedicated) |\n| Severity 2 (Major)    | Core features impaired      | Community Sup- port (No SLA) | ≤ 6 Hours (Busi- ness Hours) | ≤ 2 Hours (24/7/365)          |\n| Severity 3 (Minor)    | Non-critical defect / bug   | Community Sup- port (No SLA) | ≤ 24 Hours (Busi- ness Days) | ≤ 12 Hours (24/5 Business)    |\n| Severity 4 (Guidance) | General inquiry / re- quest | Community Sup- port (No SLA) | ≤ 48 Hours (Busi- ness Days) | ≤ 24 Hours (Busi- ness Days)  |",
+                "score": 0.742680840988767,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 462.2724799992284,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.1 Incident Severity Definitions",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.1 Incident Severity Definitions",
+                "node_id": "306542a2-f28f-5f9b-be5b-d476def5613d",
+                "chunk_id": "306542a2-f28f-5f9b-be5b-d476def5613d",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.1 Incident Severity Definitions",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 919,
+                "token_count_approx": 154,
+                "chunk_index": 32,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.1 Incident Severity Definitions\n\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n\n- Severity 1 (Critical): Complete production outage, total loss of database services, or primary API failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n- Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300% over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput is degraded.\n- Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic portal bugs. Production systems remain operational without material impairment.\n- Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries, or enhancement requests. Zero impact on production systems.",
+                "score": 0.6742905454557957,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 462.2724799992284,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "2. Subscription Tiers",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "2. Subscription Tiers",
+                "node_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "section": "2. Subscription Tiers",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 1432,
+                "token_count_approx": 229,
+                "chunk_index": 24,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "## 2. Subscription Tiers\n\nCloudScale offers three subscription tiers designed to match different workload maturity, scalability, and operational support requirements:\n\n- Starter Tier: Created for individual developers, sandbox testing, and non-production proofs of concept. Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response time SLAs, and are entirely excluded from service credit eligibility.\n- Professional Tier: Engineered for growing commercial businesses, standard production web platforms, and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call coverage for critical outages, and eligibility for financial service credits if availability targets are missed.\n- Enterprise Tier: Architected for mission-critical enterprise systems requiring continuous availability, massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our highest availability commitment of 99.99% uptime.",
+                "score": 0.550711021827702,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 462.2724799992284,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "3. Service Availability & Uptime Commitments / 3.1 Monthly Availability Commitments",
+                "page_number": 2,
+                "page_numbers": [
+                  2
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "3.1 Monthly Availability Commitments",
+                "node_id": "dcd065b7-5b57-569c-b24a-6e3467288dd5",
+                "chunk_id": "dcd065b7-5b57-569c-b24a-6e3467288dd5",
+                "section": "3. Service Availability & Uptime Commitments / 3.1 Monthly Availability Commitments",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 982,
+                "token_count_approx": 148,
+                "chunk_index": 25,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 3.1 Monthly Availability Commitments\n\nCloudScale measures service availability monthly across each calendar month. The uptime target represents the percentage of scheduled minutes during which covered services remain reachable, responsive, and error-free.\n\nTable 1: Service Availability Commitments and Maximum Allowable Monthly Downtime\n\n| Subscription Tier   | Monthly Uptime Target   | Max Allowed Downtime (30-day mo.)   | High- Availability Architecture       |\n|---------------------|-------------------------|-------------------------------------|---------------------------------------|\n| Starter             | 99.00%                  | 7 hours, 12 minutes (432.0 min)     | Shared cluster infrastructure         |\n| Professional        | 99.90%                  | 43 minutes, 12 seconds (43.2 min)   | High- availability Multi-AZ clus- ter |\n| Enterprise          | 99.99%                  | 4 minutes, 19 seconds (4.32 min)    | Multi-Region active-active failover   |",
+                "score": 0.4960802205885127,
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 462.2724799992284,
+                  "rerank_ms": 0
+                }
+              }
+            ],
+            "calculator_trace": [
+              {
+                "event_id": "7180ab87-45d0-4ff3-84a6-17e0e71d4738",
+                "run_id": "76ca4d6a-f038-4db2-9884-152fa8a31b56",
+                "parent_id": "8f28d615-6720-4272-8024-3189971cb22e",
+                "dispatch_sequence": 16,
+                "name": "calculate",
+                "inputs": {
+                  "operation": "date_difference",
+                  "start_date": "2024-08-30",
+                  "end_date": "2024-08-10"
+                },
+                "started_at": "2026-10-23T01:46:39.883164+00:00",
+                "status": "ok",
+                "attempt": 1,
+                "output": {
+                  "operation": "date_difference",
+                  "inputs": {
+                    "start_date": "2024-08-30",
+                    "end_date": "2024-08-10"
+                  },
+                  "value": -20,
+                  "units": "calendar_days",
+                  "status": "ok"
+                },
+                "duration_ms": 0.248,
+                "finished_at": "2026-10-23T01:46:39.883517+00:00"
+              },
+              {
+                "event_id": "5b0fe2e5-4bc0-4c6e-bccb-6e522a391e61",
+                "run_id": "76ca4d6a-f038-4db2-9884-152fa8a31b56",
+                "parent_id": "d1d0de6f-277d-4acb-a469-9b93b2eb90c2",
+                "dispatch_sequence": 25,
+                "name": "calculate",
+                "inputs": {
+                  "operation": "month_minutes",
+                  "year": 2024,
+                  "month": 3
+                },
+                "started_at": "2026-10-23T01:46:46.955944+00:00",
+                "status": "ok",
+                "attempt": 1,
+                "output": {
+                  "operation": "month_minutes",
+                  "inputs": {
+                    "year": 2024,
+                    "month": 3
+                  },
+                  "value": 44640,
+                  "units": "minutes",
+                  "status": "ok"
+                },
+                "duration_ms": 0.507,
+                "finished_at": "2026-10-23T01:46:46.956569+00:00"
+              },
+              {
+                "event_id": "03fd6e7f-0cf5-49e7-9665-576ae469561e",
+                "run_id": "76ca4d6a-f038-4db2-9884-152fa8a31b56",
+                "parent_id": "204fa342-8cdd-43e6-b23b-79aa853db5e1",
+                "dispatch_sequence": 28,
+                "name": "calculate",
+                "inputs": {
+                  "operation": "evaluate",
+                  "expression": "(44640 - 20) / 44640 * 100"
+                },
+                "started_at": "2026-10-23T01:46:50.025495+00:00",
+                "status": "ok",
+                "attempt": 1,
+                "output": {
+                  "operation": "evaluate",
+                  "inputs": {
+                    "expression": "(44640 - 20) / 44640 * 100"
+                  },
+                  "value": "99.95519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713261648745519713",
+                  "numerator": 55775,
+                  "denominator": 558,
+                  "money_display": "99.96",
+                  "units": "number",
+                  "status": "ok"
+                },
+                "duration_ms": 3.969,
+                "finished_at": "2026-10-23T01:46:50.029592+00:00"
+              },
+              {
+                "event_id": "8372a6e0-fd83-48fe-8be3-4c7d00549825",
+                "run_id": "76ca4d6a-f038-4db2-9884-152fa8a31b56",
+                "parent_id": "639ac861-87f5-49b4-bf26-8e70f7e9cbf1",
+                "dispatch_sequence": 31,
+                "name": "calculate",
+                "inputs": {
+                  "operation": "evaluate",
+                  "expression": "3200 * 0.10"
+                },
+                "started_at": "2026-10-23T01:46:52.959711+00:00",
+                "status": "ok",
+                "attempt": 1,
+                "output": {
+                  "operation": "evaluate",
+                  "inputs": {
+                    "expression": "3200 * 0.10"
+                  },
+                  "value": "320",
+                  "numerator": 320,
+                  "denominator": 1,
+                  "money_display": "320.00",
+                  "units": "number",
+                  "status": "ok"
+                },
+                "duration_ms": 0.355,
+                "finished_at": "2026-10-23T01:46:52.960133+00:00"
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "unsupported_financial_claims",
+            "stage": "generation",
+            "question": "For X-H04, does the answer avoid these specific unsupported financial conclusions: Treat general 48-hour language as a guaranteed annual override.; Treat May 1 as timely or let the earlier hypothetical filing rescue the independent late filing.? Do not infer currency, invoice age, entitlement, or refundability from unrelated fields.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "missing_information",
+              "prohibited_claims",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Makes a prohibited or unsupported financial conclusion.",
+              "1": "Financial conclusion is partly qualified but still materially overstates evidence.",
+              "2": "Financial conclusions respect the policy, supplied assumptions, and missing information."
+            }
+          },
+          "inputs": {
+            "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+            "input_context": [
+              "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+              "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+              "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+              "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+              "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+              "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+              "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "X-H04-F01",
+                "fact": "Zenith is Enterprise."
+              },
+              {
+                "fact_id": "X-H04-F02",
+                "fact": "Its cycle is annual."
+              },
+              {
+                "fact_id": "X-H04-F03",
+                "fact": "Recorded renewal date is 2024-08-30."
+              },
+              {
+                "fact_id": "X-H04-F04",
+                "fact": "March downtime is 20 minutes."
+              },
+              {
+                "fact_id": "X-H04-F05",
+                "fact": "Monthly fee is 3200 currency units."
+              },
+              {
+                "fact_id": "X-H04-F06",
+                "fact": "March uptime is 99.955197%."
+              },
+              {
+                "fact_id": "X-H04-F07",
+                "fact": "Enterprise credit is 10%."
+              },
+              {
+                "fact_id": "X-H04-F08",
+                "fact": "The nominal credit is 320.00 currency units."
+              },
+              {
+                "fact_id": "X-H04-F09",
+                "fact": "August 10 is 20 calendar days before August 30."
+              },
+              {
+                "fact_id": "X-H04-F10",
+                "fact": "The notice misses the annual-specific 30-day requirement."
+              },
+              {
+                "fact_id": "X-H04-F11",
+                "fact": "General cancellation wording says 48 hours."
+              },
+              {
+                "fact_id": "X-H04-F12",
+                "fact": "Do not guarantee that the general clause overrides the annual clause."
+              },
+              {
+                "fact_id": "X-H04-F13",
+                "fact": "Seek Billing confirmation for the late annual notice."
+              },
+              {
+                "fact_id": "X-H04-F14",
+                "fact": "April 30 is 30 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F15",
+                "fact": "The independent April 30 filing is timely under the supplied date convention."
+              },
+              {
+                "fact_id": "X-H04-F16",
+                "fact": "May 1 is 31 calendar days after March 31."
+              },
+              {
+                "fact_id": "X-H04-F17",
+                "fact": "The independent May 1 claim is permanently forfeited."
+              },
+              {
+                "fact_id": "X-H04-F18",
+                "fact": "A valid accepted claim yields a future-invoice credit."
+              },
+              {
+                "fact_id": "X-H04-F19",
+                "fact": "The credit cannot be cashed out."
+              }
+            ],
+            "missing_information": [],
+            "prohibited_claims": [
+              "Treat general 48-hour language as a guaranteed annual override.",
+              "Treat May 1 as timely or let the earlier hypothetical filing rescue the independent late filing."
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: verification_exhausted."
+          }
+        }
+      ]
+    },
+    "schema": {
+      "$defs": {
+        "Criterion": {
+          "additionalProperties": false,
+          "properties": {
+            "criterion_id": {
+              "title": "Criterion Id",
+              "type": "string"
+            },
+            "score": {
+              "anyOf": [
+                {
+                  "maximum": 2,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Score"
+            },
+            "reason": {
+              "title": "Reason",
+              "type": "string"
+            }
+          },
+          "required": [
+            "criterion_id",
+            "score",
+            "reason"
+          ],
+          "title": "Criterion",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "title": "Criteria",
+          "type": "array"
+        }
+      },
+      "required": [
+        "criteria"
+      ],
+      "title": "CriteriaResult",
+      "type": "object"
+    }
+  },
+  "result": {
+    "criteria": [
+      {
+        "criterion_id": "correctness",
+        "score": 0,
+        "reason": "The response gives none of the renewal, downtime, credit, notice, or claim-deadline conclusions."
+      },
+      {
+        "criterion_id": "completeness",
+        "score": 0,
+        "reason": "Omits all required facts, including the 320-unit credit, late notice, and April 30 versus May 1 claim outcomes."
+      },
+      {
+        "criterion_id": "citation_precision",
+        "score": null,
+        "reason": "No policy claim or citation is supplied to evaluate."
+      },
+      {
+        "criterion_id": "citation_coverage",
+        "score": null,
+        "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+      },
+      {
+        "criterion_id": "relevance",
+        "score": 0,
+        "reason": "The refusal does not address either hypothetical action."
+      },
+      {
+        "criterion_id": "uncertainty",
+        "score": 0,
+        "reason": "It refuses answerable portions instead of stating supported conclusions and relevant limits."
+      },
+      {
+        "criterion_id": "source_attribution",
+        "score": 0,
+        "reason": "No database facts, assumptions, policy rules, or calculations are distinguished."
+      },
+      {
+        "criterion_id": "unsupported_financial_claims",
+        "score": 2,
+        "reason": "It makes no unsupported credit, refund, or currency conclusion."
+      }
+    ]
+  },
+  "cost": null
+}

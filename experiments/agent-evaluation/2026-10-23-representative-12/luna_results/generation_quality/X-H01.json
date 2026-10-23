@@ -1,0 +1,44 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "correctness",
+      "score": 0,
+      "reason": "The response supplies no answer to the requested database and policy conclusions."
+    },
+    {
+      "criterion_id": "completeness",
+      "score": 0,
+      "reason": "No required answer facts are covered."
+    },
+    {
+      "criterion_id": "citation_precision",
+      "score": null,
+      "reason": "No policy claim or citation is supplied to evaluate."
+    },
+    {
+      "criterion_id": "citation_coverage",
+      "score": null,
+      "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+    },
+    {
+      "criterion_id": "relevance",
+      "score": 0,
+      "reason": "The refusal does not address the question."
+    },
+    {
+      "criterion_id": "uncertainty",
+      "score": 0,
+      "reason": "It refuses instead of answering supported parts or identifying specific missing information."
+    },
+    {
+      "criterion_id": "source_attribution",
+      "score": 0,
+      "reason": "No facts, assumptions, rules, or calculations are attributed."
+    },
+    {
+      "criterion_id": "unsupported_financial_claims",
+      "score": 2,
+      "reason": "No unsupported financial conclusion is made."
+    }
+  ]
+}

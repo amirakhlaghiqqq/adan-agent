@@ -1,0 +1,95 @@
+{
+  "questions": 12,
+  "suites": {
+    "rag": {
+      "questions": 8,
+      "status": {
+        "complete": 1,
+        "partial": 7
+      },
+      "stop_reasons": {
+        "completed": 3,
+        "max_document_followups": 1,
+        "generation_error": 1,
+        "max_database_followups": 2,
+        "verification_exhausted": 1
+      }
+    },
+    "coordinator": {
+      "questions": 4,
+      "status": {
+        "partial": 2,
+        "complete": 1,
+        "insufficient_evidence": 1
+      },
+      "stop_reasons": {
+        "max_database_followups": 1,
+        "completed": 1,
+        "generation_error": 2
+      }
+    }
+  },
+  "node_scores": {
+    "coordinator_score": {
+      "mean": 0.9166666666666666,
+      "scored_questions": 12,
+      "unscored": {}
+    },
+    "documents_score": {
+      "mean": 0.825,
+      "scored_questions": 8,
+      "unscored": {
+        "NO_REFERENCE": 4
+      }
+    },
+    "database_score": {
+      "mean": 0.625,
+      "scored_questions": 4,
+      "unscored": {
+        "NOT_APPLICABLE": 4,
+        "NO_REFERENCE": 4
+      }
+    },
+    "aggregation_score": {
+      "mean": 1.0,
+      "scored_questions": 8,
+      "unscored": {
+        "NO_REFERENCE": 4
+      }
+    },
+    "generate_score": {
+      "mean": 0.375,
+      "scored_questions": 8,
+      "unscored": {
+        "NO_REFERENCE": 4
+      }
+    },
+    "tools_score": {
+      "mean": 0.75,
+      "scored_questions": 2,
+      "unscored": {
+        "NOT_APPLICABLE": 4,
+        "NOT_RUN": 2,
+        "NO_REFERENCE": 4
+      }
+    },
+    "guard_score": {
+      "mean": 0.75,
+      "scored_questions": 4,
+      "unscored": {
+        "NOT_RUN": 4,
+        "NO_REFERENCE": 4
+      }
+    },
+    "finalize_score": {
+      "mean": 1,
+      "scored_questions": 12,
+      "unscored": {}
+    }
+  },
+  "judge_errors": 0,
+  "response_files": 12,
+  "provider_429_attempts": 12,
+  "router_fallback_runs": 12,
+  "median_duration_ms": 22646.6565
+}

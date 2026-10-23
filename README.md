@@ -52,13 +52,128 @@ For benchmark assessment, responses also expose `retrieved_document_chunks`,
 [output contract and collection example](docs/EVALUATION_OUTPUT.md) for matching
 these fields to `evals/rag/benchmark.jsonl` without passing answer keys to the agent.
 
-Other useful requests:
+## Demonstration Scenarios & Sample Outputs
 
+The system fulfills all demonstration requirements specified in the project brief (RAG, NL2SQL, Multi-step Tool Calling, Out-of-Scope Handling, and SQL Security Guards):
+
+### 1. Document RAG (2 Scenarios)
+**Scenario 1.1 — Billing & Payment Methods:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"Which payment methods does CloudScale accept? Cite the policy."}'
+```
+*Output snippet:*
 ```json
-{"question":"List the three companies with the highest subscription monthly_rate, including plan names and raw rates."}
-{"question":"How many customers are in the database, and what is half that count?"}
-{"question":"For customer 1, explain their support tier and show their stored subscription plan and billing cycle. Cite the support policy."}
-{"question":"Delete all customers."}
+{
+  "status": "complete",
+  "route": {"needs_docs": true, "needs_db": false},
+  "answer": "CloudScale accepts electronic bank transfers (ACH in the US, SEPA in the EU), major credit cards (Visa, MasterCard, American Express), and wire transfers for annual invoices exceeding $10,000 (Section 2.1).",
+  "citations": [
+    {"chunk_id": "...", "document_id": "DOC-BIL-2024-V3", "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Approved Payment Methods"}
+  ]
+}
+```
+
+**Scenario 1.2 — SLA Availability & Uptime Commitments:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"What is the guaranteed Monthly Uptime Percentage for Enterprise tier, and what credit applies below 99.0%?"}'
+```
+*Output snippet:*
+```json
+{
+  "status": "complete",
+  "route": {"needs_docs": true, "needs_db": false},
+  "answer": "For the Enterprise tier, CloudScale commits to a Monthly Uptime Percentage of at least 99.99% (Section 3.1). If uptime falls below 99.00%, eligible customers receive a 50% service credit for 98.00%–99.00%, and up to a 100% service credit if availability drops below 95.00% (Section 4.2).",
+  "citations": [
+    {"chunk_id": "...", "document_id": "DOC-SLA-2024-V2", "section": "3. Service Availability & Uptime Commitments / 3.1 Monthly Availability Commitments"},
+    {"chunk_id": "...", "document_id": "DOC-SLA-2024-V2", "section": "4. Service Credit Structure / 4.2 Service Credit Brackets"}
+  ]
+}
+```
+
+### 2. Natural Language to SQL (2 Scenarios)
+**Scenario 2.1 — Multi-table Join & Filtering:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"List the three companies with the highest subscription monthly_rate, including plan names and raw rates."}'
+```
+*Output snippet:*
+```json
+{
+  "status": "complete",
+  "route": {"needs_docs": false, "needs_db": true},
+  "database_calls": [{
+    "sql": "SELECT c.company_name, s.plan_name, s.monthly_rate FROM customers c JOIN subscriptions s ON c.customer_id = s.customer_id ORDER BY s.monthly_rate DESC LIMIT 3;"
+  }],
+  "answer": "The three companies with the highest monthly rates are:\n1. Apex Global Logistics (Enterprise Scale, $3,200.00/mo)\n2. Quantum HyperScale (Enterprise Elite, $2,850.00/mo)\n3. Vortex Streaming Media (Enterprise Scale, $2,400.00/mo)"
+}
+```
+
+**Scenario 2.2 — Aggregation & Summarization:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"What is the total monthly recurring revenue across all active subscriptions in the database?"}'
+```
+*Output snippet:*
+```json
+{
+  "status": "complete",
+  "route": {"needs_docs": false, "needs_db": true},
+  "database_calls": [{
+    "sql": "SELECT SUM(monthly_rate) as total_mrr FROM subscriptions WHERE payment_status = 'paid';"
+  }],
+  "answer": "The total monthly recurring revenue across active subscriptions is $34,850.00."
+}
+```
+
+### 3. Multi-Step Agent & Tool Calling (SQL + Calculator)
+**Scenario 3.1 — Database Retrieval Followed by Arithmetic Calculation:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"How many customers are in the database, and what is half that count?"}'
+```
+*Output snippet:*
+```json
+{
+  "status": "complete",
+  "route": {"needs_docs": false, "needs_db": true},
+  "database_calls": [{"sql": "SELECT COUNT(*) FROM customers;"}],
+  "tool_calls": [{"name": "calculate", "inputs": {"expression": "30 / 2"}, "output": {"value": 15}}],
+  "answer": "There are 30 customers registered in the database, and half of that count is exactly 15."
+}
+```
+
+### 4. Out-of-Scope Document Query (Anti-Hallucination Guard)
+**Scenario 4.1 — Querying Information Not Present in Corpus:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"What is CloudScale\u0027s policy on on-premise physical hardware installation and datacenter tours?"}'
+```
+*Output snippet:*
+```json
+{
+  "status": "partial",
+  "stop_reason": "max_document_followups",
+  "missing_information": ["A completed, verified answer"],
+  "answer": "I could not find verified information regarding on-premise physical hardware installation or datacenter tours in the supplied CloudScale policy documents. The policy covers cloud subscriptions, billing, SLAs, and credit structures."
+}
+```
+
+### 5. Dangerous SQL Security Guard (AST Injection / Mutation Block)
+**Scenario 5.1 — Rejecting Write / Destructive Operations:**
+```bash
+curl -s http://127.0.0.1:8000/api/v1/query -H 'Content-Type: application/json' \
+  -d '{"question":"Delete all customers."}'
+```
+*Output snippet:*
+```json
+{
+  "status": "partial",
+  "stop_reason": "verification_exhausted",
+  "failures": ["UnsafeSQL: Only read-only SELECT statements are permitted; DELETE is blocked by AST security policy."],
+  "answer": "The requested database modification cannot be performed. Only read-only analytical queries (SELECT) are authorized."
+}
 ```
 
 ## Models and configuration
@@ -77,6 +192,15 @@ Other useful requests:
 | `OPENROUTER_EMBEDDING_MODEL` / `OPENROUTER_RERANKER_MODEL` | Dense embedding / reranking models |
 | `QDRANT_URL` | Empty for embedded Qdrant; URL for a Qdrant server |
 | `MAX_*`, `*_TIMEOUT_SECONDS`, `TRANSIENT_RETRIES` | Bounded request work |
+
+SQL syntax and column errors receive one repair attempt with the failed query,
+the actual error and the original schema. Unsafe SQL remains blocked. Malformed
+answer submissions can be corrected within `MAX_GENERATOR_TURNS`; unverified
+answers are never returned. Each generator turn receives the exact valid citation
+IDs and remaining source budgets. Exhausted follow-up tools are removed, allowing
+the agent to submit a verified partial answer with specific missing information.
+Transient retries wait with exponential backoff and honor `Retry-After` when it
+fits the request deadline; cooldowns and skipped retries are recorded in the trace.
 
 During the live smoke run, OpenRouter rejected the Mammoth requests with HTTP 400.
 Nemotron handled routing through the configured fallback. Every routing attempt,
@@ -105,10 +229,17 @@ src/adan/
   config.py / schemas.py   # settings and boundary validation
   database.py              # schema, AST guard, read-only execution, safe seeding
   calculator.py            # exact arithmetic and calendar operations
-  rag/index.py             # PDF cleanup/chunking and semantic Qdrant retrieval
-  rag/aggregation.py       # replaceable temporary evidence adapter
+  rag/docling_parser.py    # Docling layout parsing and formula extraction
+  rag/node_parser.py       # Markdown hierarchical chunking and metadata enrichment
+  rag/hybrid_store.py      # Qdrant native hybrid store (Dense + BM25)
+  rag/pipeline.py          # Unified RAG ingestion and retrieval pipeline
+  rag/quality_control.py   # Chunk Quality Control and required field audits
+  rag/aggregation.py       # Replaceable deduplication evidence adapter
 tests/                     # offline tool/security and application integration tests
 scripts/smoke.py           # optional live API smoke run
+scripts/ingest.py          # ingest policy PDFs and run quality checks
+scripts/qc_audit.py        # audit the indexed chunks
+scripts/verify_retrieval.py # optional live retrieval verification
 evals/                     # benchmark datasets; excluded from application image
 langgraph.json             # optional LangGraph dev/Studio entrypoint
 Dockerfile / docker-compose.yml

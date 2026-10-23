@@ -16,7 +16,7 @@ RUN uv sync --frozen --no-dev --no-install-project
 COPY src ./src
 COPY data/documents/*.pdf ./data/documents/
 COPY data/database/app.db data/database/schema.sql data/database/seed_data.sql ./data/database/
-COPY config.py ingest.py qc_audit.py ./
+COPY scripts/ingest.py scripts/qc_audit.py ./scripts/
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 
 RUN uv sync --frozen --no-dev \

@@ -1,6 +1,14 @@
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    StrictBool,
+    StrictInt,
+    field_validator,
+    model_validator,
+)
 
 
 class Contract(BaseModel):
@@ -53,7 +61,10 @@ class SubmitAnswer(Contract):
     """Submit the supported answer after acquiring evidence and calculating required values."""
 
     answer: str = Field(min_length=1)
-    citation_ids: list[str]
+    citation_ids: list[str] = Field(
+        description="Exact retrieved chunk_id values; never document/section labels. "
+        "Use [] when no document is cited."
+    )
     status: Literal["complete", "partial", "insufficient_evidence"]
     missing_information: list[str]
 
@@ -77,8 +88,28 @@ class Calculate(Contract):
     expression: str | None = None
     year: StrictInt | None = None
     month: StrictInt | None = None
-    start_date: str | None = None
-    end_date: str | None = None
+    start_date: str | None = Field(
+        None,
+        pattern=r"^\d{4}-\d{2}-\d{2}$",
+        description="For date_difference: a YYYY-MM-DD calendar date, without a time component.",
+    )
+    end_date: str | None = Field(
+        None,
+        pattern=r"^\d{4}-\d{2}-\d{2}$",
+        description="For date_difference: a YYYY-MM-DD calendar date, without a time component.",
+    )
+
+    @model_validator(mode="after")
+    def required_operands(self):
+        required = {
+            "evaluate": ("expression",),
+            "month_minutes": ("year", "month"),
+            "date_difference": ("start_date", "end_date"),
+        }[self.operation]
+        missing = [name for name in required if getattr(self, name) is None]
+        if missing:
+            raise ValueError(self.operation + " requires " + ", ".join(missing))
+        return self
 
 
 class RunTimings(Contract):

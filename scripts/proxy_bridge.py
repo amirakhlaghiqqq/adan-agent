@@ -1,6 +1,8 @@
 """Lightweight TCP bridge to forward traffic to local proxy."""
+
 import socket
 import threading
+
 
 def forward(src, dst):
     try:
@@ -18,6 +20,7 @@ def forward(src, dst):
         except Exception:
             pass
 
+
 def handle(client):
     try:
         remote = socket.create_connection(("127.0.0.1", 10808))
@@ -26,6 +29,7 @@ def handle(client):
         return
     threading.Thread(target=forward, args=(client, remote), daemon=True).start()
     threading.Thread(target=forward, args=(remote, client), daemon=True).start()
+
 
 def main():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,6 +41,6 @@ def main():
         client, _ = server.accept()
         threading.Thread(target=handle, args=(client,), daemon=True).start()
 
+
 if __name__ == "__main__":
     main()
-

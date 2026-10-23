@@ -130,7 +130,7 @@ deadlines, and a 200-row result cap.
 
 ## Phase 5: Coordinator Agent & Calculator Tool
 - [x] Run the Mammoth/Elephant/Nemotron comparison on the balanced 64-case routing benchmark, with results and traces saved in `experiments/`.
-- [ ] Complete the original [Jev/model comparison task](to-do-tasks/evaluate-coordinator-models.md) in full: the runner currently provides OpenRouter decisions/chat adapters, not a Jev/TypeSafe adapter; saved runs use one trial per case, so repeatability is not established. The task document's blanket “Completed” status overstates this narrower evidence.
+- [ ] Complete the Jev/model comparison: the runner currently provides OpenRouter decisions/chat adapters, not a Jev/TypeSafe adapter; saved runs use one trial per case, so repeatability is not established.
 - [x] Implement **Deterministic Calculator Tool** (`src/adan/calculator.py` and generator tool dispatch):
   - Real tool invoked via LLM Function Calling.
   - Allowlisted, bounded AST arithmetic without `eval()`, retaining exact values for bracket comparisons.
@@ -298,7 +298,7 @@ the README still describes local MiniLM/FastEmbed startup and an older text
 model, while current startup uses OpenRouter embeddings, Docling, and server
 Qdrant by default. Its retrieval-experiment README link points to a missing file.
 The API section lists response fields but lacks a concrete response example.
-`docs/IMPLEMENTATION.md`, the architecture, and `to-do-tasks/README.md` also need
+`docs/IMPLEMENTATION.md` and the architecture also need
 reconciliation with current implementation/experiment status. Keep Setup &
 Quickstart open until those instructions are consistent and freshly verified.
 A complete set of seven logged demos remains missing. No Git remote is

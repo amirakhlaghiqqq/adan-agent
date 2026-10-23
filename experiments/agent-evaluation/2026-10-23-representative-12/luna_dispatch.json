@@ -1,0 +1,13 @@
+{
+  "model": "gpt-6-luna",
+  "parallel_workers": 3,
+  "jobs": 26,
+  "all_batches_dispatched_in_parallel": true,
+  "assignments": {
+    "luna_answer_judge": "8 generation-quality jobs",
+    "luna_visibility_judge": "6 faithfulness and 3 guard jobs",
+    "luna_hybrid_judge": "4 DB, 2 faithfulness, and 3 guard jobs"
+  },
+  "prior_judges_excluded": true,
+  "token_cost": null
+}

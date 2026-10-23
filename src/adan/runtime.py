@@ -3,8 +3,10 @@
 import asyncio
 import json
 import logging
+import math
 import time
 from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
 from uuid import uuid4
 
 from langchain_core.messages import AIMessage
@@ -28,9 +30,31 @@ def visible_message(message):
     }
     if isinstance(message, AIMessage) and message.tool_calls:
         result["tool_calls"] = message.tool_calls
+    if isinstance(message, AIMessage) and message.invalid_tool_calls:
+        result["invalid_tool_calls"] = message.invalid_tool_calls
     if hasattr(message, "tool_call_id"):
         result["tool_call_id"] = message.tool_call_id
     return result
+
+
+def _retry_delay(exc, attempt):
+    """Honor provider cooldowns, falling back to a short exponential delay."""
+    delay = min(2**attempt, 8)
+    if isinstance(exc, APIStatusError):
+        retry_after = exc.response.headers.get("retry-after")
+        if retry_after:
+            try:
+                seconds = float(retry_after)
+            except ValueError:
+                try:
+                    seconds = (
+                        parsedate_to_datetime(retry_after) - datetime.now(UTC)
+                    ).total_seconds()
+                except (ValueError, TypeError, OverflowError):
+                    return delay
+            if math.isfinite(seconds):
+                return max(delay, seconds)
+    return delay
 
 
 class Run:
@@ -79,6 +103,7 @@ class Run:
 
     async def execute(self, name, inputs, function, *, tool=False, parent_id=None, kind=None):
         for attempt in range(self.settings.transient_retries + 1):
+            self.remaining()
             if tool:
                 await self.reserve("tools", self.settings.max_tool_calls, "max_tool_calls")
             event = self.event(name, inputs, parent_id)
@@ -118,9 +143,15 @@ class Run:
                 )
                 if not transient or attempt >= self.settings.transient_retries:
                     raise
+                delay = _retry_delay(exc, attempt)
+                event["retry_delay_seconds"] = delay
+                if delay >= self.remaining():
+                    event["retry_skipped"] = "insufficient_request_time"
+                    raise
             finally:
                 event["duration_ms"] = round((time.monotonic() - start) * 1000, 3)
                 event["finished_at"] = datetime.now(UTC).isoformat()
+            await asyncio.sleep(delay)
         raise RuntimeError("Unreachable retry state")
 
     async def model(
@@ -149,6 +180,7 @@ class Run:
             "model." + purpose,
             {
                 "messages": [visible_message(m) for m in messages],
+                **({"tools": tools} if tools is not None else {}),
                 "schema": schema.__name__ if schema else None,
                 "fallback": fallback,
                 "model": (

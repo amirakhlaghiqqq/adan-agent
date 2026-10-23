@@ -8,12 +8,14 @@ from conftest import final
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from evals.agent_assessment import (  # noqa: E402
+    apply_execution_limits,
     base_assessment,
     calculator_checks,
     exact_arithmetic,
     guard_inputs,
     projected_database_check,
     resolve_citations,
+    unknown_candidate_citations,
 )
 
 
@@ -76,6 +78,9 @@ async def test_reference_route_check_rejects_a_plausible_wrong_route(make_assist
     assert "Hello" in json.dumps(candidates[0]["messages"])
     # The independent guard judge never sees the agent critic's decision.
     assert "passed" not in candidates[0]
+    response["answer"] = "Unverified replacement answer"
+    row, _ = base_assessment("coordinator", case, record, {})
+    assert row["finalize_score"] == 0
 
 
 def test_missing_response_is_an_evaluation_error_not_a_zero():
@@ -86,6 +91,46 @@ def test_missing_response_is_an_evaluation_error_not_a_zero():
         {},
     )
     assert row["coordinator_score"] == "EVALUATION_ERROR"
+
+
+def test_guard_rejects_section_labels_instead_of_visible_chunk_ids():
+    candidate = {
+        "candidate": {"citation_ids": ["DOC-SLA-2024-V2 s.4.3"]},
+        "messages": [
+            {
+                "role": "system",
+                "content": "Instructions\nEvidence:\n"
+                + json.dumps({"documents": [{"chunk_id": "retrieved-chunk-id"}]}),
+            }
+        ],
+    }
+    assert unknown_candidate_citations(candidate) == ["DOC-SLA-2024-V2 s.4.3"]
+    candidate["candidate"]["citation_ids"] = ["retrieved-chunk-id"]
+    assert unknown_candidate_citations(candidate) == []
+    candidate["messages"] = []
+    with pytest.raises(ValueError):
+        unknown_candidate_citations(candidate)
+
+
+async def test_provider_failure_is_excluded_from_node_scores(make_assistant):
+    assistant, _ = make_assistant(
+        {"coordinator": [TimeoutError("Provider timeout")]},
+        router_fallback_model="",
+        transient_retries=0,
+    )
+    response = await assistant.ask("Hello")
+    record = {"response": response, "request": {"question": "Hello", "input_context": []}}
+    case = {
+        "question_id": "one",
+        "question": "Hello",
+        "expected_needs_docs": False,
+        "expected_needs_db": False,
+    }
+    row, details = base_assessment("coordinator", case, record, {})
+    apply_execution_limits(row, details, response, case)
+    assert row["coordinator_score"] == "INFRASTRUCTURE_ERROR"
+    assert row["infrastructure_affected"]
+    assert details["observed_scores_before_exclusion"]["coordinator_score"] == 0
 
 
 def test_citations_are_resolved_from_the_real_source_not_agent_text():

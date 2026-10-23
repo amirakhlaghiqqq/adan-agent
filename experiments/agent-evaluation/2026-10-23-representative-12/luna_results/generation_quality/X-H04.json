@@ -1,0 +1,44 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "correctness",
+      "score": 0,
+      "reason": "The response gives none of the renewal, downtime, credit, notice, or claim-deadline conclusions."
+    },
+    {
+      "criterion_id": "completeness",
+      "score": 0,
+      "reason": "Omits all required facts, including the 320-unit credit, late notice, and April 30 versus May 1 claim outcomes."
+    },
+    {
+      "criterion_id": "citation_precision",
+      "score": null,
+      "reason": "No policy claim or citation is supplied to evaluate."
+    },
+    {
+      "criterion_id": "citation_coverage",
+      "score": null,
+      "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+    },
+    {
+      "criterion_id": "relevance",
+      "score": 0,
+      "reason": "The refusal does not address either hypothetical action."
+    },
+    {
+      "criterion_id": "uncertainty",
+      "score": 0,
+      "reason": "It refuses answerable portions instead of stating supported conclusions and relevant limits."
+    },
+    {
+      "criterion_id": "source_attribution",
+      "score": 0,
+      "reason": "No database facts, assumptions, policy rules, or calculations are distinguished."
+    },
+    {
+      "criterion_id": "unsupported_financial_claims",
+      "score": 2,
+      "reason": "It makes no unsupported credit, refund, or currency conclusion."
+    }
+  ]
+}

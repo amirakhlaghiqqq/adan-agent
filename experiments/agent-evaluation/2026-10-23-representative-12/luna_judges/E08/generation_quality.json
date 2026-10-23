@@ -1,0 +1,667 @@
+{
+  "backend": "luna_subagents",
+  "model": "gpt-6-luna",
+  "job_sha256": "9fb31580c285aec33b902f8ac07caa051a466c0c981a94e2b9a2311d26e70d9d",
+  "request": {
+    "question_id": "E08",
+    "stage": "generation_quality",
+    "inputs": {
+      "criteria": [
+        {
+          "rubric": {
+            "criterion_id": "correctness",
+            "stage": "generation",
+            "question": "For E08 (Enterprise critical response), are all material conclusions consistent with required_answer_facts, the independent reference evidence, and visible assumptions? In particular check: Enterprise Severity 1 initial response is at most 30 minutes.; Coverage is 24/7 dedicated support.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "required_document_evidence",
+              "expected_database_response",
+              "expected_calculations",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Wrong conclusion or material factual error.",
+              "1": "Partly correct with a material imprecision.",
+              "2": "All material conclusions agree with the reference facts and visible assumptions."
+            }
+          },
+          "inputs": {
+            "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "E08-F01",
+                "fact": "Enterprise Severity 1 initial response is at most 30 minutes."
+              },
+              {
+                "fact_id": "E08-F02",
+                "fact": "Coverage is 24/7 dedicated support."
+              },
+              {
+                "fact_id": "E08-F03",
+                "fact": "This is an initial-response commitment, not a resolution deadline."
+              }
+            ],
+            "required_document_evidence": [
+              {
+                "requirement_id": "E08-R01",
+                "role": "supporting_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "S5.2",
+                    "source_id": "document_2",
+                    "document_id": "DOC-SLA-2024-V2",
+                    "path": "data/documents/sla_and_support_tier_policy.pdf",
+                    "page": 4,
+                    "section": "5.2, Table 3",
+                    "text": "5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times"
+                  }
+                ]
+              }
+            ],
+            "expected_database_response": null,
+            "expected_calculations": [],
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "completeness",
+            "stage": "generation",
+            "question": "For E08, identify every required_answer_facts fact_id covered and omitted. Does the answer cover all parts of Enterprise critical response, including Enterprise Severity 1 initial response is at most 30 minutes.; Coverage is 24/7 dedicated support.?",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "No required answer facts covered.",
+              "1": "Some but not all required facts covered.",
+              "2": "All required facts covered; equivalent wording is accepted."
+            }
+          },
+          "inputs": {
+            "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "E08-F01",
+                "fact": "Enterprise Severity 1 initial response is at most 30 minutes."
+              },
+              {
+                "fact_id": "E08-F02",
+                "fact": "Coverage is 24/7 dedicated support."
+              },
+              {
+                "fact_id": "E08-F03",
+                "fact": "This is an initial-response commitment, not a resolution deadline."
+              }
+            ],
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_precision",
+            "stage": "generation",
+            "question": "For E08 (Enterprise critical response), does each attached document/page/section citation support its particular policy claim? Inspect the cited source text rather than accepting matching page labels.",
+            "required_inputs": [
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No cited claim–source pairs are supported.",
+              "1": "Some cited pairs are supported.",
+              "2": "All cited pairs are supported by the actual cited page/section.",
+              "not_applicable": "No citations; assess citation coverage separately."
+            }
+          },
+          "inputs": {
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found.",
+            "citations": [
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.2 Response Time Matrix",
+                "node_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 1164,
+                "token_count_approx": 225,
+                "chunk_index": 33,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.2 Response Time Matrix\n\nInitial response time is defined as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer.\n\nTable 3: Support Severity Levels and Guaranteed Initial Response Times\n\n| Severity Level        | Operational Impact          | Starter Tier                 | Professional Tier            | Enterprise Tier               |\n|-----------------------|-----------------------------|------------------------------|------------------------------|-------------------------------|\n| Severity 1 (Critical) | Total production out- age   | Community Sup- port (No SLA) | ≤ 2 Hours (24/7/365)         | ≤ 30 Minutes (24/7 Dedicated) |\n| Severity 2 (Major)    | Core features impaired      | Community Sup- port (No SLA) | ≤ 6 Hours (Busi- ness Hours) | ≤ 2 Hours (24/7/365)          |\n| Severity 3 (Minor)    | Non-critical defect / bug   | Community Sup- port (No SLA) | ≤ 24 Hours (Busi- ness Days) | ≤ 12 Hours (24/5 Business)    |\n| Severity 4 (Guidance) | General inquiry / re- quest | Community Sup- port (No SLA) | ≤ 48 Hours (Busi- ness Days) | ≤ 24 Hours (Busi- ness Days)  |",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.4 Support Access Channels by Subscription Tier",
+                "node_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 586,
+                "token_count_approx": 102,
+                "chunk_index": 35,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.4 Support Access Channels by Subscription Tier\n\n- Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https: //forum.cloudscale.io).\n- Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n- Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels, Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3 SRE escalation.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.3 Ongoing Incident Communication Cadence",
+                "node_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 434,
+                "token_count_approx": 78,
+                "chunk_index": 34,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.3 Ongoing Incident Communication Cadence\n\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n\n- Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional customers receive updates every 2 hours.\n- Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers receive updates every 6 hours.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "2. Subscription Tiers",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "2. Subscription Tiers",
+                "node_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "section": "2. Subscription Tiers",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 1432,
+                "token_count_approx": 229,
+                "chunk_index": 24,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "## 2. Subscription Tiers\n\nCloudScale offers three subscription tiers designed to match different workload maturity, scalability, and operational support requirements:\n\n- Starter Tier: Created for individual developers, sandbox testing, and non-production proofs of concept. Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response time SLAs, and are entirely excluded from service credit eligibility.\n- Professional Tier: Engineered for growing commercial businesses, standard production web platforms, and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call coverage for critical outages, and eligibility for financial service credits if availability targets are missed.\n- Enterprise Tier: Architected for mission-critical enterprise systems requiring continuous availability, massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our highest availability commitment of 99.99% uptime.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              }
+            ],
+            "cited_source_passages": [
+              {
+                "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 1,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy                Doc ID: DOC-SLA-2024-V2\n\n\n\n                                          CloudScale Inc.\n         Service Level Agreement (SLA) & Support Tier Policy\n             Enterprise Cloud Infrastructure, Managed Database Engine, and Developer API Platform\n\n\n  Document ID:           DOC-SLA-2024-V2                    Effective Date:    January 15, 2024\n  Version:               2.0 (Supersedes DOC-SLA-           Classification:    Public Customer Policy\n                         2023-V1)\n  Target Systems:        Infrastructure, Database, API      Review Cycle:      Annual (Next Review: Jan-\n                                                                               uary 2025)\n\n1. Purpose & Scope\nThis Service Level Agreement (“SLA”) and Support Tier Policy establishes the binding performance stan-\ndards, availability commitments, and technical support response standards provided by CloudScale Inc.\n(“CloudScale”) to its customers. The objective is to provide clear, measurable operational benchmarks and\ntransparent compensation rules so that organizations running production workloads can plan and operate\nwith complete certainty.\n1.1 Covered Services (In-Scope Components)\nThis SLA governs the operational uptime, availability, and technical support for three core platform systems:\n1. Cloud Infrastructure: Scalable virtual compute instances, software-defined virtual private clouds\n   (VPCs), edge load balancers, persistent block storage volumes, and distributed object storage.\n2. Managed Database Engine: High-availability managed PostgreSQL clusters and distributed cache\n   nodes, including automated failover, cluster synchronization, and continuous transactional backups.\n3. CloudScale API Platform: Public REST API endpoints, GraphQL queries and mutations, incom-\n   ing/outgoing webhook dispatch engines, and customer identity/authentication microservices.\n1.2 Out-of-Scope Systems & Applicability\nThis policy does not cover customer-developed application software, custom scripts running inside virtual\ninstances, external third-party software packages, client-managed external DNS configurations, or third-party\ndownstream APIs.\nThis policy applies to all active customer accounts in good standing governed by a signed CloudScale Master\nServices Agreement (MSA) or an active online subscription plan.\n2. Subscription Tiers\nCloudScale offers three subscription tiers designed to match different workload maturity, scalability, and\noperational support requirements:\n• Starter Tier: Created for individual developers, sandbox testing, and non-production proofs of concept.\n  Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community\n  forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response\n  time SLAs, and are entirely excluded from service credit eligibility.\n• Professional Tier: Engineered for growing commercial businesses, standard production web platforms,\n  and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute\n  resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call\n  coverage for critical outages, and eligibility for financial service credits if availability targets are missed.\n• Enterprise Tier: Architected for mission-critical enterprise systems requiring continuous availability,\n  massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region\n  architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a\n  designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our\n  highest availability commitment of 99.99% uptime.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                          Page 1 of 6\n\f"
+              }
+            ]
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_coverage",
+            "stage": "generation",
+            "question": "For E08, does every externally verifiable policy claim about Enterprise critical response have a valid supporting PDF citation? Exclude facts explicitly supplied in the question and separately attributed DB/calculator results.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No externally verifiable policy claim has a valid citation.",
+              "1": "Some policy claims have valid citations.",
+              "2": "All externally verifiable policy claims have valid supporting citations.",
+              "not_applicable": "No externally verifiable policy claims are made."
+            }
+          },
+          "inputs": {
+            "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found.",
+            "citations": [
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.2 Response Time Matrix",
+                "node_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+                "is_table": true,
+                "has_policy_note": false,
+                "char_count": 1164,
+                "token_count_approx": 225,
+                "chunk_index": 33,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.2 Response Time Matrix\n\nInitial response time is defined as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer.\n\nTable 3: Support Severity Levels and Guaranteed Initial Response Times\n\n| Severity Level        | Operational Impact          | Starter Tier                 | Professional Tier            | Enterprise Tier               |\n|-----------------------|-----------------------------|------------------------------|------------------------------|-------------------------------|\n| Severity 1 (Critical) | Total production out- age   | Community Sup- port (No SLA) | ≤ 2 Hours (24/7/365)         | ≤ 30 Minutes (24/7 Dedicated) |\n| Severity 2 (Major)    | Core features impaired      | Community Sup- port (No SLA) | ≤ 6 Hours (Busi- ness Hours) | ≤ 2 Hours (24/7/365)          |\n| Severity 3 (Minor)    | Non-critical defect / bug   | Community Sup- port (No SLA) | ≤ 24 Hours (Busi- ness Days) | ≤ 12 Hours (24/5 Business)    |\n| Severity 4 (Guidance) | General inquiry / re- quest | Community Sup- port (No SLA) | ≤ 48 Hours (Busi- ness Days) | ≤ 24 Hours (Busi- ness Days)  |",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.4 Support Access Channels by Subscription Tier",
+                "node_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 586,
+                "token_count_approx": 102,
+                "chunk_index": 35,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.4 Support Access Channels by Subscription Tier\n\n- Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https: //forum.cloudscale.io).\n- Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n- Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels, Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3 SRE escalation.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "page_number": 4,
+                "page_numbers": [
+                  4
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "5.3 Ongoing Incident Communication Cadence",
+                "node_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "section": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 434,
+                "token_count_approx": 78,
+                "chunk_index": 34,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "### 5.3 Ongoing Incident Communication Cadence\n\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n\n- Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional customers receive updates every 2 hours.\n- Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers receive updates every 6 hours.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              },
+              {
+                "doc_id": "DOC-SLA-2024-V2",
+                "version": "2.0",
+                "effective_date": "January 15, 2024",
+                "classification": "Public Customer Policy",
+                "review_cycle": "Annual (Next Review: January 2025)",
+                "target_audience": "Infrastructure, Database, API",
+                "document_id": "DOC-SLA-2024-V2",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "file_path": "/app/data/documents/sla_and_support_tier_policy.pdf",
+                "source_sha256": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+                "header_path": "2. Subscription Tiers",
+                "page_number": 1,
+                "page_numbers": [
+                  1
+                ],
+                "policy_doc_id": "DOC-SLA-2024-V2",
+                "clause_title": "2. Subscription Tiers",
+                "node_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "section": "2. Subscription Tiers",
+                "is_table": false,
+                "has_policy_note": false,
+                "char_count": 1432,
+                "token_count_approx": 229,
+                "chunk_index": 24,
+                "qc_status": "PASSED",
+                "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+                "text": "## 2. Subscription Tiers\n\nCloudScale offers three subscription tiers designed to match different workload maturity, scalability, and operational support requirements:\n\n- Starter Tier: Created for individual developers, sandbox testing, and non-production proofs of concept. Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response time SLAs, and are entirely excluded from service credit eligibility.\n- Professional Tier: Engineered for growing commercial businesses, standard production web platforms, and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call coverage for critical outages, and eligibility for financial service credits if availability targets are missed.\n- Enterprise Tier: Architected for mission-critical enterprise systems requiring continuous availability, massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our highest availability commitment of 99.99% uptime.",
+                "retrieval_status": {
+                  "mode": "hybrid",
+                  "reranker": "disabled",
+                  "retrieval_ms": 989.8728619991743,
+                  "rerank_ms": 0
+                }
+              }
+            ],
+            "cited_source_passages": [
+              {
+                "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 4,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy             Doc ID: DOC-SLA-2024-V2\n\n\n\n5. Support Incident Severity Levels & Response Times\n5.1 Incident Severity Definitions\nCloudScale categorizes technical support incidents into four clearly defined severity categories:\n• Severity 1 (Critical): Complete production outage, total loss of database services, or primary API\n   failure affecting all end-users. No workaround exists. Critical business operations are completely halted.\n• Severity 2 (Major): Core platform functionality is significantly degraded, API latency increases > 300%\n  over baseline, or high-volume transactional flows are impaired. Limited workarounds exist, but throughput\n  is degraded.\n• Severity 3 (Minor): Non-critical software defects, localized errors affecting minor endpoints, or cosmetic\n  portal bugs. Production systems remain operational without material impairment.\n• Severity 4 (General Guidance): Administrative questions, setup guidance, documentation inquiries,\n  or enhancement requests. Zero impact on production systems.\n5.2 Response Time Matrix\nInitial response time is defined as the duration between ticket creation and the first substantive technical\nresponse by a qualified CloudScale support engineer.\nSeverity Level\n                            Operational Impact       Starter Tier       Professional         Enterprise Tier\n                                                                        Tier\nSeverity 1 (Critical)       Total production out-    Community Sup-     ≤     2     Hours    ≤ 30 Minutes\n                            age                      port (No SLA)      (24/7/365)           (24/7 Dedicated)\nSeverity 2 (Major)          Core features impaired   Community Sup-     ≤ 6 Hours (Busi-     ≤     2    Hours\n                                                     port (No SLA)      ness Hours)          (24/7/365)\nSeverity 3 (Minor)          Non-critical defect /    Community Sup-     ≤ 24 Hours (Busi-    ≤ 12 Hours (24/5\n                            bug                      port (No SLA)      ness Days)           Business)\nSeverity 4 (Guidance)       General inquiry / re-    Community Sup-     ≤ 48 Hours (Busi-    ≤ 24 Hours (Busi-\n                            quest                    port (No SLA)      ness Days)           ness Days)\n                    Table 3: Support Severity Levels and Guaranteed Initial Response Times\n5.3 Ongoing Incident Communication Cadence\nDuring an ongoing active incident, CloudScale provides regular progress updates until the issue is resolved:\n• Severity 1 Incidents: Enterprise customers receive status updates every 30 minutes; Professional\n   customers receive updates every 2 hours.\n• Severity 2 Incidents: Enterprise customers receive status updates every 2 hours; Professional customers\n  receive updates every 6 hours.\n5.4 Support Access Channels by Subscription Tier\n• Starter Tier: Self-service Knowledge Base, API documentation, and peer Community Forum (https:\n   //forum.cloudscale.io).\n• Professional Tier: Web Support Portal and email (support@cloudscale.io). Hours: Monday through\n  Friday, 08:00 to 20:00 US Eastern Time, with 24/7 coverage exclusively for Severity 1 incidents.\n• Enterprise Tier: 24/7/365 dedicated telephone hotline, synchronized Slack/Teams Connect channels,\n  Priority Web Portal, and direct assignment to a dedicated Technical Account Manager (TAM) with Tier-3\n  SRE escalation.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                       Page 4 of 6\n\f"
+              },
+              {
+                "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+                "source_file": "sla_and_support_tier_policy.pdf",
+                "page": 1,
+                "text": "CloudScale Inc. | Service Level Agreement (SLA) & Support Tier Policy                Doc ID: DOC-SLA-2024-V2\n\n\n\n                                          CloudScale Inc.\n         Service Level Agreement (SLA) & Support Tier Policy\n             Enterprise Cloud Infrastructure, Managed Database Engine, and Developer API Platform\n\n\n  Document ID:           DOC-SLA-2024-V2                    Effective Date:    January 15, 2024\n  Version:               2.0 (Supersedes DOC-SLA-           Classification:    Public Customer Policy\n                         2023-V1)\n  Target Systems:        Infrastructure, Database, API      Review Cycle:      Annual (Next Review: Jan-\n                                                                               uary 2025)\n\n1. Purpose & Scope\nThis Service Level Agreement (“SLA”) and Support Tier Policy establishes the binding performance stan-\ndards, availability commitments, and technical support response standards provided by CloudScale Inc.\n(“CloudScale”) to its customers. The objective is to provide clear, measurable operational benchmarks and\ntransparent compensation rules so that organizations running production workloads can plan and operate\nwith complete certainty.\n1.1 Covered Services (In-Scope Components)\nThis SLA governs the operational uptime, availability, and technical support for three core platform systems:\n1. Cloud Infrastructure: Scalable virtual compute instances, software-defined virtual private clouds\n   (VPCs), edge load balancers, persistent block storage volumes, and distributed object storage.\n2. Managed Database Engine: High-availability managed PostgreSQL clusters and distributed cache\n   nodes, including automated failover, cluster synchronization, and continuous transactional backups.\n3. CloudScale API Platform: Public REST API endpoints, GraphQL queries and mutations, incom-\n   ing/outgoing webhook dispatch engines, and customer identity/authentication microservices.\n1.2 Out-of-Scope Systems & Applicability\nThis policy does not cover customer-developed application software, custom scripts running inside virtual\ninstances, external third-party software packages, client-managed external DNS configurations, or third-party\ndownstream APIs.\nThis policy applies to all active customer accounts in good standing governed by a signed CloudScale Master\nServices Agreement (MSA) or an active online subscription plan.\n2. Subscription Tiers\nCloudScale offers three subscription tiers designed to match different workload maturity, scalability, and\noperational support requirements:\n• Starter Tier: Created for individual developers, sandbox testing, and non-production proofs of concept.\n  Services operate on shared multi-tenant cluster infrastructure. Support is self-service via community\n  forums and public documentation. Starter tier accounts receive no uptime guarantees, have no response\n  time SLAs, and are entirely excluded from service credit eligibility.\n• Professional Tier: Engineered for growing commercial businesses, standard production web platforms,\n  and operational SaaS workloads. Includes dedicated multi-availability zone (Multi-AZ) virtual compute\n  resources, automated daily database snapshots, standard business-hours technical support, 24/7 on-call\n  coverage for critical outages, and eligibility for financial service credits if availability targets are missed.\n• Enterprise Tier: Architected for mission-critical enterprise systems requiring continuous availability,\n  massive throughput, and stringent operational governance. Includes isolated single-tenant or multi-region\n  architecture, continuous point-in-time database recovery (PITR with 1-second recovery point objective), a\n  designated Technical Account Manager (TAM), 24/7/365 priority hotline and Slack support, and our\n  highest availability commitment of 99.99% uptime.\n\n\n\n\nCloudScale Customer Agreement | Public Customer-Facing Policy                                          Page 1 of 6\n\f"
+              }
+            ]
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "relevance",
+            "stage": "generation",
+            "question": "Does the answer directly address E08: What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available? without unrelated policy exposition?",
+            "required_inputs": [
+              "question",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Answer does not address the request.",
+              "1": "Useful answer mixed with distracting unrelated content.",
+              "2": "Focused on the request."
+            }
+          },
+          "inputs": {
+            "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "uncertainty",
+            "stage": "generation",
+            "question": "For E08, does the answer handle these case-specific gaps and pitfalls appropriately: Guarantee resolution within 30 minutes.? Answer supported parts and avoid both fabrication and unnecessary refusal.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answerability",
+              "missing_information",
+              "prohibited_claims",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Fabricates missing facts, asserts unjustified certainty, or refuses an answerable request.",
+              "1": "Identifies only some limitations or gives vague qualifications.",
+              "2": "Answers supported parts, identifies relevant gaps/conflicts, and avoids unnecessary refusal."
+            }
+          },
+          "inputs": {
+            "question": "What is the guaranteed initial response time for an Enterprise Severity 1 incident, and when is that coverage available?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "answerability": "answerable",
+            "missing_information": [],
+            "prohibited_claims": [
+              "Guarantee resolution within 30 minutes."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "E08-F01",
+                "fact": "Enterprise Severity 1 initial response is at most 30 minutes."
+              },
+              {
+                "fact_id": "E08-F02",
+                "fact": "Coverage is 24/7 dedicated support."
+              },
+              {
+                "fact_id": "E08-F03",
+                "fact": "This is an initial-response commitment, not a resolution deadline."
+              }
+            ],
+            "answer": "For an Enterprise tier customer, the guaranteed initial response time for a Severity 1 (Critical) incident is ≤ 30 minutes, available 24/7/365. This coverage is provided through the Enterprise Tier's 24/7/365 dedicated telephone hotline and priority support channels. The Professional tier offers ≤ 2 hours (24/7/365) for Severity 1 incidents, but Enterprise tier provides the more aggressive 30-minute guarantee. Starter tier receives no SLA coverage for Severity 1 incidents (Community Support, No SLA). The policy defines initial response time as the duration between ticket creation and the first substantive technical response by a qualified CloudScale support engineer. Enterprise customers also receive status updates every 30 minutes during ongoing Severity 1 incidents.\n\nSupporting citations:\n- [DOC-SLA-2024-V2, p. 4, section 5.2 Response Time Matrix] – Table 3 shows Enterprise Tier ≤ 30 Minutes (24/7 Dedicated) for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.4 Support Access Channels by Subscription Tier] – Enterprise Tier includes 24/7/365 dedicated telephone hotline; Professional tier hours are Monday–Friday 08:00–20:00 US Eastern with 24/7 coverage exclusively for Severity 1.\n- [DOC-SLA-2024-V2, p. 4, section 5.3 Ongoing Incident Communication Cadence] – Enterprise customers receive status updates every 30 minutes for Severity 1 incidents.\n- [DOC-SLA-2024-V2, p. 1, section 2. Subscription Tiers] – Enterprise Tier description includes 24/7/365 priority hotline and Slack support.\n\nMissing information: The policy does not specify a different initial response time guarantee for Enterprise tier incidents that occur outside of business hours vs. within business hours; the \"24/7 Dedicated\" phrasing implies around-the-clock coverage, but the exact calendar-day availability (including holidays) is not explicitly enumerated beyond \"24/7/365\". No conflicting wording was found."
+          }
+        }
+      ]
+    },
+    "schema": {
+      "$defs": {
+        "Criterion": {
+          "additionalProperties": false,
+          "properties": {
+            "criterion_id": {
+              "title": "Criterion Id",
+              "type": "string"
+            },
+            "score": {
+              "anyOf": [
+                {
+                  "maximum": 2,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Score"
+            },
+            "reason": {
+              "title": "Reason",
+              "type": "string"
+            }
+          },
+          "required": [
+            "criterion_id",
+            "score",
+            "reason"
+          ],
+          "title": "Criterion",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "title": "Criteria",
+          "type": "array"
+        }
+      },
+      "required": [
+        "criteria"
+      ],
+      "title": "CriteriaResult",
+      "type": "object"
+    }
+  },
+  "result": {
+    "criteria": [
+      {
+        "criterion_id": "correctness",
+        "score": 2,
+        "reason": "Correctly gives Enterprise Severity 1 initial response as ≤30 minutes with 24/7 dedicated coverage; this is an initial-response commitment, not resolution."
+      },
+      {
+        "criterion_id": "completeness",
+        "score": 2,
+        "reason": "Covers all required facts: ≤30-minute response, 24/7 dedicated support, and response rather than resolution."
+      },
+      {
+        "criterion_id": "citation_precision",
+        "score": 2,
+        "reason": "Cited DOC-SLA-2024-V2 page 4 §5.2 supports the response commitment; §§5.3–5.4 and p.1 §2 support the added update and channel claims."
+      },
+      {
+        "criterion_id": "citation_coverage",
+        "score": 2,
+        "reason": "The response-time and coverage claims are tied to the cited SLA sections; its ancillary claims also include citations."
+      },
+      {
+        "criterion_id": "relevance",
+        "score": 1,
+        "reason": "Answers the question, but adds several unrequested comparisons, update cadence, and caveats."
+      },
+      {
+        "criterion_id": "uncertainty",
+        "score": 2,
+        "reason": "States the supported commitment and identifies no unresolved conflict; the additional calendar-day caveat is cautious but not materially misleading."
+      }
+    ]
+  },
+  "cost": null
+}

@@ -10,12 +10,12 @@
 !uv.lock
 !.python-version
 
-# Allow source code and runtime modules
+# Allow source code and runtime scripts
 !src/
 !src/**
-!config.py
-!ingest.py
-!qc_audit.py
+!scripts/
+!scripts/ingest.py
+!scripts/qc_audit.py
 
 # Allow data files (PDF policies and SQLite schema/data)
 !data/

@@ -45,7 +45,7 @@ echo "======================================================================"
 echo "[INGESTION] Starting automated PDF ingestion & Quality Control audit..."
 echo "======================================================================"
 
-python ingest.py
+python scripts/ingest.py
 
 echo "======================================================================"
 echo "[INGESTION] Completed successfully: All documents indexed and verified."

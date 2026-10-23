@@ -3,7 +3,7 @@ import json
 from copy import deepcopy
 
 from adan.config import Settings
-from adan.database import Database, ensure_database
+from adan.database import Database, InvalidSQL, ensure_database
 from adan.models import OpenRouterModels
 from adan.rag.aggregation import PassthroughAggregator
 from adan.runtime import LimitReached, Run
@@ -138,7 +138,11 @@ class Assistant:
                     "role": "system",
                     "content": "Formulate a precise read-only database request. "
                     "Preserve names, date windows and filters. "
-                    "Do not calculate policy-derived results. "
+                    "Note: SQLite stores only tenant profiles (customers), "
+                    "subscriptions, and logged incident tickets. "
+                    "Enterprise policies (SLA uptime commitments, uptime formulas, "
+                    "credit brackets, refund rules) reside in RAG policy PDFs, not SQLite. "
+                    "Do not calculate policy-derived results or look for policy clauses in SQL. "
                     "Do not authorize mutations. Return request.",
                 },
                 {"role": "user", "content": json.dumps(request_data)},
@@ -146,44 +150,65 @@ class Assistant:
             schema=SQLRequest,
             parent_id=parent_id,
         )
-        statement = await run.model(
-            "sql",
-            [
-                {
-                    "role": "system",
-                    "content": "Generate exactly one read-only SQLite SELECT, "
-                    "optionally with non-recursive CTEs. "
-                    "Use named :parameters for values. Use only schema tables and columns. "
-                    "No writes, schema inspection, file/extension functions or policy assumptions. "
-                    "Return raw numerical fields, not formatted money. "
-                    "Preserve period and customer filters. "
-                    "Return sql and parameters. No markdown.",
-                },
-                {
-                    "role": "user",
-                    "content": json.dumps(
-                        {**request_data, "formulated_request": formulated["request"]}
+        messages = [
+            {
+                "role": "system",
+                "content": "Generate exactly one read-only SQLite SELECT, "
+                "optionally with non-recursive CTEs. "
+                "Use named :parameters for values. "
+                "Use ONLY schema tables (customers, subscriptions, incident_tickets) "
+                "and their exact defined columns. "
+                "Do not invent columns for policy terms (e.g. SLA uptime guarantees, "
+                "credit tiers, and refund windows are in policy PDFs, not SQL). "
+                "No writes, schema inspection, file/extension functions or policy assumptions. "
+                "Return raw numerical fields, not formatted money. "
+                "Preserve period and customer filters. "
+                "Return sql and parameters. No markdown.",
+            },
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {**request_data, "formulated_request": formulated["request"]}
+                ),
+            },
+        ]
+        for attempt in range(2):
+            statement = await run.model("sql", messages, schema=SQLStatement, parent_id=parent_id)
+            try:
+                result = await run.execute(
+                    "query_database",
+                    statement,
+                    lambda s=statement: asyncio.to_thread(
+                        self.database.query,
+                        s["sql"],
+                        s["parameters"],
+                        timeout=min(10, run.remaining()),
                     ),
-                },
-            ],
-            schema=SQLStatement,
-            parent_id=parent_id,
-        )
-        result = await run.execute(
-            "query_database",
-            statement,
-            lambda: asyncio.to_thread(
-                self.database.query,
-                statement["sql"],
-                statement["parameters"],
-                timeout=min(10, run.remaining()),
-            ),
-            tool=True,
-            parent_id=parent_id,
-            kind="database_calls",
-        )
-        run.database_results.append(result)
-        return result
+                    tool=True,
+                    parent_id=parent_id,
+                    kind="database_calls",
+                )
+            except InvalidSQL as exc:
+                if attempt:
+                    raise
+                messages = [
+                    *messages,
+                    {"role": "assistant", "content": json.dumps(statement)},
+                    {
+                        "role": "user",
+                        "content": json.dumps(
+                            {
+                                "failed_sql": statement["sql"],
+                                "error": str(exc),
+                                "instruction": "Repair using exact schema tables and columns. "
+                                "Return one read-only SELECT and its parameters.",
+                            }
+                        ),
+                    },
+                ]
+                continue
+            run.database_results.append(result)
+            return result
 
     async def ask(self, question, input_context=None):
         request = QueryRequest(question=question, input_context=input_context or [])

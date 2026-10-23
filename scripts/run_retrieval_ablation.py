@@ -14,17 +14,14 @@ Outputs:
 - experiments/retrieval-ablation/index_manifest.json
 """
 
+# ruff: noqa: E402, E501
 from __future__ import annotations
 
 import argparse
 import json
 import logging
-import math
-import os
-import random
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -36,7 +33,7 @@ from llama_index.core import QueryBundle
 from llama_index.core.schema import NodeWithScore
 from qdrant_client import QdrantClient
 
-from adan.rag.config import RAGConfig, load_config
+from adan.rag.config import load_config
 from adan.rag.pipeline import RAGPipeline
 from evals.rag.retrieval_judgments import build_annotations
 from evals.rag.retrieval_metrics import (
@@ -62,7 +59,7 @@ RERANK_CACHE_FILE = CACHE_DIR / "rerank_cache.json"
 _RERANK_CACHE: dict[str, Any] = {}
 if RERANK_CACHE_FILE.exists():
     try:
-        with open(RERANK_CACHE_FILE, "r", encoding="utf-8") as f:
+        with open(RERANK_CACHE_FILE, encoding="utf-8") as f:
             _RERANK_CACHE = json.load(f)
     except Exception:
         _RERANK_CACHE = {}
@@ -81,7 +78,7 @@ def safe_round(val: float | None, n: int = 4) -> float | None:
 
 
 def load_benchmark(path: Path) -> list[dict[str, Any]]:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return [json.loads(line) for line in f if line.strip()]
 
 
@@ -93,11 +90,13 @@ def get_qdrant_corpus(client: QdrantClient, collection_name: str) -> list[dict[s
         nc = json.loads(p.payload.get("_node_content", "{}"))
         chunk_id = p.payload.get("chunk_id") or nc.get("id_") or str(p.id)
         text = nc.get("text", "")
-        corpus.append({
-            "chunk_id": chunk_id,
-            "text": text,
-            "metadata": p.payload,
-        })
+        corpus.append(
+            {
+                "chunk_id": chunk_id,
+                "text": text,
+                "metadata": p.payload,
+            }
+        )
     return corpus
 
 
@@ -107,7 +106,7 @@ def precompute_query_embeddings(
     cache: dict[str, list[float]] = {}
     if EMB_CACHE_FILE.exists():
         try:
-            with open(EMB_CACHE_FILE, "r", encoding="utf-8") as f:
+            with open(EMB_CACHE_FILE, encoding="utf-8") as f:
                 cache = json.load(f)
             logger.info("Loaded %d query embeddings from cache: %s", len(cache), EMB_CACHE_FILE)
         except Exception as e:
@@ -115,14 +114,16 @@ def precompute_query_embeddings(
 
     missing = [q for q in queries if q not in cache]
     if missing:
-        logger.info("Precomputing %d missing query embeddings in batches of %d...", len(missing), batch_size)
+        logger.info(
+            "Precomputing %d missing query embeddings in batches of %d...", len(missing), batch_size
+        )
         embed_model = pipeline.index_manager.embed_model
         for i in range(0, len(missing), batch_size):
             batch = missing[i : i + batch_size]
             t0 = time.perf_counter()
             try:
                 embeddings = embed_model.get_text_embedding_batch(batch)
-                for q, emb in zip(batch, embeddings):
+                for q, emb in zip(batch, embeddings, strict=False):
                     cache[q] = emb
                 dt = (time.perf_counter() - t0) * 1000
                 logger.info("Embedded batch %d-%d in %.1f ms", i, i + len(batch), dt)
@@ -168,13 +169,15 @@ def retrieve_query_candidates(
     for r in nodes:
         meta = r.node.metadata
         cid = r.node.node_id or meta.get("chunk_id")
-        serialized.append({
-            "chunk_id": cid,
-            "score": float(r.score) if r.score is not None else 0.0,
-            "text": r.node.get_content(),
-            "metadata": meta,
-            "_node": r,
-        })
+        serialized.append(
+            {
+                "chunk_id": cid,
+                "score": float(r.score) if r.score is not None else 0.0,
+                "text": r.node.get_content(),
+                "metadata": meta,
+                "_node": r,
+            }
+        )
     return serialized, latency_ms
 
 
@@ -198,10 +201,12 @@ def execute_rerank(
         serialized = []
         for item in cached["serialized"]:
             cid = item["chunk_id"]
-            serialized.append({
-                **item,
-                "_node": node_map.get(cid, None),
-            })
+            serialized.append(
+                {
+                    **item,
+                    "_node": node_map.get(cid, None),
+                }
+            )
         return serialized, cached["trace"]
 
     ranker = pipeline.reranker.model_copy(update={"top_n": min(top_n, len(nodes_with_score))})
@@ -218,10 +223,12 @@ def execute_rerank(
             "metadata": meta,
         }
         clean_for_cache.append(dict(item_dict))
-        serialized.append({
-            **item_dict,
-            "_node": r,
-        })
+        serialized.append(
+            {
+                **item_dict,
+                "_node": r,
+            }
+        )
 
     # Cache if successful
     if trace.get("status") == "success":
@@ -255,7 +262,9 @@ def run_single_question_ablation(
         "difficulty": case["difficulty"],
         "category": case["category"],
         "num_requirements": len(case["required_document_evidence"]),
-        "required_evidence_groups": [g["requirement_id"] for g in case["required_document_evidence"]],
+        "required_evidence_groups": [
+            g["requirement_id"] for g in case["required_document_evidence"]
+        ],
         "relevant_chunk_ids": judgment["relevant_chunk_ids"],
         "single_query": question,
         "decomposed_queries": [
@@ -264,7 +273,7 @@ def run_single_question_ablation(
                 "requirement_ids": sq["requirement_ids"],
                 "budget": b,
             }
-            for sq, b in zip(sub_queries, budgets)
+            for sq, b in zip(sub_queries, budgets, strict=False)
         ],
         "configurations": {},
     }
@@ -287,7 +296,7 @@ def run_single_question_ablation(
     for mode in ("dense", "sparse", "hybrid"):
         total_lat = 0.0
         rankings = []
-        for sq, b in zip(sub_queries, budgets):
+        for sq, b in zip(sub_queries, budgets, strict=False):
             sq_text = sq["query"]
             sq_emb = embeddings_map.get(sq_text)
             cands, lat = retrieve_query_candidates(
@@ -304,54 +313,108 @@ def run_single_question_ablation(
 
     # Store base configs: dense_only, sparse_only, hybrid_no_rerank (both mono and decomp)
     configs_to_process = [
-        ("dense_only_monolithic", mono_cands["dense"][0], mono_cands["dense"][1], "dense", "monolithic", False),
-        ("dense_only_decomposed", decomp_cands["dense"][0], decomp_cands["dense"][1], "dense", "decomposed", False),
-        ("sparse_only_monolithic", mono_cands["sparse"][0], mono_cands["sparse"][1], "sparse", "monolithic", False),
-        ("sparse_only_decomposed", decomp_cands["sparse"][0], decomp_cands["sparse"][1], "sparse", "decomposed", False),
-        ("hybrid_no_rerank_monolithic", mono_cands["hybrid"][0], mono_cands["hybrid"][1], "hybrid", "monolithic", False),
-        ("hybrid_no_rerank_decomposed", decomp_cands["hybrid"][0], decomp_cands["hybrid"][1], "hybrid", "decomposed", False),
+        (
+            "dense_only_monolithic",
+            mono_cands["dense"][0],
+            mono_cands["dense"][1],
+            "dense",
+            "monolithic",
+            False,
+        ),
+        (
+            "dense_only_decomposed",
+            decomp_cands["dense"][0],
+            decomp_cands["dense"][1],
+            "dense",
+            "decomposed",
+            False,
+        ),
+        (
+            "sparse_only_monolithic",
+            mono_cands["sparse"][0],
+            mono_cands["sparse"][1],
+            "sparse",
+            "monolithic",
+            False,
+        ),
+        (
+            "sparse_only_decomposed",
+            decomp_cands["sparse"][0],
+            decomp_cands["sparse"][1],
+            "sparse",
+            "decomposed",
+            False,
+        ),
+        (
+            "hybrid_no_rerank_monolithic",
+            mono_cands["hybrid"][0],
+            mono_cands["hybrid"][1],
+            "hybrid",
+            "monolithic",
+            False,
+        ),
+        (
+            "hybrid_no_rerank_decomposed",
+            decomp_cands["hybrid"][0],
+            decomp_cands["hybrid"][1],
+            "hybrid",
+            "decomposed",
+            False,
+        ),
     ]
 
     # Reranking configurations: hybrid_rerank (and dense_rerank)
     if run_reranker:
         # Hybrid Monolithic Rerank
         hybrid_mono_nodes = [c["_node"] for c in mono_cands["hybrid"][0]]
-        reranked_mono, rr_trace_mono = execute_rerank(pipeline, hybrid_mono_nodes, question, top_n=20)
+        reranked_mono, rr_trace_mono = execute_rerank(
+            pipeline, hybrid_mono_nodes, question, top_n=20
+        )
         mono_rr_lat = rr_trace_mono.get("latency_ms", 0.0)
-        configs_to_process.append((
-            "hybrid_rerank_monolithic",
-            reranked_mono,
-            mono_cands["hybrid"][1] + mono_rr_lat,
-            "hybrid",
-            "monolithic",
-            True,
-        ))
+        configs_to_process.append(
+            (
+                "hybrid_rerank_monolithic",
+                reranked_mono,
+                mono_cands["hybrid"][1] + mono_rr_lat,
+                "hybrid",
+                "monolithic",
+                True,
+            )
+        )
 
         # Hybrid Decomposed Rerank (rerank merged pool against original question)
         hybrid_decomp_nodes = [c["_node"] for c in decomp_cands["hybrid"][0]]
-        reranked_decomp, rr_trace_decomp = execute_rerank(pipeline, hybrid_decomp_nodes, question, top_n=20)
+        reranked_decomp, rr_trace_decomp = execute_rerank(
+            pipeline, hybrid_decomp_nodes, question, top_n=20
+        )
         decomp_rr_lat = rr_trace_decomp.get("latency_ms", 0.0)
-        configs_to_process.append((
-            "hybrid_rerank_decomposed",
-            reranked_decomp,
-            decomp_cands["hybrid"][1] + decomp_rr_lat,
-            "hybrid",
-            "decomposed",
-            True,
-        ))
+        configs_to_process.append(
+            (
+                "hybrid_rerank_decomposed",
+                reranked_decomp,
+                decomp_cands["hybrid"][1] + decomp_rr_lat,
+                "hybrid",
+                "decomposed",
+                True,
+            )
+        )
 
         # Dense Monolithic Rerank (optional cross-ablation)
         dense_mono_nodes = [c["_node"] for c in mono_cands["dense"][0]]
-        reranked_dense_mono, rr_dense_trace = execute_rerank(pipeline, dense_mono_nodes, question, top_n=20)
+        reranked_dense_mono, rr_dense_trace = execute_rerank(
+            pipeline, dense_mono_nodes, question, top_n=20
+        )
         dense_rr_lat = rr_dense_trace.get("latency_ms", 0.0)
-        configs_to_process.append((
-            "dense_rerank_monolithic",
-            reranked_dense_mono,
-            mono_cands["dense"][1] + dense_rr_lat,
-            "dense",
-            "monolithic",
-            True,
-        ))
+        configs_to_process.append(
+            (
+                "dense_rerank_monolithic",
+                reranked_dense_mono,
+                mono_cands["dense"][1] + dense_rr_lat,
+                "dense",
+                "monolithic",
+                True,
+            )
+        )
 
     for name, cands, total_lat, mode, strategy, is_rerank in configs_to_process:
         # Score at all cutoffs k in [1, 3, 5, 10, 20]
@@ -361,14 +424,17 @@ def run_single_question_ablation(
 
         clean_cands = []
         for rank_idx, c in enumerate(cands, 1):
-            clean_cands.append({
-                "rank": rank_idx,
-                "chunk_id": c["chunk_id"],
-                "score": c["score"],
-                "is_relevant": c["chunk_id"] in relevant_set,
-                "section": c["metadata"].get("section") or c["metadata"].get("clause_title", ""),
-                "source_file": c["metadata"].get("source_file", ""),
-            })
+            clean_cands.append(
+                {
+                    "rank": rank_idx,
+                    "chunk_id": c["chunk_id"],
+                    "score": c["score"],
+                    "is_relevant": c["chunk_id"] in relevant_set,
+                    "section": c["metadata"].get("section")
+                    or c["metadata"].get("clause_title", ""),
+                    "source_file": c["metadata"].get("source_file", ""),
+                }
+            )
 
         trace["configurations"][name] = {
             "mode": mode,
@@ -410,7 +476,7 @@ def run_full_ablation(
 
     # Collect all unique queries
     unique_queries = set(c["question"] for c in cases)
-    for qid, p in plans.items():
+    for _qid, p in plans.items():
         for sq in p["queries"]:
             unique_queries.add(sq["query"])
     query_list = sorted(unique_queries)
@@ -430,13 +496,17 @@ def run_full_ablation(
         "hybrid_no_rerank_decomposed",
     ]
     if not skip_reranker:
-        config_names.extend([
-            "hybrid_rerank_monolithic",
-            "hybrid_rerank_decomposed",
-            "dense_rerank_monolithic",
-        ])
+        config_names.extend(
+            [
+                "hybrid_rerank_monolithic",
+                "hybrid_rerank_decomposed",
+                "dense_rerank_monolithic",
+            ]
+        )
 
-    logger.info("Starting ablation runs across %d questions for configs: %s", len(cases), config_names)
+    logger.info(
+        "Starting ablation runs across %d questions for configs: %s", len(cases), config_names
+    )
     start_time = time.perf_counter()
 
     for idx, case in enumerate(cases, 1):
@@ -509,7 +579,9 @@ def run_full_ablation(
     for cfg in config_names:
         cfg_summary: dict[str, Any] = {"by_k": {}, "latency_ms": {}}
 
-        latencies = [all_traces[c["question_id"]]["configurations"][cfg]["total_latency_ms"] for c in cases]
+        latencies = [
+            all_traces[c["question_id"]]["configurations"][cfg]["total_latency_ms"] for c in cases
+        ]
         latencies_sorted = sorted(latencies)
         cfg_summary["latency_ms"] = {
             "mean": safe_round(mean(latencies), 2),
@@ -520,10 +592,28 @@ def run_full_ablation(
         }
 
         for k in CUTOFFS:
-            recalls = [all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)]["evidence_recall"] for c in cases]
-            successes = [all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)]["all_evidence_success"] for c in cases]
-            precisions = [all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)]["context_precision"] for c in cases]
-            ndcgs = [all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)]["ndcg"] for c in cases]
+            recalls = [
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)][
+                    "evidence_recall"
+                ]
+                for c in cases
+            ]
+            successes = [
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)][
+                    "all_evidence_success"
+                ]
+                for c in cases
+            ]
+            precisions = [
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)][
+                    "context_precision"
+                ]
+                for c in cases
+            ]
+            ndcgs = [
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"][str(k)]["ndcg"]
+                for c in cases
+            ]
 
             cfg_summary["by_k"][str(k)] = {
                 "evidence_recall": safe_round(mean(recalls), 4),
@@ -539,15 +629,21 @@ def run_full_ablation(
         summary["slices"][slice_name] = {"count": len(slice_cases), "configs": {}}
         for cfg in config_names:
             recalls_k5 = [
-                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"]["evidence_recall"]
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"][
+                    "evidence_recall"
+                ]
                 for c in slice_cases
             ]
             succ_k5 = [
-                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"]["all_evidence_success"]
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"][
+                    "all_evidence_success"
+                ]
                 for c in slice_cases
             ]
             prec_k5 = [
-                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"]["context_precision"]
+                all_traces[c["question_id"]]["configurations"][cfg]["metrics_by_k"]["5"][
+                    "context_precision"
+                ]
                 for c in slice_cases
             ]
             ndcg_k5 = [
@@ -566,42 +662,87 @@ def run_full_ablation(
     comparisons_to_run = [
         ("hybrid_no_rerank_monolithic", "dense_only_monolithic", "Hybrid vs Dense (Monolithic)"),
         ("hybrid_no_rerank_monolithic", "sparse_only_monolithic", "Hybrid vs Sparse (Monolithic)"),
-        ("hybrid_rerank_monolithic", "hybrid_no_rerank_monolithic", "Reranker vs No-Rerank (Hybrid Monolithic)"),
-        ("hybrid_no_rerank_decomposed", "hybrid_no_rerank_monolithic", "Decomposed vs Monolithic (Hybrid)"),
+        (
+            "hybrid_rerank_monolithic",
+            "hybrid_no_rerank_monolithic",
+            "Reranker vs No-Rerank (Hybrid Monolithic)",
+        ),
+        (
+            "hybrid_no_rerank_decomposed",
+            "hybrid_no_rerank_monolithic",
+            "Decomposed vs Monolithic (Hybrid)",
+        ),
         ("dense_only_decomposed", "dense_only_monolithic", "Decomposed vs Monolithic (Dense)"),
         ("sparse_only_decomposed", "sparse_only_monolithic", "Decomposed vs Monolithic (Sparse)"),
-        ("hybrid_rerank_decomposed", "hybrid_rerank_monolithic", "Decomposed vs Monolithic (Hybrid + Rerank)"),
+        (
+            "hybrid_rerank_decomposed",
+            "hybrid_rerank_monolithic",
+            "Decomposed vs Monolithic (Hybrid + Rerank)",
+        ),
     ]
 
     for cfg_a, cfg_b, label in comparisons_to_run:
         if cfg_a not in config_names or cfg_b not in config_names:
             continue
-        comp_result: dict[str, Any] = {"label": label, "config_a": cfg_a, "config_b": cfg_b, "cutoffs": {}}
+        comp_result: dict[str, Any] = {
+            "label": label,
+            "config_a": cfg_a,
+            "config_b": cfg_b,
+            "cutoffs": {},
+        }
         for k in (3, 5, 10, 20):
             # Evidence Recall delta
             deltas_recall = [
-                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["evidence_recall"]
-                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["evidence_recall"]
+                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "evidence_recall"
+                ]
+                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "evidence_recall"
+                ]
                 for c in cases
             ]
             deltas_succ = [
-                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["all_evidence_success"]
-                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["all_evidence_success"]
+                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "all_evidence_success"
+                ]
+                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "all_evidence_success"
+                ]
                 for c in cases
             ]
             deltas_prec = [
-                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["context_precision"]
-                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["context_precision"]
+                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "context_precision"
+                ]
+                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "context_precision"
+                ]
                 for c in cases
-                if all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["context_precision"] is not None
-                and all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["context_precision"] is not None
+                if all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "context_precision"
+                ]
+                is not None
+                and all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "context_precision"
+                ]
+                is not None
             ]
             deltas_ndcg = [
-                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["ndcg"]
-                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["ndcg"]
+                all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "ndcg"
+                ]
+                - all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "ndcg"
+                ]
                 for c in cases
-                if all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)]["ndcg"] is not None
-                and all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)]["ndcg"] is not None
+                if all_traces[c["question_id"]]["configurations"][cfg_a]["metrics_by_k"][str(k)][
+                    "ndcg"
+                ]
+                is not None
+                and all_traces[c["question_id"]]["configurations"][cfg_b]["metrics_by_k"][str(k)][
+                    "ndcg"
+                ]
+                is not None
             ]
 
             comp_result["cutoffs"][str(k)] = {
@@ -622,7 +763,9 @@ def run_full_ablation(
     print("\n" + "=" * 100)
     print("                      RAG RETRIEVAL ABLATION BENCHMARK RESULTS")
     print("=" * 100)
-    print(f"{'Configuration':<32} | {'Recall@5':<8} | {'Success@5':<9} | {'Prec@5':<8} | {'NDCG@5':<8} | {'Recall@20':<9} | {'Latency p50':<11}")
+    print(
+        f"{'Configuration':<32} | {'Recall@5':<8} | {'Success@5':<9} | {'Prec@5':<8} | {'NDCG@5':<8} | {'Recall@20':<9} | {'Latency p50':<11}"
+    )
     print("-" * 100)
     for cfg in config_names:
         c_k5 = summary["configurations"][cfg]["by_k"]["5"]

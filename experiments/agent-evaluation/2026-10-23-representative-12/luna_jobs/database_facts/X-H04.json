@@ -1,0 +1,150 @@
+{
+  "question_id": "X-H04",
+  "stage": "database_facts",
+  "inputs": {
+    "question": "Look up Zenith Cloud Robotics' annual renewal date and March 2024 downtime. Assess two separate hypothetical actions: (A) written cancellation notice on August 10, 2024 for the recorded renewal, and (B) a fully documented March credit claim filed on April 30, 2024 versus May 1, 2024. Calculate the nominal March credit, explain the two claim outcomes, and address the customer's claim that 48 hours' cancellation notice is sufficient for annual renewal.",
+    "input_context": [
+      "Treat the database as a fixed supplied snapshot. Its account/payment statuses are snapshot labels, not a historical status ledger. Do not infer a past account state from those labels. Use the stated policy versions for the exercise; do not invent later revisions.",
+      "For cases calculating monthly credits, assume all recorded downtime in the specified month is qualifying, non-overlapping downtime, that the incident list is complete for that month, and that subscriptions remained covered throughout that month. Assume other credit prerequisites and timely filing are satisfied unless the question explicitly asks about them or provides different facts. These are exercise assumptions, not facts recorded in the database.",
+      "For credit amounts, treat monthly_rate as the applicable final monthly recurring fee, already reflecting any contractual discount. Do not apply the 15% annual discount again. The database has no currency column: report amounts as currency units, unless the question supplies a currency. Ignore taxes for credit calculations.",
+      "Use actual calendar-month lengths in UTC: January and March 2024 have 44,640 minutes; February 2024 has 41,760 minutes. Do not use the SLA's illustrative 30-day allowance for every month. Compare unrounded uptime against bracket thresholds; round displayed uptime to six decimal places and money to two decimal places.",
+      "For annual refund-window questions, use subscriptions.start_date as initial activation for the exercise. Do not substitute customer join dates or renewal dates. The database does not prove new activation at renewal or record refund requests, compute usage, claim filings, or invoice due dates.",
+      "Cite both PDFs by document and page/section, and expose the SQL and its raw result. Use an actual calculator tool for arithmetic when exercising the full system. Equivalent read-only SQL and equivalent supporting passages are acceptable.",
+      "Interpret filing on a calendar date as meeting that date's deadline, without a time-of-day cutoff; evaluate the two hypothetical claim filings independently, not as sequential submissions."
+    ],
+    "reference": {
+      "source_id": "database",
+      "reference_sql": "SELECT c.customer_id, c.company_name, c.tier, c.region,\n       c.status AS account_status, s.subscription_id,\n       s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date,\n       s.payment_status, i.ticket_id, i.severity, i.downtime_minutes,\n       i.reported_at, i.resolved_at, i.status AS incident_status,\n       i.sla_breached\nFROM customers AS c\nJOIN subscriptions AS s ON s.customer_id = c.customer_id\nLEFT JOIN incident_tickets AS i\n  ON i.customer_id = c.customer_id\n AND substr(i.reported_at, 1, 7) = :month\nWHERE c.company_name = :company_name\nORDER BY s.subscription_id, i.ticket_id;",
+      "parameters": {
+        "company_name": "Zenith Cloud Robotics",
+        "month": "2024-03"
+      },
+      "columns": [
+        "customer_id",
+        "company_name",
+        "tier",
+        "region",
+        "account_status",
+        "subscription_id",
+        "billing_cycle",
+        "monthly_rate",
+        "start_date",
+        "renewal_date",
+        "payment_status",
+        "ticket_id",
+        "severity",
+        "downtime_minutes",
+        "reported_at",
+        "resolved_at",
+        "incident_status",
+        "sla_breached"
+      ],
+      "rows": [
+        [
+          7,
+          "Zenith Cloud Robotics",
+          "Enterprise",
+          "Asia Pacific",
+          "active",
+          7,
+          "annual",
+          3200.0,
+          "2023-08-30",
+          "2024-08-30",
+          "paid",
+          7,
+          "Severity 2",
+          20,
+          "2024-03-02T09:00:00Z",
+          "2024-03-02T09:20:00Z",
+          "resolved",
+          0
+        ]
+      ],
+      "order_matters": false,
+      "comparison": "Compare semantic facts; equivalent read-only SQL, projections containing all requested facts, and immaterial row/column reordering are acceptable. Reference SQL text is not an exact-match target."
+    },
+    "actual_database_results": [
+      {
+        "sql": "SELECT c.company_name, c.tier, c.region, s.plan_name, s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date, GROUP_CONCAT(i.ticket_id || '|' || i.downtime_minutes || '|' || i.reported_at || '|' || i.resolved_at || '|' || i.status || '|' || i.sla_breached) AS tickets\nFROM customers c\nJOIN subscriptions s ON c.customer_id = s.customer_id\nLEFT JOIN incident_tickets i ON c.customer_id = i.customer_id AND i.reported_at >= '2024-03-01' AND i.reported_at < '2024-04-01'\nWHERE c.company_name = 'Zenith Cloud Robotics'\nGROUP BY c.customer_id;",
+        "parameters": {},
+        "columns": [
+          "company_name",
+          "tier",
+          "region",
+          "plan_name",
+          "billing_cycle",
+          "monthly_rate",
+          "start_date",
+          "renewal_date",
+          "tickets"
+        ],
+        "rows": [
+          [
+            "Zenith Cloud Robotics",
+            "Enterprise",
+            "Asia Pacific",
+            "Enterprise Robotics Orchestrator",
+            "annual",
+            3200.0,
+            "2023-08-30",
+            "2024-08-30",
+            "7|20|2024-03-02T09:00:00Z|2024-03-02T09:20:00Z|resolved|0"
+          ]
+        ],
+        "truncated": false
+      },
+      {
+        "sql": "SELECT c.company_name, c.tier, c.region, s.plan_name, s.billing_cycle, s.monthly_rate, s.start_date, s.renewal_date, GROUP_CONCAT(i.ticket_id || '|' || i.downtime_minutes || '|' || i.reported_at || '|' || i.resolved_at || '|' || i.status || '|' || i.sla_breached) AS tickets\nFROM customers c\nJOIN subscriptions s ON c.customer_id = s.customer_id\nLEFT JOIN incident_tickets i ON c.customer_id = i.customer_id AND i.reported_at >= '2024-03-01' AND i.reported_at < '2024-04-01'\nWHERE c.company_name = 'Zenith Cloud Robotics'\nGROUP BY c.customer_id;",
+        "parameters": {},
+        "columns": [
+          "company_name",
+          "tier",
+          "region",
+          "plan_name",
+          "billing_cycle",
+          "monthly_rate",
+          "start_date",
+          "renewal_date",
+          "tickets"
+        ],
+        "rows": [
+          [
+            "Zenith Cloud Robotics",
+            "Enterprise",
+            "Asia Pacific",
+            "Enterprise Robotics Orchestrator",
+            "annual",
+            3200.0,
+            "2023-08-30",
+            "2024-08-30",
+            "7|20|2024-03-02T09:00:00Z|2024-03-02T09:20:00Z|resolved|0"
+          ]
+        ],
+        "truncated": false
+      }
+    ],
+    "rubric": "Score the ACTUAL acquired raw DB facts needed for this question: 0=no useful requested facts or wrong customer/cohort/period, 1=some useful facts but a material omission/error, 2=all requested facts correct. Accept equivalent SQL, aliases, projections and immaterial order differences. The broad reference query may include columns not needed for the question: do NOT require those extra fields. Do not credit facts merely assumed by the question or generated answer. Consider all actual DB calls together, including valid aggregates."
+  },
+  "schema": {
+    "additionalProperties": false,
+    "properties": {
+      "score": {
+        "maximum": 2,
+        "minimum": 0,
+        "title": "Score",
+        "type": "integer"
+      },
+      "reason": {
+        "title": "Reason",
+        "type": "string"
+      }
+    },
+    "required": [
+      "score",
+      "reason"
+    ],
+    "title": "DatabaseResult",
+    "type": "object"
+  }
+}

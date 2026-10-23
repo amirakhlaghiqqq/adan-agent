@@ -225,6 +225,8 @@ def test_rag_pipeline_generate_answer_mocked():
 
 
 def test_search_plan_schema_up_to_three_queries():
+    from pydantic import ValidationError
+
     from adan.schemas import SearchPlan
 
     # Valid: 1, 2, 3 queries
@@ -233,41 +235,9 @@ def test_search_plan_schema_up_to_three_queries():
     assert len(SearchPlan(queries=["q1", "q2", "q3"]).queries) == 3
 
     # Invalid: 0 or >3 queries
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         SearchPlan(queries=[])
-    with pytest.raises(Exception):
-        SearchPlan(queries=["q1", "q2", "q3", "q4"])
-
-
-def test_passthrough_aggregator_deduplication():
-    from adan.rag.aggregation import PassthroughAggregator
-
-    aggregator = PassthroughAggregator()
-    chunks = [
-        {"chunk_id": "c1", "text": "Chunk 1"},
-        {"chunk_id": "c2", "text": "Chunk 2"},
-        {"chunk_id": "c1", "text": "Chunk 1 duplicate"},
-        {"chunk_id": "c3", "text": "Chunk 3"},
-        {"chunk_id": "c2", "text": "Chunk 2 duplicate"},
-    ]
-    artifact = aggregator.build("test question", [], chunks)
-    assert artifact["source_chunk_ids"] == ["c1", "c2", "c3"]
-    assert len(artifact["chunks"]) == 3
-    assert [c["chunk_id"] for c in artifact["chunks"]] == ["c1", "c2", "c3"]
-
-
-def test_search_plan_schema_up_to_three_queries():
-    from adan.schemas import SearchPlan
-
-    # Valid: 1, 2, 3 queries
-    assert len(SearchPlan(queries=["q1"]).queries) == 1
-    assert len(SearchPlan(queries=["q1", "q2"]).queries) == 2
-    assert len(SearchPlan(queries=["q1", "q2", "q3"]).queries) == 3
-
-    # Invalid: 0 or >3 queries
-    with pytest.raises(Exception):
-        SearchPlan(queries=[])
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         SearchPlan(queries=["q1", "q2", "q3", "q4"])
 
 

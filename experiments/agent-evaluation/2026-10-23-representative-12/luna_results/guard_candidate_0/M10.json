@@ -1,0 +1,5 @@
+{
+  "candidate_index": 0,
+  "supported": false,
+  "reason": "Reject: the answer calls the 99.90% bracket boundary ambiguous even though the visible table explicitly gives Enterprise 99.90% to <99.99% and Professional SLA Target Met (0%). The main percentages and invoice application are otherwise supported, but this material false claim undermines acceptance."
+}

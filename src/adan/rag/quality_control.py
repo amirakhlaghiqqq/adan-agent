@@ -231,9 +231,8 @@ class ChunkQualityController:
 
         # 8. S3.2 Calculation Formula Completeness Check
         is_sla_policy = "sla_and_support_tier_policy" in str(meta.get("source_file", "")).lower()
-        is_sec_3_2 = (
-            "3.2" in str(meta.get("clause_title", ""))
-            or "3.2" in str(meta.get("header_path", ""))
+        is_sec_3_2 = "3.2" in str(meta.get("clause_title", "")) or "3.2" in str(
+            meta.get("header_path", "")
         )
         if is_sla_policy and is_sec_3_2:
             required_formula_terms = [

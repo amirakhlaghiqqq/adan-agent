@@ -23,6 +23,7 @@ NOT_APPLICABLE = "NOT_APPLICABLE"
 NO_REFERENCE = "NO_REFERENCE"
 NOT_RUN = "NOT_RUN"
 ERROR = "EVALUATION_ERROR"
+INFRASTRUCTURE_ERROR = "INFRASTRUCTURE_ERROR"
 NODE_COLUMNS = [
     f"{name}_score"
     for name in (
@@ -61,12 +62,6 @@ class GuardVerdict(BaseModel):
     candidate_index: int
     supported: bool
     reason: str
-
-
-class VisibilityResult(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    faithfulness: Criterion
-    guard_candidates: list[GuardVerdict]
 
 
 def expected_route(case):
@@ -253,12 +248,30 @@ def guard_inputs(response):
     return candidates
 
 
+def unknown_candidate_citations(candidate):
+    """Check citation identifiers against the evidence visible to this candidate."""
+    cited = set(candidate["candidate"]["citation_ids"])
+    if not cited:
+        return []
+    for message in candidate["messages"]:
+        content = message.get("content", "")
+        if message.get("role") != "system" or not isinstance(content, str):
+            continue
+        _, separator, evidence = content.partition("\nEvidence:\n")
+        if separator:
+            visible = {c["chunk_id"] for c in json.loads(evidence)["documents"]}
+            return sorted(cited - visible)
+    raise ValueError("Candidate's source evidence is missing from its visible context")
+
+
 def base_assessment(suite, case, record, annotations):
     row = {
         "suite": suite,
         "question_id": case["question_id"],
         "question": case["question"],
         "difficulty": case.get("difficulty", ""),
+        "category": case.get("category", "routing"),
+        "reference_answerability": case.get("answerability", ""),
         "split": case.get("split", ""),
         "http_status": record.get("http_status"),
         "collection_error": record.get("error") or "",
@@ -271,6 +284,27 @@ def base_assessment(suite, case, record, annotations):
         return row, details
     QueryResponse.model_validate(response)
     expected = expected_route(case)
+    provider_errors = [
+        e
+        for e in response["execution_trace"]
+        if isinstance(e.get("output"), dict) and e["output"].get("http_status") == 429
+    ]
+    guards = response["guardrail_history"]
+    if response["stop_reason"] == "completed":
+        final_matches = (
+            bool(guards)
+            and guards[-1]["passed"]
+            and all(
+                response[key] == guards[-1]["candidate"][key]
+                for key in ("answer", "status", "missing_information")
+            )
+        )
+        if final_matches:
+            final_matches = [c["chunk_id"] for c in response["citations"]] == list(
+                dict.fromkeys(guards[-1]["candidate"]["citation_ids"])
+            )
+    else:
+        final_matches = response["status"] != "complete" and bool(response["missing_information"])
     row.update(
         {
             "run_id": response["run_id"],
@@ -281,19 +315,23 @@ def base_assessment(suite, case, record, annotations):
             "tool_calls": response["usage"]["tool_calls"],
             "total_tokens": response["usage"]["total_tokens"],
             "cost": response["usage"]["cost"],
+            "text_model": response["effective_limits"]["text_model"],
+            "router_model": response["effective_limits"]["router_model"],
+            "router_fallback_model": response["effective_limits"]["router_fallback_model"],
             "expected_route": json.dumps(expected, sort_keys=True),
             "actual_route": json.dumps(response["route"], sort_keys=True),
             "coordinator_score": int(response["route"] == expected),
             "failures": json.dumps(response["failures"]),
+            "provider_429_attempts": len(provider_errors),
+            "router_fallback_used": any(
+                e["name"] == "model.coordinator" and e["inputs"].get("fallback")
+                for e in response["execution_trace"]
+            ),
             "finalize_score": int(
                 response["question"] == record["request"]["question"].strip()
                 and response["input_context"] == record["request"]["input_context"]
                 and all(e["status"] != "running" for e in response["execution_trace"])
-                and (
-                    response["stop_reason"] != "completed"
-                    or bool(response["guardrail_history"])
-                    and response["guardrail_history"][-1]["passed"]
-                )
+                and final_matches
             ),
         }
     )
@@ -335,6 +373,50 @@ def base_assessment(suite, case, record, annotations):
     row["generate_score"] = ERROR
     row["guard_score"] = NOT_RUN if not response["guardrail_history"] else ERROR
     return row, details
+
+
+def apply_execution_limits(row, details, response, case):
+    """Keep upstream/provider failures out of intrinsic node-score denominators."""
+    stages = {
+        "coordinator": "coordinator",
+        "documents": "documents",
+        "search_documents": "documents",
+        "database": "database",
+        "query_database": "database",
+        "generate": "generate",
+        "guard": "guard",
+        "calculate": "tools",
+    }
+    excluded = {}
+    infrastructure_affected = False
+    for failure in response["failures"]:
+        kind = failure.get("error_type", "")
+        if not any(
+            name in kind for name in ("OpenAI", "API", "RateLimit", "Connection", "Timeout")
+        ):
+            continue
+        infrastructure_affected = True
+        node = stages.get(failure["stage"])
+        if node and row[node + "_score"] != NO_REFERENCE:
+            excluded[node + "_score"] = INFRASTRUCTURE_ERROR
+    names = {e["name"] for e in response["execution_trace"]}
+    if row["suite"] == "rag":
+        for node, event in (
+            ("documents", "model.rewrite"),
+            ("database", "model.formulate"),
+            ("generate", "model.generate"),
+        ):
+            if row[node + "_score"] != NOT_APPLICABLE and event not in names:
+                excluded[node + "_score"] = NOT_RUN
+        if (
+            not response["calculator_trace"]
+            and case["is_calculator_needed"]
+            and response["stop_reason"] != "completed"
+        ):
+            excluded["tools_score"] = NOT_RUN
+    details["observed_scores_before_exclusion"] = {key: row[key] for key in excluded}
+    row.update(excluded)
+    row["infrastructure_affected"] = infrastructure_affected
 
 
 async def snapshot_corpus(client, output, qdrant_url, fingerprint):
@@ -407,15 +489,103 @@ def write_reports(output, assessments):
         }
     summary["judge_errors"] = sum(len(a["details"]["judge_errors"]) for a in assessments)
     summary["response_files"] = len(list((output / "runs").glob("*/*.json")))
+    summary["provider_429_attempts"] = sum(r.get("provider_429_attempts", 0) for r in rows)
+    summary["router_fallback_runs"] = sum(r.get("router_fallback_used", False) for r in rows)
     summary["median_duration_ms"] = (
         statistics.median(r["duration_ms"] for r in rows if "duration_ms" in r)
         if any("duration_ms" in r for r in rows)
         else None
     )
     (output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    table = []
+    for column, stats in summary["node_scores"].items():
+        mean = f"{stats['mean']:.3f}" if stats["mean"] is not None else "unscored"
+        table.append(f"| {column} | {mean} | {stats['scored_questions']} | {stats['unscored']} |")
+    lines = [
+        "# Compose agent evaluation",
+        "",
+        f"Assessed **{len(rows)} questions**. See [node_assessments.csv](node_assessments.csv) "
+        "for one row per question and [summary.json](summary.json) for counts/denominators.",
+        "",
+        "| Node diagnostic | Mean (0–1) | Scored questions | Unscored reasons |",
+        "|---|---:|---:|---|",
+        *table,
+        "",
+        "## What the scores mean",
+        "",
+        "- **Coordinator:** exact match against the benchmark's expected source flags.",
+        "- **Documents:** cumulative required-evidence recall@20 using existing reviewed "
+        "chunk annotations, checked against the active corpus. Includes follow-up searches.",
+        "- **Database:** external semantic judge of requested raw DB facts versus reference "
+        "rows; equivalent SQL/projections/order are accepted (0, 0.5, 1).",
+        "- **Aggregation:** fraction of acquired required evidence groups still present "
+        "in aggregation outputs, using annotated stable chunk IDs. Current aggregation "
+        "is a passthrough; this is retention, not a new algorithm benchmark.",
+        "- **Generate:** benchmark correctness rubric score divided by two. Completeness, "
+        "faithfulness, citations, relevance and uncertainty remain separate judge columns (0–2).",
+        "- **Tools:** independently recomputed calculator execution accuracy. Required "
+        "calculator omission scores zero if the generator finished; blocked/unreached tools "
+        "are NOT_RUN. Reference numeric-value coverage is a separate diagnostic: presence "
+        "of a number alone does not prove its meaning or the correct formula.",
+        "- **Guard:** agreement with deterministic citation-ID validation, then a separate "
+        "Luna judge using each candidate's own visible context. Unknown IDs require rejection "
+        "even if Luna finds the prose supported. Original Luna judgments are preserved.",
+        "- **Finalize:** JSON contract, input identity, finished traces, and faithful return "
+        "of the verified candidate (or an explicit qualified result after interruption). "
+        "A score of one here does not mean the answer is correct.",
+        "",
+        "NO_REFERENCE means the dataset supplies no expected result for that node. "
+        "The four routing-only cases therefore do not get invented answer/SQL scores. "
+        "NOT_APPLICABLE means no required operation/evidence to score. NOT_RUN means the "
+        "node was not reached. INFRASTRUCTURE_ERROR excludes affected node scores from "
+        "means; EVALUATION_ERROR means collection/judge evidence was invalid. "
+        "Observed pre-exclusion scores and detailed reasons remain in assessments/.",
+        "",
+        "## Evidence and limits",
+        "",
+        "- [selection.json](selection.json) records the coverage-based 12-case selection "
+        "and reused responses. It is a purposive diagnostic sample, not an unbiased estimate "
+        "of performance across all 112 cases. Selection occurred after collection began.",
+        "- runs/{suite}/{question_id}.json preserves each exact request, full API response "
+        "and trace. assessments/ stores checks and reasons; judges/ stores judge requests, "
+        "responses, model IDs, usage and failed attempts, without authentication headers.",
+        "- Expected answers/rows/rubrics stay outside the agent. The Compose image was "
+        "checked to exclude evals, and its PDFs/database match the benchmark source hashes.",
+        "- Citation checks use actual PDF pages resolved independently with pdftotext. "
+        "Faithfulness/guard judging is separate from answer-key-based judging, using exact "
+        "generator visibility and no hidden answer key.",
+        "- Final LLM judgments use **Luna subagents (gpt-6-luna)**, as requested. "
+        "All three available workers were dispatched in parallel with 26 schema-constrained "
+        "assessment jobs. luna_jobs/ records their inputs; luna_results/ records their "
+        "actual judgments; luna_judges/ links validated results to input hashes. "
+        "Earlier Nemotron and Antigravity attempts are audit-only and excluded from "
+        "the final CSV. Antigravity reached its account quota before the user requested Luna. "
+        "Judgments remain uncalibrated model assessments, not objective truth.",
+        f"- Saved runs contain **{summary['provider_429_attempts']} HTTP 429 attempts**, "
+        f"including recovered retries; **{summary['router_fallback_runs']} runs** used "
+        "the configured routing fallback. The primary Mammoth chat requests returned "
+        "HTTP 400; these are fallback-system results, not proof of primary-router quality.",
+        "- All agent models remain free OpenRouter endpoints; no paid OpenRouter "
+        "endpoint was used. Final judgments use the requested Luna subagents. "
+        "Unknown token/cost totals remain null, "
+        "including failed attempts without provider usage. No inferred total cost is reported.",
+        "- Node diagnostics describe behavior inside an end-to-end run. They are not "
+        "causally isolated node experiments; upstream mistakes can affect downstream outputs. "
+        "No single blended overall score is produced.",
+        "- Final-answer faithfulness uses the exact final generator input, which retains "
+        "the supplied conversation and current evidence. Each guard candidate is judged "
+        "separately against its own exact input to avoid crediting later evidence. "
+        "All original turns remain in the saved agent responses.",
+        "",
+        "The original broader collection is retained separately at "
+        "../2026-10-23-compose/ after the user reduced the scope to 12 questions. "
+        "It is excluded from this CSV and its denominators.",
+        "",
+    ]
+    (output / "REPORT.md").write_text("\n".join(lines))
     checksums = {
         str(p.relative_to(output)): hashlib.sha256(p.read_bytes()).hexdigest()
-        for p in sorted(output.rglob("*.json"))
-        if p.name != "checksums.json"
+        for p in sorted(output.rglob("*"))
+        if p.is_file() and p.name != "checksums.json" and p.suffix not in (".tmp", ".log")
     }
     (output / "checksums.json").write_text(json.dumps(checksums, indent=2) + "\n")

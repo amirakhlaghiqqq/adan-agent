@@ -1,0 +1,193 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "X-E01",
+    "question": "Look up Nexus Logistics Hub's tier, billing cycle, payment status, and recorded February 2024 incident severity. If it cancels during an already-started billing cycle, does its plan allow a prorated refund? For the recorded severity, what initial technical response time and coverage does its tier receive?",
+    "difficulty": "easy",
+    "category": "hybrid",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 1.0,
+    "database_score": 1.0,
+    "aggregation_score": 1.0,
+    "generate_score": 0.0,
+    "tools_score": 0.5,
+    "guard_score": "NOT_RUN",
+    "finalize_score": 1,
+    "run_id": "334a4d45-fe23-4a88-b5ee-d3fbcff5f5a4",
+    "status": "partial",
+    "stop_reason": "generation_error",
+    "duration_ms": 70036.839,
+    "model_calls": 16,
+    "tool_calls": 13,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "failures": "[{\"stage\": \"calculate\", \"error_type\": \"ValueError\", \"error\": \"Expected ISO YYYY-MM-DD calendar dates\"}, {\"stage\": \"generate\", \"error_type\": \"ValidationError\", \"error\": \"1 validation error for SubmitAnswer\\ncitation_ids\\n  Field required [type=missing, input_value={'missing_information': [...LA-2024-V2 \\u00a75.4 p.4\\\"]'}, input_type=dict]\\n    For further information visit https://errors.pydantic.dev/2.14/v/missing\"}]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 0.0,
+    "all_evidence_success_at_5": 0,
+    "context_precision_at_5": 0.0,
+    "evidence_recall_at_10": 0.0,
+    "all_evidence_success_at_10": 0,
+    "context_precision_at_10": 0.0,
+    "evidence_recall_at_20": 1.0,
+    "all_evidence_success_at_20": 1,
+    "context_precision_at_20": 0.1,
+    "calculator_execution_accuracy": 0.5,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/X-E01.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 0,
+    "judge_completeness": 0,
+    "judge_citation_precision": null,
+    "judge_citation_coverage": null,
+    "judge_relevance": 0,
+    "judge_uncertainty": 0,
+    "judge_source_attribution": 0,
+    "judge_unsupported_financial_claims": 2,
+    "judge_faithfulness": null,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 0.0,
+        "all_evidence_success": 0,
+        "context_precision": 0.0,
+        "ndcg": 0.0,
+        "returned_count": 5,
+        "covered_requirements": []
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 0.0,
+        "all_evidence_success": 0,
+        "context_precision": 0.0,
+        "ndcg": 0.0,
+        "returned_count": 10,
+        "covered_requirements": []
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.1,
+        "ndcg": 0.3053831394719294,
+        "returned_count": 20,
+        "covered_requirements": [
+          "X-E01-R01",
+          "X-E01-R02"
+        ]
+      },
+      "calculator": {
+        "executions": [
+          {
+            "event_id": "ad872f8d-bd0b-4430-a250-86e15eca106e",
+            "correct": false
+          },
+          {
+            "event_id": "94b7e95d-7166-44b0-afb3-3007e92426b0",
+            "correct": true
+          }
+        ],
+        "reference_targets": [],
+        "execution_accuracy": 0.5,
+        "reference_value_coverage": null
+      },
+      "database_projection": [
+        {
+          "columns": [
+            "company_name",
+            "tier",
+            "billing_cycle",
+            "monthly_rate",
+            "start_date",
+            "renewal_date",
+            "payment_status"
+          ],
+          "exact_multiset_match": true,
+          "truncated": false
+        },
+        {
+          "columns": [
+            "tier",
+            "billing_cycle",
+            "monthly_rate",
+            "start_date",
+            "renewal_date",
+            "payment_status",
+            "severity",
+            "downtime_minutes",
+            "reported_at",
+            "resolved_at"
+          ],
+          "exact_multiset_match": true,
+          "truncated": false
+        }
+      ],
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 0,
+          "reason": "No tier, cycle, payment status, incident severity, refund, or response-time answer is supplied."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 0,
+          "reason": "Omits all ten required facts, including the no-prorated-refund rule and Enterprise Severity 1 response terms."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": null,
+          "reason": "No policy claim or citation is supplied to evaluate."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": null,
+          "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 0,
+          "reason": "The refusal does not address the requested facts or policy questions."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 0,
+          "reason": "It unnecessarily refuses a request with supplied reference evidence and answerable policy questions."
+        },
+        {
+          "criterion_id": "source_attribution",
+          "score": 0,
+          "reason": "No database facts, assumptions, policy rules, or derived conclusions are distinguished."
+        },
+        {
+          "criterion_id": "unsupported_financial_claims",
+          "score": 2,
+          "reason": "It makes no unsupported financial conclusion, including no claim of a prorated refund."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": null,
+      "reason": "The delivered answer only reports that generation stopped with an error and that the conclusions remain unverified; it makes no material factual claims, so the not-applicable anchor applies."
+    },
+    "database_facts": {
+      "score": 2,
+      "reason": "Both actual queries retrieve Nexus Logistics Hub as Enterprise, monthly, paid, with the February 2024 Severity 1 incident; the requested database facts are complete."
+    },
+    "observed_scores_before_exclusion": {}
+  }
+}

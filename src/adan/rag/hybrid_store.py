@@ -10,6 +10,7 @@ from importlib.metadata import version
 from typing import TYPE_CHECKING
 
 from llama_index.core import StorageContext, VectorStoreIndex
+from llama_index.core.schema import NodeRelationship, RelatedNodeInfo
 from llama_index.embeddings.openai_like import OpenAILikeEmbedding
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from qdrant_client import AsyncQdrantClient, QdrantClient
@@ -117,8 +118,10 @@ class HybridIndexManager:
         )
         for node in nodes:
             node.metadata["index_fingerprint"] = self.fingerprint
-            if hasattr(node, "ref_doc_id") and not node.ref_doc_id:
-                node.ref_doc_id = node.metadata.get("doc_id")
+            if node.ref_doc_id is None and node.metadata.get("doc_id"):
+                node.relationships[NodeRelationship.SOURCE] = RelatedNodeInfo(
+                    node_id=node.metadata["doc_id"]
+                )
         storage_context = StorageContext.from_defaults(vector_store=self.vector_store)
         index = VectorStoreIndex(
             nodes=nodes,

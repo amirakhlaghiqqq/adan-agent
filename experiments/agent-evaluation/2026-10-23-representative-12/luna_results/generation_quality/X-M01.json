@@ -1,0 +1,44 @@
+{
+  "criteria": [
+    {
+      "criterion_id": "correctness",
+      "score": 0,
+      "reason": "No uptime, bracket, credit amount, refund, cashability, or access conclusion is provided."
+    },
+    {
+      "criterion_id": "completeness",
+      "score": 0,
+      "reason": "Omits all eleven required facts, including uptime, applicable percentage, and credit amount."
+    },
+    {
+      "criterion_id": "citation_precision",
+      "score": null,
+      "reason": "No policy claim or citation is supplied to evaluate."
+    },
+    {
+      "criterion_id": "citation_coverage",
+      "score": null,
+      "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+    },
+    {
+      "criterion_id": "relevance",
+      "score": 0,
+      "reason": "The refusal does not answer the outage or cancellation questions."
+    },
+    {
+      "criterion_id": "uncertainty",
+      "score": 0,
+      "reason": "It unnecessarily refuses an answerable case with supplied reference facts."
+    },
+    {
+      "criterion_id": "source_attribution",
+      "score": 0,
+      "reason": "No database facts, exercise assumptions, policy rules, or calculations are attributed."
+    },
+    {
+      "criterion_id": "unsupported_financial_claims",
+      "score": 2,
+      "reason": "It makes none of the prohibited cash-payment, prorated-refund, extra-discount, or invented-currency claims."
+    }
+  ]
+}

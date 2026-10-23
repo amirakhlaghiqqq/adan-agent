@@ -1,0 +1,342 @@
+{
+  "backend": "luna_subagents",
+  "model": "gpt-6-luna",
+  "job_sha256": "df5041518efccf15287189616ad9f50d1958306d6d0b96740a9addd5138a5f25",
+  "request": {
+    "question_id": "H06",
+    "stage": "generation_quality",
+    "inputs": {
+      "criteria": [
+        {
+          "rubric": {
+            "criterion_id": "correctness",
+            "stage": "generation",
+            "question": "For H06 (Unsupported exact commercial rates), are all material conclusions consistent with required_answer_facts, the independent reference evidence, and visible assumptions? In particular check: Neither numerical overage rate is specified in the supplied documents.; Excess usage is metered hourly.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "required_document_evidence",
+              "expected_database_response",
+              "expected_calculations",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Wrong conclusion or material factual error.",
+              "1": "Partly correct with a material imprecision.",
+              "2": "All material conclusions agree with the reference facts and visible assumptions."
+            }
+          },
+          "inputs": {
+            "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "H06-F01",
+                "fact": "Neither numerical overage rate is specified in the supplied documents."
+              },
+              {
+                "fact_id": "H06-F02",
+                "fact": "Excess usage is metered hourly."
+              },
+              {
+                "fact_id": "H06-F03",
+                "fact": "Overages are billed at calendar month-end at contracted standard rates."
+              },
+              {
+                "fact_id": "H06-F04",
+                "fact": "The applicable contract/rate schedule is needed for exact per-hour and per-GB prices."
+              }
+            ],
+            "required_document_evidence": [
+              {
+                "requirement_id": "H06-R01",
+                "role": "limiting_or_adjacent_policy",
+                "alternatives": [
+                  {
+                    "evidence_id": "B1.5",
+                    "source_id": "document_1",
+                    "document_id": "DOC-BIL-2024-V3",
+                    "path": "data/documents/enterprise_billing_and_refund_policy.pdf",
+                    "page": 1,
+                    "section": "1.5",
+                    "text": "1.5 Resource Metering and Overage Charges\nEnterprise plans include baseline quotas for computing hours, NVMe storage, and network egress bandwidth. Resource\nusage beyond baseline quotas is metered on an hourly basis and billed as overage charges at the close of each calendar\nmonth at contracted standard rates."
+                  }
+                ]
+              }
+            ],
+            "expected_database_response": null,
+            "expected_calculations": [],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "completeness",
+            "stage": "generation",
+            "question": "For H06, identify every required_answer_facts fact_id covered and omitted. Does the answer cover all parts of Unsupported exact commercial rates, including Neither numerical overage rate is specified in the supplied documents.; Excess usage is metered hourly.?",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "No required answer facts covered.",
+              "1": "Some but not all required facts covered.",
+              "2": "All required facts covered; equivalent wording is accepted."
+            }
+          },
+          "inputs": {
+            "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "H06-F01",
+                "fact": "Neither numerical overage rate is specified in the supplied documents."
+              },
+              {
+                "fact_id": "H06-F02",
+                "fact": "Excess usage is metered hourly."
+              },
+              {
+                "fact_id": "H06-F03",
+                "fact": "Overages are billed at calendar month-end at contracted standard rates."
+              },
+              {
+                "fact_id": "H06-F04",
+                "fact": "The applicable contract/rate schedule is needed for exact per-hour and per-GB prices."
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_precision",
+            "stage": "generation",
+            "question": "For H06 (Unsupported exact commercial rates), does each attached document/page/section citation support its particular policy claim? Inspect the cited source text rather than accepting matching page labels.",
+            "required_inputs": [
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No cited claim–source pairs are supported.",
+              "1": "Some cited pairs are supported.",
+              "2": "All cited pairs are supported by the actual cited page/section.",
+              "not_applicable": "No citations; assess citation coverage separately."
+            }
+          },
+          "inputs": {
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups.",
+            "citations": [],
+            "cited_source_passages": []
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "citation_coverage",
+            "stage": "generation",
+            "question": "For H06, does every externally verifiable policy claim about Unsupported exact commercial rates have a valid supporting PDF citation? Exclude facts explicitly supplied in the question and separately attributed DB/calculator results.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answer",
+              "citations",
+              "cited_source_passages"
+            ],
+            "scoring_anchors": {
+              "0": "No externally verifiable policy claim has a valid citation.",
+              "1": "Some policy claims have valid citations.",
+              "2": "All externally verifiable policy claims have valid supporting citations.",
+              "not_applicable": "No externally verifiable policy claims are made."
+            }
+          },
+          "inputs": {
+            "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups.",
+            "citations": [],
+            "cited_source_passages": []
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "relevance",
+            "stage": "generation",
+            "question": "Does the answer directly address H06: What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers? without unrelated policy exposition?",
+            "required_inputs": [
+              "question",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Answer does not address the request.",
+              "1": "Useful answer mixed with distracting unrelated content.",
+              "2": "Focused on the request."
+            }
+          },
+          "inputs": {
+            "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups."
+          }
+        },
+        {
+          "rubric": {
+            "criterion_id": "uncertainty",
+            "stage": "generation",
+            "question": "For H06, does the answer handle these case-specific gaps and pitfalls appropriately: Contracted price per extra computing hour.; Contracted price per extra GB of network egress.; Invent numerical overage prices or import other providers’ prices.? Answer supported parts and avoid both fabrication and unnecessary refusal.",
+            "required_inputs": [
+              "question",
+              "input_context",
+              "answerability",
+              "missing_information",
+              "prohibited_claims",
+              "required_answer_facts",
+              "answer"
+            ],
+            "scoring_anchors": {
+              "0": "Fabricates missing facts, asserts unjustified certainty, or refuses an answerable request.",
+              "1": "Identifies only some limitations or gives vague qualifications.",
+              "2": "Answers supported parts, identifies relevant gaps/conflicts, and avoids unnecessary refusal."
+            }
+          },
+          "inputs": {
+            "question": "What is CloudScale's exact price per extra computing hour and per extra GB of network egress for Enterprise customers?",
+            "input_context": [
+              "Use the supplied billing policy DOC-BIL-2024-V3 (effective 2024-02-01) and SLA policy DOC-SLA-2024-V2 (effective 2024-01-15) for this exercise; do not invent later revisions.",
+              "Answer from the two supplied policy PDFs and facts explicitly stated in the question. No database or external sources are needed.",
+              "Cite the document and rendered PDF page or section supporting each material policy claim. State missing information or conflicting wording when it limits the answer."
+            ],
+            "answerability": "not_answerable",
+            "missing_information": [
+              "Contracted price per extra computing hour.",
+              "Contracted price per extra GB of network egress."
+            ],
+            "prohibited_claims": [
+              "Invent numerical overage prices or import other providers’ prices."
+            ],
+            "required_answer_facts": [
+              {
+                "fact_id": "H06-F01",
+                "fact": "Neither numerical overage rate is specified in the supplied documents."
+              },
+              {
+                "fact_id": "H06-F02",
+                "fact": "Excess usage is metered hourly."
+              },
+              {
+                "fact_id": "H06-F03",
+                "fact": "Overages are billed at calendar month-end at contracted standard rates."
+              },
+              {
+                "fact_id": "H06-F04",
+                "fact": "The applicable contract/rate schedule is needed for exact per-hour and per-GB prices."
+              }
+            ],
+            "answer": "I could not finish a verified answer within this request. Available source evidence is included in the response; unresolved conclusions remain unverified. Stop reason: max_document_followups."
+          }
+        }
+      ]
+    },
+    "schema": {
+      "$defs": {
+        "Criterion": {
+          "additionalProperties": false,
+          "properties": {
+            "criterion_id": {
+              "title": "Criterion Id",
+              "type": "string"
+            },
+            "score": {
+              "anyOf": [
+                {
+                  "maximum": 2,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Score"
+            },
+            "reason": {
+              "title": "Reason",
+              "type": "string"
+            }
+          },
+          "required": [
+            "criterion_id",
+            "score",
+            "reason"
+          ],
+          "title": "Criterion",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "criteria": {
+          "items": {
+            "$ref": "#/$defs/Criterion"
+          },
+          "title": "Criteria",
+          "type": "array"
+        }
+      },
+      "required": [
+        "criteria"
+      ],
+      "title": "CriteriaResult",
+      "type": "object"
+    }
+  },
+  "result": {
+    "criteria": [
+      {
+        "criterion_id": "correctness",
+        "score": 0,
+        "reason": "The response provides no factual answer to the question."
+      },
+      {
+        "criterion_id": "completeness",
+        "score": 0,
+        "reason": "No required answer fact is covered."
+      },
+      {
+        "criterion_id": "citation_precision",
+        "score": null,
+        "reason": "No policy claim or citation is supplied to evaluate."
+      },
+      {
+        "criterion_id": "citation_coverage",
+        "score": null,
+        "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+      },
+      {
+        "criterion_id": "relevance",
+        "score": 0,
+        "reason": "The refusal does not address the question."
+      },
+      {
+        "criterion_id": "uncertainty",
+        "score": 0,
+        "reason": "It unnecessarily refuses rather than answering supported portions and identifying actual gaps."
+      }
+    ]
+  },
+  "cost": null
+}

@@ -4,7 +4,6 @@ import argparse
 import asyncio
 import hashlib
 import json
-import socket
 import subprocess
 import sys
 import time
@@ -26,11 +25,17 @@ def save_json(path, value):
     temporary.replace(path)
 
 
-def cases():
+def cases(directory=None):
     return [
         (suite, json.loads(line))
         for suite in ("rag", "coordinator")
-        for line in (ROOT / "evals" / suite / "benchmark.jsonl").read_text().splitlines()
+        for line in (
+            (directory / f"{suite}.jsonl")
+            if directory
+            else (ROOT / "evals" / suite / "benchmark.jsonl")
+        )
+        .read_text()
+        .splitlines()
         if line.strip()
     ]
 
@@ -116,82 +121,89 @@ async def collect(args):
 
 
 async def assess(args):
-    from adan.config import Settings
     from evals.agent_assessment import (
         annotations_for,
+        apply_execution_limits,
         base_assessment,
         snapshot_corpus,
         write_reports,
     )
     from evals.agent_judge import Judge, semantic_assessment
 
-    settings = Settings()
-    model = args.judge_model or settings.text_model
+    model = args.judge_model or "claude-sonnet-4-6"
     collection = json.loads((args.output / "collection.json").read_text())
     async with httpx.AsyncClient(timeout=30, trust_env=False) as local:
         corpus = await snapshot_corpus(
             local, args.output, args.qdrant_url, collection["health"]["index_fingerprint"]
         )
     save_json(args.output / "corpus.json", corpus)
-    all_cases = cases()
+    all_cases = cases(args.output / "datasets")
     annotations = annotations_for(corpus, [case for suite, case in all_cases if suite == "rag"])
     save_json(args.output / "retrieval_annotations.json", annotations)
     metadata = {
         "judge_model": model,
-        "judge_temperature": 0,
-        "judge_max_attempts": 3,
-        "judge_timeout_seconds": 90,
+        "judge_backend": "antigravity_agy",
+        "judge_max_attempts": 2,
+        "judge_max_concurrency": 2,
+        "judge_timeout_seconds": 180,
         "agent_trials_per_question": 1,
-        "judge_is_same_model_as_generator": model == settings.text_model,
+        "judge_is_same_model_as_generator": False,
+        "visibility": "Final-answer last generator context; "
+        "each guard candidate's exact own context",
         "git_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
         "source_sha256": {
             str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in sorted((ROOT / "src").rglob("*.py"))
         },
+        "evaluator_sha256": {
+            str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in [
+                Path(__file__).resolve(),
+                ROOT / "evals/agent_assessment.py",
+                ROOT / "evals/agent_judge.py",
+                ROOT / "evals/rag/retrieval_judgments.py",
+                ROOT / "evals/rag/retrieval_metrics.py",
+            ]
+        },
         "corpus_chunks": len(corpus),
     }
     save_json(args.output / "assessment_config.json", metadata)
-    proxy = None
-    try:
-        with socket.create_connection(("127.0.0.1", 10808), timeout=1):
-            proxy = "http://127.0.0.1:10808"
-    except OSError:
-        pass
     assessments = []
     case_semaphore = asyncio.Semaphore(args.concurrency)
-    async with httpx.AsyncClient(timeout=90, proxy=proxy, trust_env=False) as remote:
-        judge = Judge(remote, settings, model, args.output, asyncio.Semaphore(2), save_json)
+    judge = Judge(model, args.output, asyncio.Semaphore(2), save_json)
 
-        async def worker(suite, case):
-            qid = case["question_id"]
-            path = args.output / "runs" / suite / f"{qid}.json"
-            if not path.exists() or args.only and f"{suite}:{qid}" not in args.only:
-                return
-            async with case_semaphore:
-                record = json.loads(path.read_text())
-                row, details = base_assessment(suite, case, record, annotations)
-                row["response_file"] = str(path.relative_to(args.output))
-                if suite == "rag" and record.get("response") and not record.get("error"):
-                    await semantic_assessment(judge, case, record["response"], row, details, ROOT)
-                assessment = {"row": row, "details": details}
-                save_json(args.output / "assessments" / suite / f"{qid}.json", assessment)
-                assessments.append(assessment)
-                write_reports(
-                    args.output,
-                    sorted(assessments, key=lambda a: (a["row"]["suite"], a["row"]["question_id"])),
-                )
-                print(
-                    json.dumps(
-                        {
-                            "assessed": f"{suite}/{qid}",
-                            "generation": row["generate_score"],
-                            "judge_errors": details["judge_errors"],
-                        }
-                    ),
-                    flush=True,
-                )
+    async def worker(suite, case):
+        qid = case["question_id"]
+        path = args.output / "runs" / suite / f"{qid}.json"
+        if not path.exists() or args.only and f"{suite}:{qid}" not in args.only:
+            return
+        async with case_semaphore:
+            record = json.loads(path.read_text())
+            row, details = base_assessment(suite, case, record, annotations)
+            row["response_file"] = str(path.relative_to(args.output))
+            if suite == "rag" and record.get("response") and not record.get("error"):
+                await semantic_assessment(judge, case, record["response"], row, details, ROOT)
+            if record.get("response") and not record.get("error"):
+                apply_execution_limits(row, details, record["response"], case)
+            assessment = {"row": row, "details": details}
+            save_json(args.output / "assessments" / suite / f"{qid}.json", assessment)
+            assessments.append(assessment)
+            write_reports(
+                args.output,
+                sorted(assessments, key=lambda a: (a["row"]["suite"], a["row"]["question_id"])),
+            )
+            print(
+                json.dumps(
+                    {
+                        "assessed": f"{suite}/{qid}",
+                        "generation": row["generate_score"],
+                        "judge_errors": details["judge_errors"],
+                    }
+                ),
+                flush=True,
+            )
 
-        await asyncio.gather(*(worker(suite, case) for suite, case in all_cases))
+    await asyncio.gather(*(worker(suite, case) for suite, case in all_cases))
 
 
 def main():

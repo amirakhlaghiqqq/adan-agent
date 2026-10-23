@@ -1,0 +1,185 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "X-M01",
+    "question": "For Nexus Logistics Hub, calculate February 2024 monthly uptime, the applicable credit percentage, and the credit amount from recorded downtime. If it asks on March 10, 2024 for that outage compensation in cash and a prorated refund for cancelling its already-started monthly cycle, which requests do the two policies support?",
+    "difficulty": "medium",
+    "category": "hybrid",
+    "reference_answerability": "answerable",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 0.5,
+    "database_score": 0.0,
+    "aggregation_score": 1.0,
+    "generate_score": 0.0,
+    "tools_score": "NOT_RUN",
+    "guard_score": "NOT_RUN",
+    "finalize_score": 1,
+    "run_id": "e471a2a5-f15b-466a-957b-d27473783015",
+    "status": "partial",
+    "stop_reason": "max_database_followups",
+    "duration_ms": 24853.565,
+    "model_calls": 12,
+    "tool_calls": 6,
+    "total_tokens": null,
+    "cost": null,
+    "text_model": "nvidia/nemotron-3.5-lightning:free",
+    "router_model": "baseten/mammoth-1:free",
+    "router_fallback_model": "nvidia/nemotron-3.5-lightning:free",
+    "expected_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": true, \"needs_docs\": true}",
+    "failures": "[{\"stage\": \"database\", \"error_type\": \"UnsafeSQL\", \"error\": \"SQL could not be parsed\"}, {\"stage\": \"query_database\", \"error_type\": \"ValueError\", \"error\": \"SQLite query failed: no such column: t.notes\"}, {\"stage\": \"query_database\", \"error_type\": \"ValueError\", \"error\": \"SQLite query failed: no such column: s.subscription_type\"}, {\"stage\": \"query_database\", \"error_type\": \"LimitReached\", \"error\": \"max_database_followups\"}]",
+    "provider_429_attempts": 0,
+    "router_fallback_used": true,
+    "evidence_recall_at_5": 0.25,
+    "all_evidence_success_at_5": 0,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 0.25,
+    "all_evidence_success_at_10": 0,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 0.5,
+    "all_evidence_success_at_20": 0,
+    "context_precision_at_20": 0.15384615384615385,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": 0.0,
+    "response_file": "runs/rag/X-M01.json",
+    "judge_model": "gpt-6-luna",
+    "judge_correctness": 0,
+    "judge_completeness": 0,
+    "judge_citation_precision": null,
+    "judge_citation_coverage": null,
+    "judge_relevance": 0,
+    "judge_uncertainty": 0,
+    "judge_source_attribution": 0,
+    "judge_unsupported_financial_claims": 2,
+    "judge_faithfulness": null,
+    "infrastructure_affected": false
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 0.25,
+        "all_evidence_success": 0,
+        "context_precision": 0.2,
+        "ndcg": 0.24630238874073,
+        "returned_count": 5,
+        "covered_requirements": [
+          "X-M01-R02"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 0.25,
+        "all_evidence_success": 0,
+        "context_precision": 0.1,
+        "ndcg": 0.24630238874073,
+        "returned_count": 10,
+        "covered_requirements": [
+          "X-M01-R02"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 0.5,
+        "all_evidence_success": 0,
+        "context_precision": 0.15384615384615385,
+        "ndcg": 0.35179797297584037,
+        "returned_count": 13,
+        "covered_requirements": [
+          "X-M01-R01",
+          "X-M01-R02"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [
+          {
+            "calculation_id": "C01",
+            "target": "scheduled_minutes",
+            "expected": 41760,
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "uptime_percentage",
+            "expected": "99.664751",
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "credit_percentage",
+            "expected": 25,
+            "matched": false
+          },
+          {
+            "calculation_id": "C01",
+            "target": "credit_amount",
+            "expected": "1050.00",
+            "matched": false
+          }
+        ],
+        "execution_accuracy": null,
+        "reference_value_coverage": 0.0
+      },
+      "database_projection": [],
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 0,
+          "reason": "No uptime, bracket, credit amount, refund, cashability, or access conclusion is provided."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 0,
+          "reason": "Omits all eleven required facts, including uptime, applicable percentage, and credit amount."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": null,
+          "reason": "No policy claim or citation is supplied to evaluate."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": null,
+          "reason": "No externally verifiable policy claim is made; the rubric marks citation coverage not applicable."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 0,
+          "reason": "The refusal does not answer the outage or cancellation questions."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 0,
+          "reason": "It unnecessarily refuses an answerable case with supplied reference facts."
+        },
+        {
+          "criterion_id": "source_attribution",
+          "score": 0,
+          "reason": "No database facts, exercise assumptions, policy rules, or calculations are attributed."
+        },
+        {
+          "criterion_id": "unsupported_financial_claims",
+          "score": 2,
+          "reason": "It makes none of the prohibited cash-payment, prorated-refund, extra-discount, or invented-currency claims."
+        }
+      ]
+    },
+    "visibility": {
+      "criterion_id": "faithfulness",
+      "score": null,
+      "reason": "This is a stop-reason response with no material factual answer claims to assess."
+    },
+    "database_facts": {
+      "score": 0,
+      "reason": "No database result was acquired, so none of the requested Nexus tier/rate/February downtime facts needed for the calculation are available from actual DB calls."
+    },
+    "observed_scores_before_exclusion": {
+      "tools_score": 0
+    }
+  }
+}

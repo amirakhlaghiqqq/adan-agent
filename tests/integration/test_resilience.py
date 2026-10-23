@@ -93,12 +93,17 @@ async def test_followup_limit_blocks_more_searches(make_assistant):
     assistant, _ = make_assistant(
         {
             "coordinator": [{"needs_docs": False, "needs_db": False}],
-            "generate": [tool("search_documents", {"query": "billing"})],
+            "generate": [
+                tool("search_documents", {"query": "billing"}),
+                final("Policy evidence is unavailable.", status="insufficient_evidence"),
+            ],
+            "guard": [{"passed": True, "feedback": ""}],
         },
         max_document_followups=0,
     )
     result = await assistant.ask("Hello")
-    assert result["stop_reason"] == "max_document_followups"
+    assert result["stop_reason"] == "completed"
+    assert result["status"] == "insufficient_evidence"
     assert result["retrieval_calls"] == []
 
 

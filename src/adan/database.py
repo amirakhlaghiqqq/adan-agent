@@ -15,6 +15,10 @@ class UnsafeSQL(ValueError):
     pass
 
 
+class InvalidSQL(ValueError):
+    """A query has a syntax or schema error that the SQL model can repair."""
+
+
 def ensure_database(path: Path, seed_directory: Path = Path("data/database")):
     """Initialize only a missing destination; never reset an existing database."""
     if path.exists():
@@ -68,7 +72,7 @@ class Database:
         try:
             statements = sqlglot.parse(sql, read="sqlite")
         except sqlglot.errors.ParseError as exc:
-            raise UnsafeSQL("SQL could not be parsed") from exc
+            raise InvalidSQL("SQL could not be parsed: " + str(exc)) from exc
         if len(statements) != 1 or not isinstance(statements[0], (exp.Select, exp.SetOperation)):
             raise UnsafeSQL("Exactly one SELECT statement is permitted")
         tree = statements[0]
@@ -134,6 +138,17 @@ class Database:
         except sqlite3.DatabaseError as exc:
             if "authoriz" in str(exc) or "prohibited" in str(exc):
                 raise UnsafeSQL("SQL attempted a forbidden table, function, or operation") from exc
+            if isinstance(exc, sqlite3.ProgrammingError) or any(
+                text in str(exc).lower()
+                for text in (
+                    "no such column",
+                    "ambiguous column",
+                    "syntax error",
+                    "incomplete input",
+                    "misuse of aggregate",
+                )
+            ):
+                raise InvalidSQL(f"SQLite query failed: {exc}") from exc
             raise ValueError(f"SQLite query failed: {exc}") from exc
         finally:
             conn.close()

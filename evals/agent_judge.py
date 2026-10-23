@@ -3,15 +3,19 @@
 import asyncio
 import hashlib
 import json
+import tempfile
 from datetime import UTC, datetime
+from pathlib import Path
 
 from evals.agent_assessment import (
     ERROR,
     CriteriaResult,
+    Criterion,
     DatabaseResult,
-    VisibilityResult,
+    GuardVerdict,
     guard_inputs,
     resolve_citations,
+    unknown_candidate_citations,
 )
 
 SYSTEM = """You are an independent evaluator of a CloudScale assistant run.
@@ -26,28 +30,19 @@ Return only JSON matching the response schema. Do not include hidden reasoning."
 
 
 class Judge:
-    def __init__(self, client, settings, model, output, semaphore, save_json):
-        self.client, self.settings, self.model = client, settings, model
+    def __init__(self, model, output, semaphore, save_json):
+        self.model = model
         self.output, self.semaphore, self.save_json = output, semaphore, save_json
 
     async def call(self, qid, stage, inputs, schema):
         request = {
+            "backend": "antigravity_agy",
             "model": self.model,
-            "temperature": 0,
-            "max_tokens": 4096,
-            "reasoning": {"enabled": False},
-            "messages": [
-                {"role": "system", "content": SYSTEM},
-                {"role": "user", "content": json.dumps(inputs, ensure_ascii=False)},
-            ],
-            "response_format": {
-                "type": "json_schema",
-                "json_schema": {
-                    "name": schema.__name__,
-                    "strict": False,
-                    "schema": schema.model_json_schema(),
-                },
-            },
+            "instructions": SYSTEM + "\nDo not use tools, files, browser, or network. "
+            "Judge only the supplied JSON. Do not delegate. Return a concise assessment.",
+            "inputs": inputs,
+            "schema": schema.model_json_schema(),
+            "timeout_seconds": 180,
         }
         digest = hashlib.sha256(json.dumps(request, sort_keys=True).encode()).hexdigest()
         path = self.output / "judges" / qid / f"{stage}.json"
@@ -64,33 +59,86 @@ class Judge:
             "result": None,
         }
         async with self.semaphore:
-            for attempt in range(3):
+            for attempt in range(2):
                 evidence = {"attempt": attempt + 1}
                 record["attempts"].append(evidence)
                 try:
-                    response = await self.client.post(
-                        self.settings.openrouter_base_url.rstrip("/") + "/chat/completions",
-                        headers={
-                            "Authorization": "Bearer "
-                            + self.settings.openrouter_api_key.get_secret_value()
-                        },
-                        json=request,
-                    )
-                    evidence["http_status"] = response.status_code
-                    response.raise_for_status()
-                    data = response.json()
-                    evidence["model"] = data.get("model")
-                    evidence["usage"] = data.get("usage")
-                    content = data["choices"][0]["message"]["content"]
-                    evidence["content"] = content
-                    result = schema.model_validate_json(content)
+                    with tempfile.TemporaryDirectory(prefix="adan-antigravity-judge-") as cwd:
+                        schema_path = Path(cwd) / "schema.json"
+                        schema_path.write_text(json.dumps(request["schema"]))
+                        command = [
+                            "agy",
+                            "--print=",
+                            "--input-format",
+                            "stream-json",
+                            "--output-format",
+                            "stream-json",
+                            "--json-schema",
+                            str(schema_path),
+                            "--model",
+                            self.model,
+                            "--sandbox",
+                            "--disable-slash-commands",
+                            "--print-timeout",
+                            "180s",
+                        ]
+                        process = await asyncio.create_subprocess_exec(
+                            *command,
+                            cwd=cwd,
+                            stdin=asyncio.subprocess.PIPE,
+                            stdout=asyncio.subprocess.PIPE,
+                            stderr=asyncio.subprocess.PIPE,
+                        )
+                        prompt = (
+                            request["instructions"]
+                            + "\n\n"
+                            + json.dumps(inputs, ensure_ascii=False)
+                        )
+                        message = (
+                            json.dumps(
+                                {
+                                    "event": "user",
+                                    "message": {
+                                        "role": "user",
+                                        "content": prompt,
+                                    },
+                                }
+                            )
+                            + "\n"
+                        )
+                        try:
+                            stdout, stderr = await asyncio.wait_for(
+                                process.communicate(message.encode()), timeout=200
+                            )
+                        except TimeoutError:
+                            process.kill()
+                            await process.communicate()
+                            raise
+                    events = [
+                        json.loads(line) for line in stdout.decode().splitlines() if line.strip()
+                    ]
+                    evidence["event_types"] = [event.get("event") for event in events]
+                    init = next((e["init"] for e in events if e.get("event") == "init"), {})
+                    evidence["model"] = init.get("model", self.model)
+                    evidence["exit_code"] = process.returncode
+                    data = next(e["result"] for e in reversed(events) if e.get("event") == "result")
+                    # Save only final output and usage, never thought/delta events.
+                    evidence["cli_result"] = data
+                    if process.returncode or data["status"] != "SUCCESS":
+                        raise ValueError("Antigravity CLI failed; see saved result")
+                    if any("tool" in str(event.get("event", "")).lower() for event in events):
+                        raise ValueError("Judge used tools outside the supplied evidence")
+                    if data.get("structured_output") is not None:
+                        result = schema.model_validate(data["structured_output"])
+                    else:
+                        result = schema.model_validate_json(data["response"])
                     record["result"] = result.model_dump()
                     self.save_json(path, record)
                     return result
                 except Exception as exc:
                     evidence["error_type"] = type(exc).__name__
                     self.save_json(path, record)
-                    if attempt < 2:
+                    if attempt < 1:
                         await asyncio.sleep(3 * (attempt + 1))
         raise ValueError(f"Judge failed: {qid}/{stage}; see saved attempts")
 
@@ -144,40 +192,67 @@ async def semantic_assessment(judge, case, response, row, details, root):
                 q for q in case["llm_judge_questions"] if q["criterion_id"] == "faithfulness"
             )
             inputs = {key: response[key] for key in faithfulness["required_inputs"]}
+            # Final-answer support must still be visible on its final generator turn.
+            inputs["generator_contexts"] = response["generator_contexts"][-1:]
             job = {
-                "faithfulness": {"rubric": faithfulness, "inputs": inputs},
-                "guard_candidates": guard_inputs(response),
-                "guard_rubric": (
-                    "For each candidate, determine whether a verifier should ACCEPT it using ONLY "
-                    "its associated visible messages. Require material claims to be supported, "
-                    "requested parts answered or qualified, "
-                    "citations to exist in visible evidence, "
-                    "and derived arithmetic to agree with actual calculator outputs. "
-                    "A useful partial "
-                    "answer may be supported. Never use information from a later turn to justify "
-                    "an earlier candidate. Do not infer that a candidate was accepted or rejected."
-                ),
+                "rubric": faithfulness,
+                "inputs": inputs,
+                "visibility_note": "The exact last generator context is supplied for the delivered "
+                "answer. Earlier contexts are not a license to justify a claim absent from "
+                "the final supplied conversation. Raw evidence not visible there is not support.",
             }
-            result = await judge.call(qid, "faithfulness_and_guard", job, VisibilityResult)
-            if result.faithfulness.criterion_id != "faithfulness":
+            result = await judge.call(qid, "faithfulness", job, Criterion)
+            if result.criterion_id != "faithfulness":
                 raise ValueError("Faithfulness criterion mismatch")
-            expected_indices = set(range(len(response["guardrail_history"])))
-            if {c.candidate_index for c in result.guard_candidates} != expected_indices or len(
-                result.guard_candidates
-            ) != len(expected_indices):
-                raise ValueError("Candidate indices mismatch")
-            row["judge_faithfulness"] = result.faithfulness.score
-            if expected_indices:
-                row["guard_score"] = sum(
-                    candidate.supported
-                    == response["guardrail_history"][candidate.candidate_index]["passed"]
-                    for candidate in result.guard_candidates
-                ) / len(expected_indices)
+            row["judge_faithfulness"] = result.score
             details["visibility"] = result.model_dump()
         except Exception as exc:
-            details["judge_errors"].append(
-                {"stage": "faithfulness_and_guard", "error": type(exc).__name__}
-            )
+            details["judge_errors"].append({"stage": "faithfulness", "error": type(exc).__name__})
+
+    async def guard():
+        if not response["guardrail_history"]:
+            return
+        try:
+            candidates = guard_inputs(response)
+            verdicts = []
+            raw_verdicts, citation_checks = [], []
+            for candidate in candidates:
+                job = {
+                    "candidate": candidate,
+                    "rubric": "Determine whether a verifier should ACCEPT this candidate using "
+                    "ONLY its associated visible messages. "
+                    "Require material claims to be supported, "
+                    "requested parts answered or qualified, valid citations in visible evidence, "
+                    "and derived arithmetic matching actual calculator outputs. A useful partial "
+                    "answer may be supported. Do not infer the agent critic's decision. "
+                    "Return the supplied candidate_index, supported (accept/reject), and reason.",
+                }
+                index = candidate["candidate_index"]
+                verdict = await judge.call(qid, f"guard_candidate_{index}", job, GuardVerdict)
+                if verdict.candidate_index != index:
+                    raise ValueError("Candidate index mismatch")
+                raw_verdicts.append(verdict.model_dump())
+                unknown = unknown_candidate_citations(candidate)
+                citation_checks.append({"candidate_index": index, "unknown_ids": unknown})
+                if unknown:
+                    verdict = verdict.model_copy(
+                        update={
+                            "supported": False,
+                            "reason": "Reject: citation_ids must match visible chunk IDs; "
+                            "unknown IDs: " + ", ".join(unknown),
+                        }
+                    )
+                verdicts.append(verdict)
+            row["guard_score"] = sum(
+                verdict.supported
+                == response["guardrail_history"][verdict.candidate_index]["passed"]
+                for verdict in verdicts
+            ) / len(verdicts)
+            details["guard"] = [verdict.model_dump() for verdict in verdicts]
+            details["raw_luna_guard"] = raw_verdicts
+            details["guard_citation_checks"] = citation_checks
+        except Exception as exc:
+            details["judge_errors"].append({"stage": "guard", "error": type(exc).__name__})
 
     async def database():
         if not case["is_database_needed"]:
@@ -208,4 +283,4 @@ async def semantic_assessment(judge, case, response, row, details, root):
         except Exception as exc:
             details["judge_errors"].append({"stage": "database_facts", "error": type(exc).__name__})
 
-    await asyncio.gather(quality(), visibility(), database())
+    await asyncio.gather(quality(), visibility(), guard(), database())
