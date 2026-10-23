@@ -1,0 +1,15 @@
+{
+  "started_at": "2026-10-23T01:30:06.162117+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "health": {
+    "status": "ok",
+    "index_fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b"
+  },
+  "concurrency": 2,
+  "trials": 1,
+  "timeout_seconds": 180,
+  "datasets": {
+    "rag": "043a0e6d811be9d038ccc0c261c7db93f0541d8add7680aeed02520b18016f29",
+    "coordinator": "2eb3711a453e3e245b12b94e3fd1249f7d35949e1354875da384a9b86868733e"
+  }
+}

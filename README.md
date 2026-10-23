@@ -1,4 +1,4 @@
-# CloudScale assistant
+# adan-agent (CloudScale Assistant)
 
 A runnable LangGraph assistant for the [Adan task](TASK_SPECIFICATION.md). It answers
 policy questions from the two supplied PDFs, generates read-only SQLite queries,

@@ -1,0 +1,21 @@
+{
+  "assessment_config.json": "62232491949e7e029d7c829d6584817bc49b4c394931deb1270e09a338906e53",
+  "assessments/rag/E01.json": "f1fcfea07bd072cda3787a8844ed373c4286ffe3203cf5c87350b11c7db748b0",
+  "collection.json": "ff2fd5c65b21f68277cb4a0c663d648c90b5c520db3c01a2461ac4d48d39952c",
+  "corpus.json": "5acadc43dc1f3ea32e34ea8d5e48c955be3b515a5fa643e47c5b22e040e2a656",
+  "judges/E01/faithfulness_and_guard.json": "9de0bbff08c193966119f05c6b4360d2059edb918fd75d1b86f53f85804c609c",
+  "judges/E01/generation_quality.json": "d0538f9dfbbbc2fb49df5507679d0b8c0cc01642e510d62ac65386073bba86b6",
+  "retrieval_annotations.json": "9e2929b4b3316932e4c56cdb3c1a5e086e6207aa65b6e8ac9283704f7bb03ea6",
+  "runs/rag/E01.json": "c509d0fbba70e19d1350d80b69763d7cbce1c16312e54dca0300f63a4f8a9546",
+  "runs/rag/E02.json": "9e5d431bced1c68fcbd0f33668bac79ff4caf76570c923cecd7ce7238ee29172",
+  "runs/rag/E03.json": "f37a67bb19ef18151e9206ad2f5816c651d14ead1058e0d35e129fe018ff2976",
+  "runs/rag/E04.json": "6b613505fbd04809c57a31f54a4ecea21ac8ef3931f781813dcc8ccac27b1294",
+  "runs/rag/E05.json": "4545a929a2284db159d9153afe65dc70435e7c95a7f852e025e9908885ee9bff",
+  "runs/rag/E06.json": "8b4ecdefce9969e0e5066658bcf98459081e56ac555dabbe6c590a5efe46ae86",
+  "runs/rag/E07.json": "604035369873fdb022795e4b55e50cf62b064c42b42a2a282a633db57441a459",
+  "runs/rag/E08.json": "430e39d36be8eaf6a6282474145d98f55c11289c5e2919ee1facf50460ee3416",
+  "runs/rag/E09.json": "5969f6849566d2a19d7ccbc152676f9d319b35b1d20ed32d0f23baee4247189e",
+  "runs/rag/E10.json": "3b48741917831dced107022128bc91eca5889bf9dd12edac067187b5a0f79776",
+  "runs/rag/E11.json": "30ca809ccb94e195295ca52ae7a5b4d1c8a50725d6d5c9d74ba3a29655512835",
+  "summary.json": "f1d55c62ea8fbed2cf38f45d3ab038e593f80815faa7dffa67bad33c68f95670"
+}

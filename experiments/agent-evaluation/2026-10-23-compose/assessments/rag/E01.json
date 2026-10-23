@@ -1,0 +1,139 @@
+{
+  "row": {
+    "suite": "rag",
+    "question_id": "E01",
+    "question": "What upfront discount does CloudScale offer for annual Enterprise subscriptions, and how long is the prepaid term?",
+    "difficulty": "easy",
+    "split": "",
+    "http_status": 200,
+    "collection_error": "",
+    "coordinator_score": 1,
+    "documents_score": 1.0,
+    "database_score": "NOT_APPLICABLE",
+    "aggregation_score": 1.0,
+    "generate_score": 1.0,
+    "tools_score": "NOT_APPLICABLE",
+    "guard_score": 1.0,
+    "finalize_score": 1,
+    "run_id": "24d5fe3d-1c08-4cab-8728-8b2a92c74906",
+    "status": "complete",
+    "stop_reason": "completed",
+    "duration_ms": 22579.269,
+    "model_calls": 7,
+    "tool_calls": 5,
+    "total_tokens": null,
+    "cost": null,
+    "expected_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "actual_route": "{\"needs_db\": false, \"needs_docs\": true}",
+    "failures": "[]",
+    "evidence_recall_at_5": 1.0,
+    "all_evidence_success_at_5": 1,
+    "context_precision_at_5": 0.2,
+    "evidence_recall_at_10": 1.0,
+    "all_evidence_success_at_10": 1,
+    "context_precision_at_10": 0.1,
+    "evidence_recall_at_20": 1.0,
+    "all_evidence_success_at_20": 1,
+    "context_precision_at_20": 0.07142857142857142,
+    "calculator_execution_accuracy": null,
+    "calculator_reference_value_coverage": null,
+    "response_file": "runs/rag/E01.json",
+    "judge_correctness": 2,
+    "judge_completeness": 2,
+    "judge_citation_precision": 2,
+    "judge_citation_coverage": 2,
+    "judge_relevance": 2,
+    "judge_uncertainty": 2,
+    "judge_faithfulness": 2
+  },
+  "details": {
+    "checks": {
+      "retrieval_at_5": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.2,
+        "ndcg": 1.0,
+        "returned_count": 5,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "retrieval_at_10": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.1,
+        "ndcg": 1.0,
+        "returned_count": 10,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "retrieval_at_20": {
+        "evidence_recall": 1.0,
+        "all_evidence_success": 1,
+        "context_precision": 0.07142857142857142,
+        "ndcg": 1.0,
+        "returned_count": 14,
+        "covered_requirements": [
+          "E01-R01"
+        ]
+      },
+      "calculator": {
+        "executions": [],
+        "reference_targets": [],
+        "execution_accuracy": null,
+        "reference_value_coverage": null
+      },
+      "citation_resolution_errors": []
+    },
+    "judge_errors": [],
+    "generation_quality": {
+      "criteria": [
+        {
+          "criterion_id": "correctness",
+          "score": 2,
+          "reason": "The answer correctly states that the annual Enterprise discount is 15% relative to standard monthly rates and that the term is a continuous 12-month period. Both material conclusions (E01-F01 and E01-F02) agree with the required_answer_facts and the visible source text from DOC-BIL-2024-V3 section 1.2. No factual errors or material imprecisions are present."
+        },
+        {
+          "criterion_id": "completeness",
+          "score": 2,
+          "reason": "All three required_answer_facts are covered: E01-F01 (15% discount relative to standard monthly rates), E01-F02 (continuous 12-month term), and E01-F03 (prepaid in advance). The answer explicitly mentions the 15% upfront discount and the 12-month prepaid term, and the source text confirms the annual term is prepaid in advance."
+        },
+        {
+          "criterion_id": "citation_precision",
+          "score": 2,
+          "reason": "Each cited claim–source pair is supported by the actual rendered passage. The answer cites DOC-BIL-2024-V3, section 1.2, page 1, chunk 67d097c8-5bea-5282-8291-8016371081b7. The cited text explicitly states: \"Subscriptions are prepaid in advance for a continuous 12-month period\" and \"Clients selecting the annual billing cycle receive an immediate 15% upfront discount relative to standard monthly rates across all compute tiers and base platform licenses.\" This matches the answer's claims exactly."
+        },
+        {
+          "criterion_id": "citation_coverage",
+          "score": 2,
+          "reason": "All externally verifiable policy claims in the answer have valid supporting PDF citations. The 15% upfront discount and the 12-month prepaid term are both cited to DOC-BIL-2024-V3 section 1.2 page 1. No policy claims are made without a citation."
+        },
+        {
+          "criterion_id": "relevance",
+          "score": 2,
+          "reason": "The answer directly addresses the request: it states the upfront discount (15%) and the prepaid term (continuous 12-month period) for annual Enterprise subscriptions. There is no unrelated policy exposition or distracting content."
+        },
+        {
+          "criterion_id": "uncertainty",
+          "score": 2,
+          "reason": "The answer correctly identifies the discount as 15% off the standard monthly rate (not off an already-discounted annual rate, which is a prohibited claim). It answers the supported parts, identifies no unnecessary gaps, and avoids fabrication or unnecessary refusal. The answer is fully supported by the source material."
+        }
+      ]
+    },
+    "visibility": {
+      "faithfulness": {
+        "criterion_id": "faithfulness",
+        "score": 2,
+        "reason": "The answer correctly states that CloudScale offers a 15% upfront discount for annual Enterprise subscriptions and a 12-month prepaid term. Both claims are directly supported by the retrieved chunk 67d097c8-5bea-5282-8291-8016371081b7 from DOC-BIL-2024-V3, section 1.2, which explicitly states: \"Annual Billing Cycle: Subscriptions are prepaid in advance for a continuous 12-month period. Clients selecting the annual billing cycle receive an immediate 15% upfront discount relative to standard monthly rates across all compute tiers and base platform licenses.\" No other material claims are made, and all claims have visible support in the generator_contexts. The answer is fully faithful to the supplied context."
+      },
+      "guard_candidates": [
+        {
+          "candidate_index": 0,
+          "supported": true,
+          "reason": "The candidate answer is fully supported by the retrieved chunk 67d097c8-5bea-5282-8291-8016371081b7 from DOC-BIL-2024-V3, section 1.2. Both the 15% discount and the 12-month prepaid term are explicitly stated in that chunk. Citations exist in visible evidence. No unsupported material claims are present."
+        }
+      ]
+    }
+  }
+}
