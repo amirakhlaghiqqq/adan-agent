@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-23",
+  "brief_sha256": "fa68e7badbdcf563be3c38982f301551e505ad0beb9132b499ae6ae2add088d9",
+  "sources": {
+    "data/database/app.db": "e872a1ad27117cdb8bcb88291222f52ca83aa694c5597cc06d0eb1a66794843c",
+    "data/documents/enterprise_billing_and_refund_policy.pdf": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+    "data/documents/sla_and_support_tier_policy.pdf": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e",
+    "database_counts": {
+      "customers": 30,
+      "subscriptions": 30,
+      "incident_tickets": 20
+    }
+  },
+  "source_files_unchanged": true,
+  "runtime": {
+    "image_id": "sha256:50fa1acdea832a360d139c103dde27386acbbadd3396752e5be0224e2938840c",
+    "files_compared": 26,
+    "all_match": true,
+    "files": {
+      "src/adan/__init__.py": "30fde9c62b9e23b6df8e2b9eccba40744c54a6670e17af2722adceb6aaf87a67",
+      "src/adan/agent.py": "c6a3abda1ebb9114246fd8a52bca51ab9d85c4d0034d32f7f290e015deedee75",
+      "src/adan/api.py": "da24e0fad34adac110f3fb3250b50a8f70a76dbc40a4701b84c7dbf327d340cf",
+      "src/adan/calculator.py": "76c477d56467aa7e950653eaf2b1bbf86ef176912d971b42caf0e6b83744d383",
+      "src/adan/config.py": "0fbbaf44953cb6a51933701de4ca9ca0124e55701a00dc93c03cb3776c907ebd",
+      "src/adan/database.py": "c6f4da8f930ac8b51c19626c3d66b249dff6595f5a9613a5008a1b795dcbe0e8",
+      "src/adan/models.py": "90f4fd68ec046df08b5973179a27cb0ccdd88e7ac238b4b98a1bbaa87223f6cd",
+      "src/adan/prompts.py": "e06a05aa2655a8064a4015864e8855dc341eb153aa43668bd4781988b2545b00",
+      "src/adan/rag/__init__.py": "e9afb9d80f976206ecac638e70f9406fc74e62ad77cfe785b9a8b74e34801df9",
+      "src/adan/rag/aggregation.py": "3db54d85aa9ca1d7bb90fb7c2ecaa53637dd7268783324445a20793c6fca8f07",
+      "src/adan/rag/config.py": "6862d2b3b91dd9a2f40a953bd7656b75b8669858d5d7c22704a97990073bb5c2",
+      "src/adan/rag/docling_parser.py": "efe2e7ff976ddbade63bbcb07b2c201748640c0dcb55e2c51fa96bbe82c1630e",
+      "src/adan/rag/hybrid_store.py": "3dba620496331ea4ede1776be0a1af11e440f5a82eaae852e64c6fc823a28283",
+      "src/adan/rag/node_parser.py": "3ec8c90ed9d4bc24402d4119e8faee28cc430f9e7c11b595e7b0aba76f962945",
+      "src/adan/rag/pipeline.py": "13eaaf88d516541f8313ae84df5182a68b3d0bcdda5e7ee744899d63f3677225",
+      "src/adan/rag/quality_control.py": "5dafedd016b8751f96d57e883bea46de9f47bd7cd2b5562f4793731942539ecd",
+      "src/adan/rag/reranker.py": "a9acdc9ff77e246b3ea11f0b8a5747a0a8411fd0782102d69cf2c6454fb137d4",
+      "src/adan/runtime.py": "3a8d8cb3367cae26ddc736ca9fbdb7785fb86c2d0ff9db095c9573b1520d9246",
+      "src/adan/schemas.py": "4daf3d6bd18edac19f4f1aafc81cb0e860fa66b2450726c7b8ddf17bbc476dce",
+      "src/adan/service.py": "534096e8efefd347ed304f480fc8830fb143c4cec8364396a4829239d6fdeb2d",
+      "src/adan/utils/__init__.py": "0a8f0ba5b5eaf2ce7bc659e2a0ddf1c6f7d3c60ce6e3486731386102979e5149",
+      "src/adan/utils/nodes.py": "e0a1c9afe354ecffa62cc8f6439e89483da407d376b66c9b2decc4ac09ffe480",
+      "src/adan/utils/state.py": "e894be52c707af3b0a8748fe882f9c5ad58395cd391e026ed81d080a7eca6c55",
+      "docker-entrypoint.sh": "cb237d7e79480851721aaf3b93ad792c7163b7ed21f579e1cf5b7b3ac7cbb14c",
+      "scripts/ingest.py": "f166cb3a8a8adb2fea1cfa3b2bae76e5e056d494eef0ac177d64d722bc50c1ba",
+      "scripts/qc_audit.py": "dfcf92deea4a652b6900656b876001c7cea0d335d260625a88e77dc08d6921db"
+    }
+  },
+  "ingestion": {
+    "fresh_collection_chunks": 41,
+    "quality_control_passed": 41,
+    "matching_index_reuse_verified": true
+  },
+  "validation": {
+    "offline_tests_passed": 109,
+    "ruff_application_tests_scripts": "passed; 47 files formatted",
+    "compose_config": "passed",
+    "entrypoint_shell_syntax": "passed",
+    "existing_evals_ruff_issues": 185
+  },
+  "live_checks": [
+    {
+      "scenario": "documents",
+      "passed": true,
+      "status": "complete",
+      "failure": null
+    },
+    {
+      "scenario": "availability",
+      "passed": true,
+      "status": "complete",
+      "failure": null
+    },
+    {
+      "scenario": "database",
+      "passed": true,
+      "status": "complete",
+      "failure": null
+    },
+    {
+      "scenario": "calculation",
+      "passed": true,
+      "status": "complete",
+      "failure": null
+    },
+    {
+      "scenario": "aggregation",
+      "passed": false,
+      "status": "complete",
+      "failure": "aggregation: expected total with the stored unit limitation"
+    },
+    {
+      "scenario": "hybrid",
+      "passed": true,
+      "status": "complete",
+      "failure": null
+    },
+    {
+      "scenario": "out_of_scope",
+      "passed": true,
+      "status": "insufficient_evidence",
+      "failure": null
+    },
+    {
+      "scenario": "unsafe_sql",
+      "passed": true,
+      "status": "insufficient_evidence",
+      "failure": null
+    }
+  ],
+  "passed": 7,
+  "total": 8,
+  "remaining_failure": "Aggregation model invented a paid subscription-status filter and positive-rate condition: returned 27937 rather than the required 31984. This semantic SQL error remains unresolved.",
+  "models": "Free endpoints only; no LLM judge called for this audit.",
+  "repository": "https://github.com/amirakhlaghiqqq/adan-agent",
+  "visibility": "PUBLIC",
+  "evidence_note": "Final database and aggregation responses replace earlier records; other six demonstrations were collected earlier during this audit. Historical failed attempts are retained."
+}

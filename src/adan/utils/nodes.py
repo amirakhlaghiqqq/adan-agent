@@ -7,9 +7,11 @@ to go next. Nodes never raise for expected failures: they record the failure on 
 
 import asyncio
 import json
+import re
 import time
 from copy import deepcopy
 from datetime import UTC, datetime
+from decimal import Decimal, InvalidOperation
 from typing import Literal
 
 from langchain_core.messages import HumanMessage, SystemMessage, ToolMessage
@@ -375,6 +377,7 @@ async def guard(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
     visible_ids = {c["chunk_id"] for c in run.chunks}
     unknown = set(candidate["citation_ids"]) - visible_ids
     try:
+        deterministic_check = None
         if unknown:
             verdict = {
                 "passed": False,
@@ -384,6 +387,9 @@ async def guard(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
                 + json.dumps(sorted(visible_ids))
                 + ". Keep document/page/section labels inline in the answer.",
             }
+        elif currency_feedback := _database_rate_currency_feedback(candidate, run):
+            deterministic_check = "database_rate_currency_unit"
+            verdict = {"passed": False, "feedback": currency_feedback}
         else:
             verdict = await run.model(
                 "guard",
@@ -405,7 +411,10 @@ async def guard(state, runtime: Runtime[RunContext]) -> Command[Literal["generat
                 ],
                 schema=Verdict,
             )
-        run.guardrail_history.append({"candidate": candidate, **verdict})
+        history_item = {"candidate": candidate, **verdict}
+        if deterministic_check:
+            history_item["deterministic_check"] = deterministic_check
+        run.guardrail_history.append(history_item)
         if verdict["passed"]:
             return Command(goto="finalize")
         if state.get("corrections", 0) < run.settings.max_corrections:
@@ -481,6 +490,73 @@ def response(state, run):
         ),
         "index_fingerprint": run.services.documents.fingerprint,
     }
+
+
+def _database_rate_currency_feedback(candidate, run):
+    """Catch currency labels the database cannot support before asking the critic."""
+    user_text = " ".join([run.question, *run.input_context])
+    explicit_assumption = re.search(
+        r"\b(?:assume|treat|consider|use)\b[^\n.!?]{0,100}"
+        r"\b(?:USD|EUR|GBP|CAD|AUD|JPY|dollars?|euros?|pounds?)\b",
+        user_text,
+        re.IGNORECASE,
+    )
+    if explicit_assumption:
+        return None
+
+    codes = r"(?:USD|EUR|GBP|CAD|AUD|JPY|CHF|CNY|INR)"
+    symbols = r"[$€£¥]"
+    currency_before = rf"(?:{symbols}|\b{codes}\b)\s*"
+    currency_after = rf"\s*(?:{symbols}|\b{codes}\b)"
+    for result in run.database_results:
+        if not re.search(r"\bmonthly_rate\b", result.get("sql", ""), re.IGNORECASE):
+            continue
+        columns = result.get("columns", [])
+        rows = result.get("rows", [])
+        rate_indexes = [
+            index for index, column in enumerate(columns) if "monthly_rate" in str(column).lower()
+        ]
+        if not rate_indexes:
+            rate_indexes = [
+                index
+                for index, column in enumerate(columns)
+                if any(word in str(column).lower() for word in ("rate", "total", "sum"))
+            ]
+        if not rate_indexes:
+            continue
+        for row in rows:
+            for index in rate_indexes:
+                if index >= len(row) or isinstance(row[index], bool):
+                    continue
+                try:
+                    value = Decimal(str(row[index]))
+                except (InvalidOperation, ValueError):
+                    continue
+                if not value.is_finite():
+                    continue
+                number_forms = {
+                    str(row[index]),
+                    format(value.normalize(), "f"),
+                    format(value, ",f"),
+                    format(value, ",g"),
+                    format(value, ".2f"),
+                    format(value, ",.2f"),
+                }
+                for number in number_forms:
+                    numeric = re.escape(number)
+                    if re.search(
+                        rf"(?<![\w.])(?:{currency_before}{numeric}|"
+                        rf"{numeric}{currency_after})(?!\d)",
+                        candidate["answer"],
+                        re.IGNORECASE,
+                    ):
+                        return (
+                            "SQLite stores this monthly_rate without a currency code. "
+                            "Remove any currency symbol or code attached to the matching "
+                            "database value, and report it as currency units unless the user "
+                            "explicitly supplied a currency assumption."
+                        )
+    return None
 
 
 async def finalize(state, runtime: Runtime[RunContext]):

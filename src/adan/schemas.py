@@ -82,7 +82,7 @@ class QueryDatabase(Contract):
 
 
 class Calculate(Contract):
-    """Perform exact arithmetic or calendar operations; use returned values for calculations."""
+    """Perform exact arithmetic or calendar operations; input only operands, never SQL text."""
 
     operation: Literal["evaluate", "month_minutes", "date_difference"]
     expression: str | None = None

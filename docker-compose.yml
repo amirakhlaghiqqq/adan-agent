@@ -1,5 +1,6 @@
 services:
   proxy-bridge:
+    profiles: [proxy]
     image: python:3.12-slim
     container_name: adan-proxy-bridge
     network_mode: host
@@ -9,7 +10,8 @@ services:
     command: ["python", "/scripts/proxy_bridge.py"]
 
   qdrant:
-    image: qdrant/qdrant:latest
+    # Qdrant 1.19.0, pinned to the image verified with this project.
+    image: qdrant/qdrant@sha256:057ee3a8da769fe7310dd3537b4dc7583bf87a95ce8ac43c0af5a46bc580d1fc
     container_name: adan-qdrant
     restart: unless-stopped
     ports:
@@ -30,12 +32,6 @@ services:
     image: adan-assistant:local
     build:
       context: .
-      network: host
-      args:
-        HTTP_PROXY: http://127.0.0.1:10808
-        HTTPS_PROXY: http://127.0.0.1:10808
-        http_proxy: http://127.0.0.1:10808
-        https_proxy: http://127.0.0.1:10808
     ports:
       - "8000:8000"
     extra_hosts:
@@ -55,6 +51,7 @@ services:
       TEXT_MODEL: ${TEXT_MODEL:-nvidia/nemotron-3.5-lightning:free}
       ROUTER_FALLBACK_MODEL: ${ROUTER_FALLBACK_MODEL:-nvidia/nemotron-3.5-lightning:free}
       QDRANT_URL: http://qdrant:6333
+      ADAN_PROXY_URL: ${ADAN_PROXY_URL:-}
       QDRANT_COLLECTION_NAME: ${QDRANT_COLLECTION_NAME:-enterprise_policies}
       DATABASE_PATH: data/database/app.db
     volumes:

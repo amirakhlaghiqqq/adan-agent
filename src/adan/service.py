@@ -1,13 +1,34 @@
 import asyncio
 import json
+import re
 from copy import deepcopy
 
 from adan.config import Settings
 from adan.database import Database, InvalidSQL, ensure_database
 from adan.models import OpenRouterModels
+from adan.prompts import CORPUS_THEMES
 from adan.rag.aggregation import PassthroughAggregator
 from adan.runtime import LimitReached, Run
 from adan.schemas import QueryRequest, SearchPlan, SQLRequest, SQLStatement
+
+
+def _unrequested_monthly_cycle_filter(sql, request, input_context):
+    """Detect a billing-cycle restriction inferred from the `monthly_rate` name."""
+    if not re.search(r"\bmonthly_rate\b", sql, re.IGNORECASE):
+        return False
+    if not re.search(
+        r"\bbilling_cycle\b\s*(?:=\s*['\"]monthly['\"]|IN\s*\(\s*['\"]monthly['\"])",
+        sql,
+        re.IGNORECASE,
+    ):
+        return False
+    user_text = " ".join([request, *input_context])
+    return not re.search(
+        r"\bmonthly\s+(?:subscriptions?|billing\s+cycles?|cycles?)\b"
+        r"|\b(?:subscriptions?|billing\s+cycles?|cycles?)\s+(?:that\s+are\s+)?monthly\b",
+        user_text,
+        re.IGNORECASE,
+    )
 
 
 class Assistant:
@@ -61,24 +82,9 @@ class Assistant:
                     "role": "system",
                     "content": (
                         "Rewrite into focused policy search strings (at most 3). "
-                        "Preserve constraints and key entities. Return queries.\n"
-                        "Corpus Topics & Keywords for Reference:\n"
-                        "- Billing & Payment Policy: subscription cycles, "
-                        "annual upfront discount (15%), "
-                        "payment methods, Net-30 invoicing, operating currencies (USD, EUR, GBP), "
-                        "delinquency escalation schedules, 30-day grace periods, "
-                        "late payment interest (1.5%), "
-                        "account suspension, 14-day refund cancellation windows, "
-                        "non-refundable fees "
-                        "(professional onboarding, compute usage, setup fees).\n"
-                        "- SLA & Support Policy: service tiers (Starter 99.00%, "
-                        "Professional 99.90%, Enterprise 99.99%), "
-                        "monthly uptime percentage calculation formulas, "
-                        "scheduled maintenance and third-party downtime exclusions, "
-                        "service credit penalty tiers (10%, 25%, 50%), severity levels "
-                        "(P1 Critical, P2 High, P3 Medium, P4 Low response targets), "
-                        "support channels, official governance directories, "
-                        "and 30-day credit claim filing deadlines."
+                        "Preserve constraints and key entities. Do not introduce policy values "
+                        "that were not supplied by the user or retrieved evidence. "
+                        "Return queries.\n" + CORPUS_THEMES
                     ),
                 },
                 {
@@ -143,7 +149,11 @@ class Assistant:
                     "Enterprise policies (SLA uptime commitments, uptime formulas, "
                     "credit brackets, refund rules) reside in RAG policy PDFs, not SQLite. "
                     "Do not calculate policy-derived results or look for policy clauses in SQL. "
-                    "Do not authorize mutations. Return request.",
+                    "A monthly_rate is stored per month regardless of billing_cycle; ask for a "
+                    "billing-cycle filter only when the user explicitly requests one. "
+                    "For derived arithmetic requested by the user, request the raw database "
+                    "values or operands needed by the calculator. Never include SQL text as a "
+                    "calculator input. Do not authorize mutations. Return request.",
                 },
                 {"role": "user", "content": json.dumps(request_data)},
             ],
@@ -162,6 +172,11 @@ class Assistant:
                 "credit tiers, and refund windows are in policy PDFs, not SQL). "
                 "No writes, schema inspection, file/extension functions or policy assumptions. "
                 "Return raw numerical fields, not formatted money. "
+                "monthly_rate is a per-month rate regardless of billing_cycle; do not add "
+                "billing_cycle='monthly' unless the user explicitly requests monthly "
+                "subscriptions. "
+                "Do not calculate derived arithmetic in SQL when the result must be computed "
+                "by the calculator; select the raw numeric operands instead. "
                 "Preserve period and customer filters. "
                 "Return sql and parameters. No markdown.",
             },
@@ -175,6 +190,12 @@ class Assistant:
         for attempt in range(2):
             statement = await run.model("sql", messages, schema=SQLStatement, parent_id=parent_id)
             try:
+                if _unrequested_monthly_cycle_filter(statement["sql"], request, run.input_context):
+                    raise InvalidSQL(
+                        "Do not filter billing_cycle to monthly: monthly_rate is a per-month "
+                        "rate for subscriptions of any billing cycle. Only apply that filter "
+                        "when the user explicitly requested monthly-cycle subscriptions."
+                    )
                 result = await run.execute(
                     "query_database",
                     statement,

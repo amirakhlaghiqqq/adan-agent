@@ -1,107 +1,80 @@
-# Working application
+# Implementation and validation
 
-This document describes the implemented prototype. The earlier architecture and
-evaluation documents remain design inputs; their separate task lists and model
-comparison work were not executed here.
+The implemented workflow is described in [ARCHITECTURE.md](ARCHITECTURE.md).
+The [requirement audit](REQUIREMENTS_AUDIT.md) maps the supplied project brief to
+code, tests and saved Docker responses.
 
-## Evidence and safety
+## Reproduce the checks
 
-- PDF extraction uses `pdftotext -layout`. Repeated page furniture and standalone
-  page numbers are removed; sections are chunked within rendered pages. Stable
-  chunk IDs retain the source filename, document ID, page, section and passage.
-- LlamaIndex uses local FastEmbed `all-MiniLM-L6-v2` embeddings and Qdrant cosine
-  retrieval. Collections are keyed by source bytes, chunking version and embedding
-  configuration. This prevents reusing an index after those inputs change.
-- Aggregation is a replaceable temporary adapter. It passes tagged chunks
-  through without implementing the proposed future aggregation algorithm.
-- SQL is dynamically generated from inspected schema. SQLGlot restricts it to
-  one SELECT; SQLite runs with `mode=ro`, `query_only`, a table/function authorizer,
-  a progress deadline, and a 200-row output cap. Truncation is explicit. Security
-  blocks are never retried. A missing database is seeded without replacing any
-  existing database. The provided snapshot is preserved.
-- The calculator interprets an allowlisted AST with exact fractions. It bounds
-  expression length, node count, exponent, value magnitude and rational storage.
-  Calendar operations use real calendar months and ISO dates. Money is displayed
-  with Decimal `ROUND_HALF_UP`; comparisons retain the rational result.
-- The generator receives user inputs, acquired evidence and actual tool results.
-  It can request bounded document/SQL follow-ups. A separate model critic checks
-  its submitted answer; unknown citation IDs are rejected deterministically.
-  Rejected candidates get at most two correction cycles.
-- Verification is model-assisted and can miss errors. It is not a formal proof
-  of correctness. Missing information, failed acquisition and budget exhaustion
-  remain distinct outcomes.
-- Default limits are 120 seconds per request, 30 seconds per model attempt,
-  20 seconds per tool attempt, 24 tool executions, 12 generator turns, two
-  follow-ups per source and one transient retry per operation. Budget is reserved
-  before tool execution. Every attempt retains its dispatch order, status and
-  duration. Worker threads already doing local I/O cannot be forcibly killed;
-  SQLite has its own shorter progress deadline.
-- Runtime instructions contain no benchmark answers or fixed policy thresholds.
-  Only the two named PDFs are indexed. No agent filesystem/shell tool is exposed.
-  Credentials and hidden provider reasoning are excluded from application traces.
+```bash
+uv sync --frozen
+uv run pytest -q
+uv run ruff check src tests scripts evals/agent_assessment.py evals/agent_judge.py
+uv run ruff format --check src tests scripts evals/agent_assessment.py evals/agent_judge.py
+docker compose config --quiet
+bash -n docker-entrypoint.sh
+```
 
-## Validation record
+Tests use scripted model responses and mock dense embeddings to avoid network
+calls. They execute the real graph, API, SQLite queries/security checks,
+calculator, Markdown preprocessing and Qdrant persistence. They check routing
+fallback, parallel request isolation, malformed tool arguments, SQL repair,
+partial acquisition, citation rejection, correction exhaustion, rate-limit
+backoff and deadline handling. These tests do not measure live LLM accuracy or
+run Docling's model downloads and PDF layout inference.
 
-Tests were written before implementation, first observing missing modules or
-failing behavior, then implementing until they passed. Commits separate the test
-contracts, source tools, application, boundary fixes, and delivery setup.
+With the Compose API running, verify the required live scenarios and save the
+full responses:
 
-The offline suite checks arithmetic/calendar boundaries, SQL mutation/injection
-blocking, joins/aggregation, source preservation, PDF/index persistence, API
-validation, graph execution, source follow-ups, parallel request isolation,
-fallbacks, partial acquisition, request limits and correction exhaustion.
-Embedding doubles validate storage/provenance, rather than semantic quality.
+```bash
+uv run python scripts/smoke.py --base-url http://localhost:8000 --scenario all \
+  --pause-seconds 30 --output .cache/adan/task-smoke.json
+```
 
-A live FastEmbed index was separately built from the PDFs and queried. Four
-OpenRouter-backed FastAPI smoke requests completed with `stop_reason=completed`:
+This runs two document questions, a database join, a filtered aggregation, SQL
+followed by a real calculator call, a hybrid question, an out-of-corpus question
+and a mutation request. The script saves responses before checking outcomes and
+returns a nonzero exit code if a scenario fails. The live model may decline a
+mutation before producing SQL; deterministic security tests separately force
+dangerous generated SQL through the actual execution guard.
 
-| Scenario | Observed behavior |
-|---|---|
-| Document | Payment-method answer with billing-policy page/section citations |
-| Database | Generated customer/subscription join; three highest monthly rates |
-| Calculation | Actual SQL count 30; actual calculator result 15 |
-| Hybrid | Parallel policy and account acquisition; support tier, plan and cycle with citations |
+## Data preparation
 
-The requested Mammoth ID received HTTP 400; the configured Nemotron fallback
-provided the routing decisions. A transient HTTP 429 was retried within the
-request budget. This establishes operation of these example paths, without
-claiming benchmark accuracy, calibrated routing, latency or model comparisons.
-Full local smoke traces are in ignored `.cache/adan/live-smoke.json`.
+Two policy PDFs and their editable LaTeX sources are in `data/documents/`.
+`data/database/app.db` contains 30 customers and linked subscriptions/incidents.
+The supplied `schema.sql` and `seed_data.sql` reproduce this snapshot. Application
+startup creates a missing configured database without resetting an existing one.
+`data/database/seed_db.py` is an explicit destructive reset utility; ordinary
+startup does not call it.
 
-A separate real HTTP request on Uvicorn acquired both sources and called the
-calendar/arithmetic tools (41,760 minutes; approximately 99.664751% uptime for the
-explicit hypothetical inputs). Its final generation timed out and the retry
-encountered a connection error. The API returned `partial`, retained its evidence
-and reported `generation_error`; this additional request is not counted as a
-successful final answer. Its trace is in `.cache/adan/final-socket-smoke.json`.
+The Docker entrypoint runs `scripts/ingest.py --ensure`: it reuses a matching
+index or parses/embeds the PDFs if the versioned collection is absent, then
+audits the active collection. A normal restart does not re-embed all documents.
+For a deliberate re-ingestion, use `uv run python scripts/ingest.py`.
 
-LangGraph dev served `/ok`, the assistant list, graph and schemas successfully.
-Factory tests also exercise the graph with serializable inputs. Live model calls
-through Studio were not needed for these checks; live requests used FastAPI.
-The Docker image built successfully. Checks inside it confirmed UID 10001,
-read-only source data, working SQLite/calculator operations, and absence of
-`evals/` and `.env`. Compose configuration validation passed.
+## Evaluation and limitations
 
-A real container HTTP request completed the SQL count and calculator workflow
-using asyncio, the loop used by the successful smoke script. The shipped
-Uvicorn command explicitly selects that loop. An earlier attempt using automatic
-loop selection encountered model timeouts; this small smoke run does not prove
-that event-loop selection caused those failures. Failed and successful traces
-are kept separately in `.cache/adan/container-smoke.json` and
-`.cache/adan/container-asyncio-smoke.json`.
+The external evaluation runner and saved Luna assessments are documented in
+[evals/README.md](../evals/README.md) and
+[the 12-case report](../experiments/agent-evaluation/2026-10-23-representative-12/REPORT.md).
+That purposive diagnostic sample predates the latest recovery changes. It is
+not a fresh benchmark measurement of this revision. No Nemotron judge is used in
+its final scores. Isolated retrieval/generation evaluation modes remain planned.
 
-Container verification used host networking, the workstation's existing proxy,
-and a mounted embedding cache. The default Compose network was configuration-
-checked, rather than used for the live provider request. The complete offline
-suite passed **46 tests**, and Ruff lint/format checks passed.
+Free provider endpoints can be unavailable, rate-limited or return malformed
+tool calls. The requested Mammoth routing model failed with HTTP 400 in earlier
+runs; the configured free fallback is recorded explicitly. Generation and
+model-assisted verification can still make mistakes. The SQL output carries no
+currency column, so monetary database values must be reported as currency units
+unless the question supplies a currency assumption.
 
-## Scope left open
+The supplied SLA has conflicting Starter-tier wording: its tier description
+denies an uptime guarantee while the availability table lists a target. Answers
+must acknowledge that conflict when relevant. Missing policy terms and missing
+database records must not be invented.
 
-The replacement aggregation algorithm, Jev/model comparison, external retrieval/
-generation/end-to-end benchmark runner, and LLM performance evaluation remain
-separate work. The existing benchmark datasets stay under `evals/`.
-
-The prototype has no authentication, tenancy authorization, streaming API or
-durable replay of its in-memory acquisition state. It is intended for local task
-demonstration with the supplied mock data. Use the primary FastAPI endpoint for
-ordinary end-to-end requests.
+This prototype has no authentication, tenancy authorization, streaming API or
+durable multi-turn replay. Embedded Qdrant permits one process per storage path;
+use the Compose Qdrant server for concurrent application processes. First-time
+ingestion requires internet access for Docling/BM25 model assets and provider
+embeddings. There is no requirement for production deployment or a GPU.

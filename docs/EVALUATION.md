@@ -1,12 +1,15 @@
 # Retrieval, Generation, and End-to-End Evaluation
 
 **Status:** The ordinary query API exposes an end-to-end evidence record
-([output contract](EVALUATION_OUTPUT.md)). Isolated evaluation adapters and the
-runner are pending.
+([output contract](EVALUATION_OUTPUT.md)). The external end-to-end/coordinator
+runner and saved node assessments are documented in
+[evals/README.md](../evals/README.md). The isolated retrieval/generation adapters
+described below remain planned.
 
 Use the existing 48 cases in `evals/rag/benchmark.jsonl` for three evaluation
 modes. Each mode assesses a capability across complete questions. There are no
-separate benchmark cases or scores for individual graph nodes. Aggregation is
+separate benchmark cases for individual graph nodes in that dataset. The current
+runner can derive node assessments from complete traces. Aggregation is
 included in generation assessment; its algorithm remains open for later design.
 
 ## 1. Shared Conditions and Boundaries

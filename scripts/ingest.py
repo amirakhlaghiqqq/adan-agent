@@ -26,6 +26,11 @@ def main() -> None:
         description="Ingest enterprise policy PDFs into local Qdrant with hybrid indexing."
     )
     parser.add_argument(
+        "--ensure",
+        action="store_true",
+        help="Reuse a matching index, or ingest the configured documents if it is missing",
+    )
+    parser.add_argument(
         "--file",
         type=Path,
         default=None,
@@ -45,7 +50,10 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+    if args.ensure and (args.file or args.dir != Path("data/documents")):
+        parser.error("--ensure uses DOCUMENTS_PATH; do not combine it with --file or --dir")
 
+    pipeline = None
     try:
         config = load_config()
         if args.collection:
@@ -72,7 +80,10 @@ def main() -> None:
 
         pipeline = RAGPipeline(config)
 
-        if args.file:
+        if args.ensure:
+            print("[INGESTION] Opening the matching index, or building it if missing...")
+            pipeline.get_index()
+        elif args.file:
             print(f"[INGESTION] Parsing & indexing single file: {args.file}...")
             pipeline.ingest_files([args.file])
         else:
@@ -101,6 +112,9 @@ def main() -> None:
     except Exception as exc:
         logger.exception("Ingestion failed: %s", exc)
         sys.exit(1)
+    finally:
+        if pipeline is not None:
+            pipeline.close()
 
 
 if __name__ == "__main__":

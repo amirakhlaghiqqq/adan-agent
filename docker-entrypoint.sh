@@ -5,15 +5,15 @@ echo "======================================================================"
 echo " [STARTUP] CloudScale Assistant Initializing"
 echo "======================================================================"
 
-# Check for host proxy bridge (for environments requiring proxy for external APIs)
-if python -c "import socket; s = socket.socket(); s.settimeout(1); s.connect(('host.docker.internal', 10809)); s.close()" 2>/dev/null; then
-    echo "[STARTUP] Detected host proxy bridge on host.docker.internal:10809, enabling proxy..."
-    export HTTP_PROXY="http://host.docker.internal:10809"
-    export HTTPS_PROXY="http://host.docker.internal:10809"
-    export http_proxy="http://host.docker.internal:10809"
-    export https_proxy="http://host.docker.internal:10809"
-    export NO_PROXY="localhost,127.0.0.1,qdrant"
-    export no_proxy="localhost,127.0.0.1,qdrant"
+# Optional outbound proxy; ordinary installations connect directly.
+if [ -n "${ADAN_PROXY_URL:-}" ]; then
+    echo "[STARTUP] Using the configured outbound proxy."
+    export HTTP_PROXY="$ADAN_PROXY_URL"
+    export HTTPS_PROXY="$ADAN_PROXY_URL"
+    export http_proxy="$ADAN_PROXY_URL"
+    export https_proxy="$ADAN_PROXY_URL"
+    export NO_PROXY="${NO_PROXY:+$NO_PROXY,}localhost,127.0.0.1,qdrant"
+    export no_proxy="$NO_PROXY"
 fi
 
 # Target Qdrant endpoint
@@ -45,7 +45,7 @@ echo "======================================================================"
 echo "[INGESTION] Starting automated PDF ingestion & Quality Control audit..."
 echo "======================================================================"
 
-python scripts/ingest.py
+python scripts/ingest.py --ensure
 
 echo "======================================================================"
 echo "[INGESTION] Completed successfully: All documents indexed and verified."

@@ -22,7 +22,7 @@ COPY docker-entrypoint.sh /app/docker-entrypoint.sh
 RUN uv sync --frozen --no-dev \
     && useradd --create-home --uid 10001 assistant \
     && mkdir -p /app/.cache/adan /home/assistant/.cache \
-    && chown -R assistant:assistant /app /home/assistant \
+    && chown -R assistant:assistant /app/.cache/adan /home/assistant/.cache \
     && chmod -R a-w /app/data \
     && chmod +x /app/docker-entrypoint.sh
 

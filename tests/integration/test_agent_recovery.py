@@ -32,6 +32,64 @@ async def test_sql_repairs_schema_or_syntax_error_with_actual_feedback(make_assi
     assert "CREATE TABLE customers" in models.calls["sql"][1][1]["content"]
 
 
+async def test_unsupported_currency_on_database_rate_is_rejected_and_revised(make_assistant):
+    assistant, models = make_assistant(
+        {
+            "coordinator": [{"needs_docs": False, "needs_db": True}],
+            "formulate": [{"request": "Read the highest subscription monthly rate"}],
+            "sql": [
+                {"sql": "SELECT monthly_rate FROM subscriptions ORDER BY monthly_rate DESC LIMIT 1"}
+            ],
+            "generate": [
+                final("The highest rate is $4800.0."),
+                final("The highest rate is 4,800 currency units."),
+            ],
+            "guard": [{"passed": True, "feedback": ""}],
+        }
+    )
+
+    result = await assistant.ask("What is the highest subscription monthly_rate?")
+
+    assert result["status"] == "complete"
+    assert result["answer"] == "The highest rate is 4,800 currency units."
+    assert result["guardrail_history"][0]["passed"] is False
+    assert result["guardrail_history"][0]["deterministic_check"] == ("database_rate_currency_unit")
+    assert result["guardrail_history"][1]["passed"] is True
+    assert "currency" in models.calls["generate"][1][-1].content.lower()
+    assert len(models.calls["guard"]) == 1
+
+
+async def test_sql_repairs_unrequested_monthly_billing_cycle_filter(make_assistant):
+    assistant, models = make_assistant(
+        {
+            "coordinator": [{"needs_docs": False, "needs_db": True}],
+            "formulate": [{"request": "Sum monthly_rate for active customers"}],
+            "sql": [
+                {
+                    "sql": "SELECT SUM(s.monthly_rate) AS total_rate FROM subscriptions s "
+                    "JOIN customers c ON s.customer_id = c.customer_id "
+                    "WHERE c.status = 'active' AND s.billing_cycle = 'monthly'"
+                },
+                {
+                    "sql": "SELECT SUM(s.monthly_rate) AS total_rate FROM subscriptions s "
+                    "JOIN customers c ON s.customer_id = c.customer_id "
+                    "WHERE c.status = 'active'"
+                },
+            ],
+            "generate": [final("The total is 31,984 currency units.")],
+            "guard": [{"passed": True, "feedback": ""}],
+        }
+    )
+
+    result = await assistant.ask("Sum monthly_rate for subscriptions belonging to active customers")
+
+    assert result["status"] == "complete"
+    assert result["database_results"][0]["rows"] == [[31984.0]]
+    assert len(models.calls["sql"]) == 2
+    repair_context = json.dumps(models.calls["sql"][1], default=str).lower()
+    assert "monthly_rate is a per-month rate" in repair_context
+
+
 async def test_sql_repair_is_bounded(make_assistant):
     assistant, models = make_assistant(
         {
