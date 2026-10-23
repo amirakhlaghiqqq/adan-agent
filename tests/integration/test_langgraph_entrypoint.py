@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from conftest import final
 
 from adan.agent import build_graph
+from adan.schemas import QueryResponse
 
 
 async def test_studio_factory_can_be_inspected_without_loading_models(monkeypatch):
@@ -30,7 +31,9 @@ async def test_server_graph_uses_same_application_without_nonserializable_inputs
     result = await graph.ainvoke({"question": "Hello", "input_context": []})
     assert result["response"]["status"] == "complete"
     assert set(result) == {"response"}
-    json.dumps(result, default=str)
+    QueryResponse.model_validate(result["response"])
+    assert result["response"]["mode"] == "end_to_end"
+    json.dumps(result)
 
 
 async def test_concurrent_runs_on_one_graph_keep_separate_runs(make_assistant):

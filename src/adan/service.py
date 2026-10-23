@@ -63,15 +63,22 @@ class Assistant:
                         "Rewrite into focused policy search strings (at most 3). "
                         "Preserve constraints and key entities. Return queries.\n"
                         "Corpus Topics & Keywords for Reference:\n"
-                        "- Billing & Payment Policy: subscription cycles, annual upfront discount (15%), "
+                        "- Billing & Payment Policy: subscription cycles, "
+                        "annual upfront discount (15%), "
                         "payment methods, Net-30 invoicing, operating currencies (USD, EUR, GBP), "
-                        "delinquency escalation schedules, 30-day grace periods, late payment interest (1.5%), "
-                        "account suspension, 14-day refund cancellation windows, non-refundable fees "
+                        "delinquency escalation schedules, 30-day grace periods, "
+                        "late payment interest (1.5%), "
+                        "account suspension, 14-day refund cancellation windows, "
+                        "non-refundable fees "
                         "(professional onboarding, compute usage, setup fees).\n"
-                        "- SLA & Support Policy: service tiers (Starter 99.00%, Professional 99.90%, Enterprise 99.99%), "
-                        "monthly uptime percentage calculation formulas, scheduled maintenance and third-party downtime exclusions, "
-                        "service credit penalty tiers (10%, 25%, 50%), severity levels (P1 Critical, P2 High, P3 Medium, P4 Low response targets), "
-                        "support channels, official governance directories, and 30-day credit claim filing deadlines."
+                        "- SLA & Support Policy: service tiers (Starter 99.00%, "
+                        "Professional 99.90%, Enterprise 99.99%), "
+                        "monthly uptime percentage calculation formulas, "
+                        "scheduled maintenance and third-party downtime exclusions, "
+                        "service credit penalty tiers (10%, 25%, 50%), severity levels "
+                        "(P1 Critical, P2 High, P3 Medium, P4 Low response targets), "
+                        "support channels, official governance directories, "
+                        "and 30-day credit claim filing deadlines."
                     ),
                 },
                 {
@@ -94,7 +101,7 @@ class Assistant:
                     parent_id=parent_id,
                     kind="retrieval_calls",
                 )
-                for chunk in (found[:5] if isinstance(found, list) else []):
+                for chunk in found[:5] if isinstance(found, list) else []:
                     cid = chunk.get("chunk_id")
                     if cid and cid not in seen_chunk_ids:
                         seen_chunk_ids.add(cid)

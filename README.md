@@ -46,6 +46,12 @@ An interrupted or unavailable acquisition remains explicit in the trace. A
 captured system failure can return HTTP 200 with a qualified result, so inspect
 `status` and `stop_reason` as well as the HTTP status.
 
+For benchmark assessment, responses also expose `retrieved_document_chunks`,
+`database_results`, `calculator_trace`, `failures`, `timings`, and `usage`, with
+`schema_version: "1.0"` and `mode: "end_to_end"`. See the
+[output contract and collection example](docs/EVALUATION_OUTPUT.md) for matching
+these fields to `evals/rag/benchmark.jsonl` without passing answer keys to the agent.
+
 Other useful requests:
 
 ```json

@@ -28,6 +28,11 @@ retrieval cutoffs, scoring boundaries, and report requirements. Runner and
 application implementations are pending; the validation commands below check
 the dataset, not these modes' model performance.
 
+The ordinary query API now returns the evidence fields needed for end-to-end
+assessment. See [the response contract](../../docs/EVALUATION_OUTPUT.md) for the
+field mapping and an example of saving a benchmark response. Isolated retrieval
+and generation adapters, scoring, and judging are still pending.
+
 ## Files and validation
 
 - `benchmark.jsonl`: UTF-8 JSON Lines, one complete case per line.

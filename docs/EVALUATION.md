@@ -1,6 +1,8 @@
 # Retrieval, Generation, and End-to-End Evaluation
 
-**Status:** Evaluation contract; application adapters and runner are pending.
+**Status:** The ordinary query API exposes an end-to-end evidence record
+([output contract](EVALUATION_OUTPUT.md)). Isolated evaluation adapters and the
+runner are pending.
 
 Use the existing 48 cases in `evals/rag/benchmark.jsonl` for three evaluation
 modes. Each mode assesses a capability across complete questions. There are no

@@ -198,9 +198,7 @@ class Run:
             for call in calls:
                 output = call.get("output", {})
                 value = (
-                    output.get("cost")
-                    if key == "cost"
-                    else (output.get("usage") or {}).get(key)
+                    output.get("cost") if key == "cost" else (output.get("usage") or {}).get(key)
                 )
                 values.append(value)
             totals[key] = sum(values) if all(v is not None for v in values) else None
