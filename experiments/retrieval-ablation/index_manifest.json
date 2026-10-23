@@ -1,0 +1,18 @@
+{
+  "sources": {
+    "enterprise_billing_and_refund_policy.pdf": "98d9e62857b5a26b991149d2ca807ec0b8b67e6fc1af32374004916352e0fd1a",
+    "sla_and_support_tier_policy.pdf": "2c93557b69844d601db9053781f39c56b30ef995827c9aae9d3fb5fbadb7a17e"
+  },
+  "chunking": "docling-markdown-pages-v4-formula",
+  "embedding_model": "nvidia/nemotron-3-embed-1b:free",
+  "embedding_base_url": "https://openrouter.ai/api/v1",
+  "sparse_model": "Qdrant/bm25",
+  "versions": {
+    "docling": "2.142.0",
+    "llama-index-core": "0.14.25",
+    "llama-index-vector-stores-qdrant": "0.10.4",
+    "fastembed": "0.9.0"
+  },
+  "fingerprint": "6368267bcc821118a424477a4921e962c421d0fff29b2574d948172bb2447a5b",
+  "collection": "enterprise_policies_6368267bcc821118"
+}

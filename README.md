@@ -27,7 +27,8 @@ it is missing. Existing databases are preserved. It extracts the policy PDFs,
 loads local FastEmbed embeddings, and creates or reopens a persistent Qdrant
 index. The first launch downloads the embedding model and can take a few minutes.
 
-Open <http://127.0.0.1:8000/docs> for the API explorer. Health is available at
+Open <http://127.0.0.1:8000/> for the web UI or
+<http://127.0.0.1:8000/docs> for the API explorer. Health is available at
 `GET /health` after startup finishes.
 
 ```bash
@@ -65,7 +66,9 @@ Other useful requests:
 | `TEXT_MODEL` | `nvidia/nemotron-3.5-super-vl:free`, SQL, search rewriting, answers and verification |
 | `ROUTER_FALLBACK_MODEL` | Explicit Nemotron fallback; set empty to disable |
 | `DATABASE_PATH` / `DOCUMENTS_PATH` | Supplied source locations |
-| `INDEX_PATH` / `EMBEDDING_CACHE_PATH` | Generated local caches |
+| `QDRANT_LOCAL_PATH` | Embedded Qdrant storage when no server URL is configured |
+| `RETRIEVAL_CANDIDATES` / `TOP_K` | Hybrid candidates (20) / final reranked chunks (5) |
+| `OPENROUTER_EMBEDDING_MODEL` / `OPENROUTER_RERANKER_MODEL` | Dense embedding / reranking models |
 | `QDRANT_URL` | Empty for embedded Qdrant; URL for a Qdrant server |
 | `MAX_*`, `*_TIMEOUT_SECONDS`, `TRANSIENT_RETRIES` | Bounded request work |
 
@@ -157,6 +160,9 @@ benchmark scoring. Detailed verification and limits are in
 docker compose up --build
 ```
 
+After the assistant finishes starting, open <http://localhost:8000/> for the web UI.
+The API and UI are served by the same `assistant` container.
+
 Set the key in `.env` or the calling shell. The image contains only application
 code, the PDFs, and database/seed files. It runs as a non-root user, makes source
 data read-only, and persists generated embeddings/indexes in a named volume.
@@ -191,5 +197,7 @@ query starts fresh; checkpoint resume/multi-turn conversation is outside this
 prototype's request contract. The factory reuses source clients in the process.
 
 Use a single process with embedded Qdrant. Stop FastAPI before executing Studio
-queries against the same `INDEX_PATH`, or set a different path. Use a Qdrant
+queries against the same `QDRANT_LOCAL_PATH`, or set a different path. Use a Qdrant
 server for multiple worker processes; embedded storage has an exclusive lock.
+
+Retrieval uses Docling Markdown chunks, OpenRouter dense embeddings, Qdrant BM25 sparse vectors, equal-weight adapter fusion, and OpenRouter reranking. Collections are versioned by source hashes, parser versions, and embedding configuration. Existing legacy collections are retained but are no longer used. See [retrieval experiment](experiments/retrieval-ablation/README.md).

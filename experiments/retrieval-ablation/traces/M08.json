@@ -1,0 +1,2014 @@
+{
+  "question_id": "M08",
+  "question": "What must an eligible customer include in an SLA credit claim, where can they submit it, and what deadline must they meet?",
+  "difficulty": "medium",
+  "category": "document",
+  "num_requirements": 1,
+  "required_evidence_groups": [
+    "M08-R01"
+  ],
+  "relevant_chunk_ids": [
+    "f8cbaf40-1935-5630-9e54-84f6f1ffdbab"
+  ],
+  "single_query": "What must an eligible customer include in an SLA credit claim, where can they submit it, and what deadline must they meet?",
+  "decomposed_queries": [
+    {
+      "query": "What must an eligible customer include in an SLA credit claim, where can they submit it, and what deadline must they meet?",
+      "requirement_ids": [
+        "M08-R01"
+      ],
+      "budget": 20
+    }
+  ],
+  "configurations": {
+    "dense_only_monolithic": {
+      "mode": "dense",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 11.62,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.5007436,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.34449294,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.33865497,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.3230032,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.31646788,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.2774783,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.2734893,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.26478094,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.25957173,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.25828436,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.23437579,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.2281566,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.22380581,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.22101708,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.2017166,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.18821383,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 0.17394747,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.16540954,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.16054149,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "bdc84a33-0d33-5025-9d3d-1b1beac788d2",
+          "score": 0.15982783,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.3 Scheduled Maintenance Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "dense_only_decomposed": {
+      "mode": "dense",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 7.74,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.5007436,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.34449294,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.33865497,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.3230032,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.31646788,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.2774783,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.2734893,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.26478094,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.25957173,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.25828436,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.23437579,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.2281566,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.22380581,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.22101708,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.2017166,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.18821383,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 0.17394747,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.16540954,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.16054149,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "bdc84a33-0d33-5025-9d3d-1b1beac788d2",
+          "score": 0.15982783,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.3 Scheduled Maintenance Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "sparse_only_monolithic": {
+      "mode": "sparse",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 8.39,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 30.475288,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 20.185478,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 14.5910225,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 10.863343,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 10.709452,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 10.47071,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 9.31911,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 9.040885,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 7.770095,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 5.6522226,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 5.545353,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 5.53732,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 4.962615,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 4.481865,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 3.9673207,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 2.6932263,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "7500319d-2fc9-5373-9e20-613dc3242321",
+          "score": 2.3345504,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.5 Refund Processing Timeline",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 2.2595274,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "dd97ef0b-7d90-596f-92e2-f67c5c022f9b",
+          "score": 2.1472082,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.4 Plan Upgrades, Downgrades, and Prorated Billing",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+          "score": 2.1353126,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "sparse_only_decomposed": {
+      "mode": "sparse",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 5.72,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 30.475288,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 20.185478,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 14.5910225,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 10.863343,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 10.709452,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 10.47071,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 9.31911,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 9.040885,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 7.770095,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 5.6522226,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 5.545353,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 5.53732,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 4.962615,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 4.481865,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 3.9673207,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 2.6932263,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "7500319d-2fc9-5373-9e20-613dc3242321",
+          "score": 2.3345504,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.5 Refund Processing Timeline",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 2.2595274,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "dd97ef0b-7d90-596f-92e2-f67c5c022f9b",
+          "score": 2.1472082,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.4 Plan Upgrades, Downgrades, and Prorated Billing",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "0f1db791-1cac-5e9c-a17b-1d0fc788dd22",
+          "score": 2.1353126,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.2 Response Time Matrix",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "hybrid_no_rerank_monolithic": {
+      "mode": "hybrid",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 10.28,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 1.0,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.5807323427146387,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.3564774224583028,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.33085820924464476,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.3290899949154063,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.29948226700484043,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.2975610673297223,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.2943851232516731,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.16889173547774458,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.16226213780500204,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.15503464794405233,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.15392821223846587,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.14706077338373416,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.14440008158026835,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.11131753718063964,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.09941403124859453,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.09383253229969385,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.08974247509876121,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.041631984346162686,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.041400042993685875,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "hybrid_no_rerank_decomposed": {
+      "mode": "hybrid",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 10.16,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 1.0,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.5807323427146387,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.3564774224583028,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.33085820924464476,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.3290899949154063,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.29948226700484043,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.2975610673297223,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.2943851232516731,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.16889173547774458,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.16226213780500204,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.15503464794405233,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.15392821223846587,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.14706077338373416,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.14440008158026835,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.11131753718063964,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.09941403124859453,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.09383253229969385,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.08974247509876121,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.041631984346162686,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.041400042993685875,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "hybrid_rerank_monolithic": {
+      "mode": "hybrid",
+      "strategy": "monolithic",
+      "rerank": true,
+      "total_latency_ms": 2354.79,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.12929275415183486,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.004150080836220232,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.0025114635138098534,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.0023231625226312826,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.0018243827852769423,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.0013723686900524027,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.0012644219446392272,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.0012448433020883745,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.0011925492802088101,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.0009697519677825861,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.0009547317110805592,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.000903967746759475,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.0007672924128587181,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.0006878511550552459,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.0006589401102677215,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.0006337125082498781,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.0004124558901102128,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.00034599160317821547,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.0003225072119868323,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.00028021097671886315,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "hybrid_rerank_decomposed": {
+      "mode": "hybrid",
+      "strategy": "decomposed",
+      "rerank": true,
+      "total_latency_ms": 2354.67,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.12929275415183486,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.004150080836220232,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.0025114635138098534,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.0023231625226312826,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.0018243827852769423,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.0013723686900524027,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.0012644219446392272,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.0012448433020883745,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.0011925492802088101,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.0009697519677825861,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.0009547317110805592,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.000903967746759475,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.0007672924128587181,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.0006878511550552459,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.0006589401102677215,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.0006337125082498781,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.0004124558901102128,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.00034599160317821547,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.0003225072119868323,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.00028021097671886315,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    },
+    "dense_rerank_monolithic": {
+      "mode": "dense",
+      "strategy": "monolithic",
+      "rerank": true,
+      "total_latency_ms": 1266.16,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.12929275415183486,
+          "is_relevant": true,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.004150080836220232,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "00627fcc-426c-5712-a522-be036515415c",
+          "score": 0.0025114635138098534,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.1 Eligibility Overview & Starter Exclusion",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.0023231625226312826,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.0018243827852769423,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "625c2699-fd77-5575-8145-178f5ab09673",
+          "score": 0.0013723686900524027,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.4 Credit Rules and Maximum Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "c41c5617-10bb-5886-938c-837d12a8ca44",
+          "score": 0.0012644219446392272,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "98ccca22-6bc6-58f9-8b92-377da6308fb6",
+          "score": 0.0011925492802088101,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Operations Sign-off:",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.0009697519677825861,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "e79195e4-e679-5b8f-ab28-aa32edd0f0ff",
+          "score": 0.0009547317110805592,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Service Level Agreement (SLA) & Support Tier Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.0007672924128587181,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.0006878511550552459,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "63607f5e-c1db-56e7-a541-7a5ab4eee308",
+          "score": 0.0006589401102677215,
+          "is_relevant": false,
+          "section": "8. Customer Acknowledgment & Policy Sign-Off",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 0.0006337125082498781,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.0005884088185569387,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.0004124558901102128,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 0.00039204178923762814,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "4e26aecf-cec3-5a6b-8b25-5fa772ac13ad",
+          "score": 0.00034599160317821547,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.2 Out-of-Scope Systems & Applicability",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.0003225072119868323,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "bdc84a33-0d33-5025-9d3d-1b1beac788d2",
+          "score": 0.000295957113513077,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.3 Scheduled Maintenance Policy",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M08-R01"
+          ]
+        }
+      }
+    }
+  }
+}

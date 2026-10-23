@@ -121,3 +121,20 @@ def test_fastapi_validates_requests_and_exposes_response(make_assistant):
         response = client.post("/api/v1/query", json={"question": "Hello", "input_context": []})
         assert response.status_code == 200
         assert response.json()["answer"] == "I can help with CloudScale."
+
+
+def test_fastapi_serves_web_ui_and_assets(make_assistant):
+    assistant, _ = make_assistant({})
+    with TestClient(create_app(assistant)) as client:
+        page = client.get("/")
+        assert page.status_code == 200
+        assert "text/html" in page.headers["content-type"]
+        assert 'id="query-form"' in page.text
+
+        stylesheet = client.get("/static/styles.css")
+        assert stylesheet.status_code == 200
+        assert "@media (max-width: 560px)" in stylesheet.text
+
+        script = client.get("/static/app.js")
+        assert script.status_code == 200
+        assert 'fetch("/api/v1/query"' in script.text

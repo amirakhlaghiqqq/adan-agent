@@ -32,7 +32,7 @@ class RoutingDecision(Contract):
 
 
 class SearchPlan(Contract):
-    queries: list[str] = Field(min_length=1, max_length=2)
+    queries: list[str] = Field(min_length=1, max_length=3)
 
 
 class SQLRequest(Contract):
@@ -81,8 +81,30 @@ class Calculate(Contract):
     end_date: str | None = None
 
 
+class RunTimings(Contract):
+    started_at: str
+    finished_at: str
+    duration_ms: float
+
+
+class RunUsage(Contract):
+    """Attempt counts and model totals; null means at least one attempt is unreported."""
+
+    model_calls: int
+    tool_calls: int
+    generator_turns: int
+    input_tokens: int | None
+    output_tokens: int | None
+    total_tokens: int | None
+    cost: float | None
+
+
 class QueryResponse(Contract):
+    schema_version: Literal["1.0"]
+    mode: Literal["end_to_end"]
     run_id: str
+    question: str
+    input_context: list[str]
     answer: str
     status: Literal["complete", "partial", "insufficient_evidence", "error"]
     stop_reason: str
@@ -91,10 +113,16 @@ class QueryResponse(Contract):
     route: dict
     retrieval_calls: list[dict]
     database_calls: list[dict]
+    retrieved_document_chunks: list[dict]
+    database_results: list[dict]
+    calculator_trace: list[dict]
     aggregation_artifacts: list[dict]
     generator_contexts: list[dict]
     tool_calls: list[dict]
     guardrail_history: list[dict]
     execution_trace: list[dict]
+    failures: list[dict]
+    timings: RunTimings
+    usage: RunUsage
     effective_limits: dict
     index_fingerprint: str

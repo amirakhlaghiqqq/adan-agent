@@ -38,7 +38,9 @@ class Run:
         self.services, self.settings = services, services.settings
         self.question, self.input_context = question, input_context
         self.run_id = str(uuid4())
-        self.deadline = time.monotonic() + self.settings.request_timeout_seconds
+        self.started_at = datetime.now(UTC).isoformat()
+        self.started = time.monotonic()
+        self.deadline = self.started + self.settings.request_timeout_seconds
         self.lock = asyncio.Lock()
         self.counts = {"tools": 0, "document_followups": 0, "database_followups": 0, "turns": 0}
         self.trace, self.retrieval_calls, self.database_calls, self.tool_calls = [], [], [], []
@@ -128,11 +130,14 @@ class Run:
             result = await self.services.models.call(
                 purpose, messages, schema=schema, tools=tools, fallback=fallback
             )
+            cost = result.response_metadata.get("cost")
+            if cost is None:
+                cost = (result.response_metadata.get("token_usage") or {}).get("cost")
             output = {
                 "message": visible_message(result),
                 "usage": result.usage_metadata,
                 "model": result.response_metadata.get("model_name"),
-                "cost": result.response_metadata.get("cost"),
+                "cost": cost,
             }
             if schema:
                 output["parsed"] = schema.model_validate_json(result.content).model_dump()
@@ -170,6 +175,40 @@ class Run:
                 if c["name"] == "calculate"
             ],
             "acquisition_failures": self.failures,
+        }
+
+    def retrieved_document_chunks(self):
+        """Raw search results, in dispatch/rank order, deduplicated before aggregation."""
+        chunks, seen = [], set()
+        for call in sorted(self.retrieval_calls, key=lambda c: c["dispatch_sequence"]):
+            if call["status"] != "ok":
+                continue
+            for chunk in call["output"]:
+                chunk_id = chunk["chunk_id"]
+                if chunk_id not in seen:
+                    chunks.append(chunk)
+                    seen.add(chunk_id)
+        return chunks
+
+    def usage_summary(self):
+        calls = [e for e in self.trace if e["name"].startswith("model.")]
+        totals = {}
+        for key in ("input_tokens", "output_tokens", "total_tokens", "cost"):
+            values = []
+            for call in calls:
+                output = call.get("output", {})
+                value = (
+                    output.get("cost")
+                    if key == "cost"
+                    else (output.get("usage") or {}).get(key)
+                )
+                values.append(value)
+            totals[key] = sum(values) if all(v is not None for v in values) else None
+        return {
+            "model_calls": len(calls),
+            "tool_calls": len(self.tool_calls),
+            "generator_turns": self.counts["turns"],
+            **totals,
         }
 
     def serialized_evidence(self):

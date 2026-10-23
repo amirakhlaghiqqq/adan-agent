@@ -1,0 +1,1923 @@
+{
+  "question_id": "M04",
+  "question": "Summarize what happens to an unpaid Enterprise account from the due date passing through permanent data deletion, including retries, warnings, access changes, fees, and the recovery opportunity.",
+  "difficulty": "medium",
+  "category": "document",
+  "num_requirements": 2,
+  "required_evidence_groups": [
+    "M04-R01",
+    "M04-R02"
+  ],
+  "relevant_chunk_ids": [
+    "79380156-a9da-588d-a388-42a2a7739ff5"
+  ],
+  "single_query": "Summarize what happens to an unpaid Enterprise account from the due date passing through permanent data deletion, including retries, warnings, access changes, fees, and the recovery opportunity.",
+  "decomposed_queries": [
+    {
+      "query": "What access and payment grace period follow an overdue invoice?",
+      "requirement_ids": [
+        "M04-R01"
+      ],
+      "budget": 10
+    },
+    {
+      "query": "What are all overdue escalation stages, retries, warnings, fees, termination, recovery and deletion?",
+      "requirement_ids": [
+        "M04-R02"
+      ],
+      "budget": 10
+    }
+  ],
+  "configurations": {
+    "dense_only_monolithic": {
+      "mode": "dense",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 10.96,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 0.5008358,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.33680767,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.31010664,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+          "score": 0.29039145,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.2686041,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.2642543,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.26057816,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.25476584,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.25108698,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 0.24363929,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.23797695,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.23531449,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "67d097c8-5bea-5282-8291-8016371081b7",
+          "score": 0.21686903,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 0.20887886,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "c9d163e2-5d47-5a7b-a268-e470d6b1fc1c",
+          "score": 0.19872262,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.3 Monthly Subscriptions Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 0.1963534,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.19388026,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 0.19175035,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+          "score": 0.18844268,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.18771257,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "dense_only_decomposed": {
+      "mode": "dense",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 15.4,
+      "num_candidates": 16,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 0.39810604,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.29769218,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 0.26798475,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.2141401,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 0.20495209,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.19176231,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.18442649,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "3c2ba6aa-e1cf-5ae0-ac90-8750cde84049",
+          "score": 0.17791668,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.2 Supported Operating Currencies",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "7500319d-2fc9-5373-9e20-613dc3242321",
+          "score": 0.16204509,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.5 Refund Processing Timeline",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.15964204,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.20760565,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.2008588,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.19177409,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.19075036,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.1899341,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 0.1826523,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.0625,
+          "ndcg": 1.0,
+          "returned_count": 16,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "sparse_only_monolithic": {
+      "mode": "sparse",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 7.76,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 70.55777,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 21.755108,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 17.363583,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 14.477995,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 12.648441,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 9.405136,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 9.129906,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 8.871236,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 8.614785,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 7.1813846,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 6.867841,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 5.9508696,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 5.7952123,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 5.280655,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 4.993145,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 4.808484,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+          "score": 4.024273,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 3.6120367,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "295b529d-373c-5aad-b046-3cf61429bd99",
+          "score": 3.5770502,
+          "is_relevant": false,
+          "section": "1. Purpose & Scope / 1.1 Covered Services (In-Scope Components)",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 3.3982682,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "sparse_only_decomposed": {
+      "mode": "sparse",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 9.15,
+      "num_candidates": 16,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 37.39973,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 13.109201,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 11.64209,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 7.9435277,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 7.710611,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 7.4060774,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 7.34877,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "3c2ba6aa-e1cf-5ae0-ac90-8750cde84049",
+          "score": 6.700318,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.2 Supported Operating Currencies",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 6.3631754,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 6.088515,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 6.6960435,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "c9d163e2-5d47-5a7b-a268-e470d6b1fc1c",
+          "score": 5.32131,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.3 Monthly Subscriptions Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 5.2613544,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 5.0587306,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 4.585158,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 4.5018415,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.0625,
+          "ndcg": 1.0,
+          "returned_count": 16,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "hybrid_no_rerank_monolithic": {
+      "mode": "hybrid",
+      "strategy": "monolithic",
+      "rerank": false,
+      "total_latency_ms": 10.19,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 1.0,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.23966885231657575,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.22360589878607767,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.18368538979805799,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+          "score": 0.16861980074645558,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.1648948450810551,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 0.1581718419377584,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.13666599146809036,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.12916884192846376,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.12685190155539242,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 0.1210089790180871,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.10707169506395295,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 0.10397125072181519,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.0938566394933271,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 0.04781295802889355,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "67d097c8-5bea-5282-8291-8016371081b7",
+          "score": 0.04655748473212924,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.044720907980291186,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 0.038836774098881116,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.03567950326977393,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 0.03280183327846085,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "hybrid_no_rerank_decomposed": {
+      "mode": "hybrid",
+      "strategy": "decomposed",
+      "rerank": false,
+      "total_latency_ms": 16.16,
+      "num_candidates": 15,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 1.0,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 0.3158513331338847,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.2938429578263718,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.14389112316613298,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 0.12090675839420732,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 0.11211136329267327,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.07300664271714188,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.06734825801798171,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "3c2ba6aa-e1cf-5ae0-ac90-8750cde84049",
+          "score": 0.04808710832382416,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.2 Supported Operating Currencies",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 0.02012465820952652,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.04482460877235676,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 0.03427205141810188,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.028466910556627763,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.014262443635313865,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.012661782863384251,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.06666666666666667,
+          "ndcg": 1.0,
+          "returned_count": 15,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "hybrid_rerank_monolithic": {
+      "mode": "hybrid",
+      "strategy": "monolithic",
+      "rerank": true,
+      "total_latency_ms": 1420.1,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 0.4266201685490856,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.0006825019082634147,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.000507281282699237,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.0004356301410126391,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.0004222328697668336,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.00031999824407395836,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+          "score": 0.00024923252458203564,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "19b147da-f67b-519e-a965-2053bb49044c",
+          "score": 0.00015967865134838003,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.2 Document Revision History",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "67d097c8-5bea-5282-8291-8016371081b7",
+          "score": 0.00015236754767429124,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.00014313738600443555,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.0001420236402299791,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.00011591934318633098,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "f8cbaf40-1935-5630-9e54-84f6f1ffdbab",
+          "score": 8.220189478350844e-05,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.3 Claim Submission Procedure and 30-Day Window",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 8.156224673856543e-05,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 7.905303859378796e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 6.061318495608067e-05,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 5.9673520701231884e-05,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 5.649793328376293e-05,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 5.064471653194113e-05,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "19b809ba-54bc-5d49-9b65-77eaf9b30e44",
+          "score": 4.006369222920724e-05,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.3 Tax Exemption Certificate Requirements",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "hybrid_rerank_decomposed": {
+      "mode": "hybrid",
+      "strategy": "decomposed",
+      "rerank": true,
+      "total_latency_ms": 1711.31,
+      "num_candidates": 15,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 0.4266201685490856,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.0006825019082634147,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.000507281282699237,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.0004356301410126391,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.0004222328697668336,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.00031999824407395836,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.0001559802763374382,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.00014313738600443555,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "802ec3cb-85d0-5fa7-9a09-f9b27462e25a",
+          "score": 0.00012632042438707805,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.1 Cancellation Submission Process",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "3c2ba6aa-e1cf-5ae0-ac90-8750cde84049",
+          "score": 8.092757566536091e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.2 Supported Operating Currencies",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 7.905303859378796e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 7.484622751061123e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "7e26594f-b63b-5937-94c6-e405d79b5852",
+          "score": 6.061318495608067e-05,
+          "is_relevant": false,
+          "section": "6. Exclusions & Limitations",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 5.064471653194113e-05,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "44cd51a9-3a56-562a-9f0c-afab97d68436",
+          "score": 3.705296977158347e-05,
+          "is_relevant": false,
+          "section": "3. Service Availability & Uptime Commitments / 3.2 Definition of Downtime and Calculation Formula",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.06666666666666667,
+          "ndcg": 1.0,
+          "returned_count": 15,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    },
+    "dense_rerank_monolithic": {
+      "mode": "dense",
+      "strategy": "monolithic",
+      "rerank": true,
+      "total_latency_ms": 1258.08,
+      "num_candidates": 20,
+      "candidates": [
+        {
+          "rank": 1,
+          "chunk_id": "79380156-a9da-588d-a388-42a2a7739ff5",
+          "score": 0.4266201685490856,
+          "is_relevant": true,
+          "section": "4. Late Payments, Grace Period & Account Suspension",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 2,
+          "chunk_id": "e6bba06d-02e9-58d8-814e-ef6b14ece8bd",
+          "score": 0.0006825019082634147,
+          "is_relevant": false,
+          "section": "CloudScale Inc. Enterprise Billing, Payment & Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 3,
+          "chunk_id": "f9182a98-72e9-5a43-87d5-bf5880b5fab3",
+          "score": 0.000507281282699237,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.1 Purpose and Scope",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 4,
+          "chunk_id": "2994dbc7-719c-516d-a5ac-da265f321cbe",
+          "score": 0.0004356301410126391,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.3 Enterprise Net-30 Payment Terms",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 5,
+          "chunk_id": "8b316878-0bd7-54ba-bd92-46ca1264cc72",
+          "score": 0.0004222328697668336,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.1 Bank Chargebacks and Dispute Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 6,
+          "chunk_id": "25940ec0-5188-5054-acce-26b11fbb509c",
+          "score": 0.00031999824407395836,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.4 Billing Support Directory",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 7,
+          "chunk_id": "726105d3-81a7-509b-92c5-1cb34b4b9c4d",
+          "score": 0.00024923252458203564,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.3 Automatic Subscription Renewal",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 8,
+          "chunk_id": "691285b7-9f5d-5076-800e-68c12b026210",
+          "score": 0.0001559802763374382,
+          "is_relevant": false,
+          "section": "7. Document Governance & Contact Directory / 7.1 Policy Governance and Official Contact Directory",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 9,
+          "chunk_id": "67d097c8-5bea-5282-8291-8016371081b7",
+          "score": 0.00015236754767429124,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.2 Subscription Cycles and Billing Options",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 10,
+          "chunk_id": "09b8b874-73d1-5b33-900e-ad1f3fc1e8ff",
+          "score": 0.00014313738600443555,
+          "is_relevant": false,
+          "section": "1. Overview & Subscription Plans / 1.5 Resource Metering and Overage Charges",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 11,
+          "chunk_id": "bc1b5dc9-27c8-5753-997f-a8aa6fb45d83",
+          "score": 0.0001420236402299791,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.2 Annual Plans: 14-Day Money-Back Guarantee",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 12,
+          "chunk_id": "433a87f2-6f07-539e-9dc9-79b7d0b8db4c",
+          "score": 0.00011591934318633098,
+          "is_relevant": false,
+          "section": "4. Service Credit Structure / 4.2 Service Credit Brackets",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 13,
+          "chunk_id": "843edebb-979e-5d84-b3f0-7996e55b9f72",
+          "score": 8.156224673856543e-05,
+          "is_relevant": false,
+          "section": "5. Chargebacks, Dispute Fees & Taxes / 5.2 Sales Tax and Value-Added Tax (VAT) Regulations",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 14,
+          "chunk_id": "77fa5296-1b2b-5233-8539-f14cd7a49150",
+          "score": 7.905303859378796e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.1 Accepted Payment Methods",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 15,
+          "chunk_id": "c9d163e2-5d47-5a7b-a268-e470d6b1fc1c",
+          "score": 7.843789122138342e-05,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.3 Monthly Subscriptions Refund Policy",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 16,
+          "chunk_id": "7d8a6d58-556e-52e8-96a2-cbb985913603",
+          "score": 7.484622751061123e-05,
+          "is_relevant": false,
+          "section": "2. Invoicing, Payment Methods & Net Terms / 2.4 Invoice Generation and Electronic Delivery",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 17,
+          "chunk_id": "7d499ee4-d948-57a0-aae8-306bcac52be9",
+          "score": 6.302758756443266e-05,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.3 Ongoing Incident Communication Cadence",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 18,
+          "chunk_id": "d57b5f04-ae7c-58cb-90fd-f9de533b06c4",
+          "score": 5.9673520701231884e-05,
+          "is_relevant": false,
+          "section": "3. Cancellation & Refund Windows / 3.4 Non-Refundable Services",
+          "source_file": "enterprise_billing_and_refund_policy.pdf"
+        },
+        {
+          "rank": 19,
+          "chunk_id": "3c86083c-ccd3-5e1a-a9f5-b05b1d12f4b6",
+          "score": 5.649793328376293e-05,
+          "is_relevant": false,
+          "section": "5. Support Incident Severity Levels & Response Times / 5.4 Support Access Channels by Subscription Tier",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        },
+        {
+          "rank": 20,
+          "chunk_id": "a4f07d77-a38c-5baa-b350-c072f1988967",
+          "score": 5.064471653194113e-05,
+          "is_relevant": false,
+          "section": "2. Subscription Tiers",
+          "source_file": "sla_and_support_tier_policy.pdf"
+        }
+      ],
+      "metrics_by_k": {
+        "1": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 1.0,
+          "ndcg": 1.0,
+          "returned_count": 1,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "3": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.3333333333333333,
+          "ndcg": 1.0,
+          "returned_count": 3,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "5": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.2,
+          "ndcg": 1.0,
+          "returned_count": 5,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "10": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.1,
+          "ndcg": 1.0,
+          "returned_count": 10,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        },
+        "20": {
+          "evidence_recall": 1.0,
+          "all_evidence_success": 1,
+          "context_precision": 0.05,
+          "ndcg": 1.0,
+          "returned_count": 20,
+          "covered_requirements": [
+            "M04-R01",
+            "M04-R02"
+          ]
+        }
+      }
+    }
+  }
+}

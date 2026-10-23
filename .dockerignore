@@ -1,10 +1,23 @@
+# Ignore everything by default (strict allowlist)
 *
+
+# Allow Docker build configuration
 !Dockerfile
+!docker-entrypoint.sh
+
+# Allow package management & dependency lockfiles
 !pyproject.toml
 !uv.lock
 !.python-version
+
+# Allow source code and runtime modules
 !src/
 !src/**
+!config.py
+!ingest.py
+!qc_audit.py
+
+# Allow data files (PDF policies and SQLite schema/data)
 !data/
 !data/documents/
 !data/documents/*.pdf
@@ -12,4 +25,11 @@
 !data/database/app.db
 !data/database/schema.sql
 !data/database/seed_data.sql
+
+# Exclude compiled bytecode, cache, and DB lock files inside allowed directories
 **/__pycache__/
+**/*.py[cod]
+**/*.db-wal
+**/*.db-shm
+**/*.sqlite-wal
+**/*.sqlite-shm

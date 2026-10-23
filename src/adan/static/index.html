@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f7fb" />
+    <title>CloudScale Assistant</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="CloudScale Assistant home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>CloudScale <strong>Assistant</strong></span>
+      </a>
+      <span class="topbar-note">Policy and account answers</span>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">CLOUDSCALE SUPPORT</p>
+        <h1 id="page-title">How can I help?</h1>
+        <p class="intro-copy">
+          Ask about CloudScale policies or customer records. Answers are checked against available evidence.
+        </p>
+      </section>
+
+      <section class="query-card" aria-label="Ask a question">
+        <form id="query-form">
+          <label for="question">Your question</label>
+          <textarea
+            id="question"
+            name="question"
+            rows="4"
+            maxlength="8000"
+            placeholder="For example: Which payment methods does CloudScale accept?"
+            required
+          ></textarea>
+          <div class="form-footer">
+            <span class="input-hint">Be specific for the clearest answer.</span>
+            <button id="submit-button" type="submit">
+              <span class="button-label">Ask assistant</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <p id="loading-message" class="loading-message" role="status" aria-live="polite" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        Checking the available evidence…
+      </p>
+      <p id="error-message" class="error-message" role="alert" hidden></p>
+
+      <section id="answer-panel" class="answer-panel" aria-labelledby="answer-heading" hidden>
+        <div class="answer-heading-row">
+          <h2 id="answer-heading">Answer</h2>
+          <span id="answer-status" class="status-badge"></span>
+        </div>
+        <div id="answer-text" class="answer-text" aria-live="polite"></div>
+        <section id="citations-section" class="citations-section" aria-labelledby="citations-heading" hidden>
+          <h3 id="citations-heading">Sources</h3>
+          <ul id="citations-list" class="citations-list"></ul>
+        </section>
+        <p id="no-citations" class="no-citations" hidden>No policy citations were attached to this answer.</p>
+      </section>
+    </main>
+
+    <footer class="page-footer">Answers can be partial when a source is unavailable or evidence is limited.</footer>
+  </body>
+</html>

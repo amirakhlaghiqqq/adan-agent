@@ -19,6 +19,12 @@ dependencies = [
   "llama-index-embeddings-fastembed>=0.3,<1",
   "qdrant-client>=1.14,<2",
   "fastembed>=0.7,<1",
+  "llama-index-tools-mcp>=0.6.0",
+  "docling>=2.14,<3",
+  "llama-index-readers-docling>=0.5,<1",
+  "llama-index-embeddings-openai-like>=0.4,<1",
+  "python-dotenv>=1.0,<2",
+  "httpx>=0.28,<1",
 ]
 
 [dependency-groups]
@@ -39,3 +45,20 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.uv]
+override-dependencies = [
+  "torch==2.6.0+cpu",
+  "torchvision==0.21.0+cpu",
+]
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu" }]
+torchvision = [{ index = "pytorch-cpu" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+

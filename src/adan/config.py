@@ -10,15 +10,19 @@ class Settings(BaseSettings):
     openrouter_api_key: SecretStr = SecretStr("")
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
     router_model: str = "baseten/mammoth-1:free"
-    router_fallback_model: str = "nvidia/nemotron-3.5-super-vl:free"
-    text_model: str = "nvidia/nemotron-3.5-super-vl:free"
+    router_fallback_model: str = "nvidia/nemotron-3.5-lightning:free"
+    text_model: str = "nvidia/nemotron-3.5-lightning:free"
     database_path: Path = Path("data/database/app.db")
     documents_path: Path = Path("data/documents")
-    index_path: Path = Path(".cache/adan/qdrant")
-    embedding_cache_path: Path = Path(".cache/adan/embeddings")
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    qdrant_url: str = ""
+    openrouter_embedding_model: str = "nvidia/nemotron-3-embed-1b:free"
+    openrouter_reranker_model: str = "nvidia/llama-nemotron-rerank-vl-1b-v2:free"
+    enable_reranker: bool = False
+    qdrant_url: str = "http://localhost:6333"
+    qdrant_api_key: SecretStr = SecretStr("")
+    qdrant_collection_name: str = "enterprise_policies"
+    qdrant_local_path: Path = Path(".cache/adan/qdrant_hybrid")
     top_k: int = Field(5, ge=1, le=20)
+    retrieval_candidates: int = Field(20, ge=1, le=100)
     request_timeout_seconds: float = Field(120, gt=0)
     model_timeout_seconds: float = Field(30, gt=0)
     tool_timeout_seconds: float = Field(20, gt=0)

@@ -1,5 +1,6 @@
 import asyncio
 import json
+from copy import deepcopy
 
 from adan.config import Settings
 from adan.database import Database, ensure_database
@@ -23,22 +24,31 @@ class Assistant:
         settings = settings or Settings()
         models = OpenRouterModels(settings)
         ensure_database(settings.database_path)
-        from llama_index.embeddings.fastembed import FastEmbedEmbedding
+        from adan.rag.config import RAGConfig
+        from adan.rag.pipeline import RAGPipeline
 
-        from adan.rag.index import PolicyIndex
-
-        embed = FastEmbedEmbedding(
-            model_name=settings.embedding_model,
-            cache_dir=str(settings.embedding_cache_path),
-            threads=2,
+        config = RAGConfig(
+            openrouter_api_key=settings.openrouter_api_key.get_secret_value(),
+            openrouter_base_url=settings.openrouter_base_url,
+            openrouter_embedding_model=settings.openrouter_embedding_model,
+            openrouter_reranker_model=settings.openrouter_reranker_model,
+            generation_model=settings.text_model,
+            qdrant_url=settings.qdrant_url,
+            qdrant_api_key=settings.qdrant_api_key.get_secret_value(),
+            qdrant_collection_name=settings.qdrant_collection_name,
+            qdrant_local_path=settings.qdrant_local_path,
+            documents_path=settings.documents_path,
+            top_k=settings.retrieval_candidates,
+            rerank_top_n=settings.top_k,
+            enable_reranker=settings.enable_reranker,
         )
-        documents = PolicyIndex(
-            settings.documents_path,
-            settings.index_path,
-            embed_model=embed,
-            top_k=settings.top_k,
-            url=settings.qdrant_url,
-        )
+        config.validate()
+        documents = RAGPipeline(config)
+        try:
+            documents.get_index()
+        except Exception:
+            documents.close()
+            raise
         return cls(
             settings, models=models, documents=documents, database=Database(settings.database_path)
         )
@@ -50,8 +60,18 @@ class Assistant:
                 {
                     "role": "system",
                     "content": (
-                        "Rewrite into 1 or 2 focused policy search strings. "
-                        "Preserve constraints. Return queries."
+                        "Rewrite into focused policy search strings (at most 3). "
+                        "Preserve constraints and key entities. Return queries.\n"
+                        "Corpus Topics & Keywords for Reference:\n"
+                        "- Billing & Payment Policy: subscription cycles, annual upfront discount (15%), "
+                        "payment methods, Net-30 invoicing, operating currencies (USD, EUR, GBP), "
+                        "delinquency escalation schedules, 30-day grace periods, late payment interest (1.5%), "
+                        "account suspension, 14-day refund cancellation windows, non-refundable fees "
+                        "(professional onboarding, compute usage, setup fees).\n"
+                        "- SLA & Support Policy: service tiers (Starter 99.00%, Professional 99.90%, Enterprise 99.99%), "
+                        "monthly uptime percentage calculation formulas, scheduled maintenance and third-party downtime exclusions, "
+                        "service credit penalty tiers (10%, 25%, 50%), severity levels (P1 Critical, P2 High, P3 Medium, P4 Low response targets), "
+                        "support channels, official governance directories, and 30-day credit claim filing deadlines."
                     ),
                 },
                 {
@@ -63,6 +83,7 @@ class Assistant:
             parent_id=parent_id,
         )
         chunks = []
+        seen_chunk_ids = set()
         try:
             for search in plan["queries"]:
                 found = await run.execute(
@@ -73,14 +94,27 @@ class Assistant:
                     parent_id=parent_id,
                     kind="retrieval_calls",
                 )
-                chunks.extend(found)
+                for chunk in (found[:5] if isinstance(found, list) else []):
+                    cid = chunk.get("chunk_id")
+                    if cid and cid not in seen_chunk_ids:
+                        seen_chunk_ids.add(cid)
+                        chunks.append(deepcopy(chunk))
+                    elif not cid:
+                        chunks.append(deepcopy(chunk))
         finally:
             if chunks:
+                input_chunks = deepcopy(chunks)
                 artifact = self.aggregator.build(run.question, run.input_context, chunks)
+                artifact["input_chunks"] = input_chunks
                 run.aggregation_artifacts.append(artifact)
-                run.chunks.extend(artifact["chunks"])
+                existing_ids = {c.get("chunk_id") for c in run.chunks}
+                for c in artifact["chunks"]:
+                    if c.get("chunk_id") not in existing_ids:
+                        existing_ids.add(c.get("chunk_id"))
+                        run.chunks.append(c)
         if not chunks:
             artifact = self.aggregator.build(run.question, run.input_context, [])
+            artifact["input_chunks"] = []
             run.aggregation_artifacts.append(artifact)
         return artifact
 

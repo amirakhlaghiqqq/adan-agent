@@ -361,7 +361,11 @@ def response(state, run):
         }
     citations = {c["chunk_id"]: {k: v for k, v in c.items() if k != "score"} for c in run.chunks}
     return {
+        "schema_version": "1.0",
+        "mode": "end_to_end",
         "run_id": run.run_id,
+        "question": run.question,
+        "input_context": run.input_context,
         "answer": candidate["answer"],
         "status": candidate["status"],
         "stop_reason": run.stop_reason,
@@ -372,12 +376,24 @@ def response(state, run):
         "route": state.get("route", {}),
         "retrieval_calls": run.retrieval_calls,
         "database_calls": run.database_calls,
+        "retrieved_document_chunks": run.retrieved_document_chunks(),
+        "database_results": run.database_results,
+        "calculator_trace": [c for c in run.tool_calls if c["name"] == "calculate"],
         "tool_calls": run.tool_calls,
         "aggregation_artifacts": run.aggregation_artifacts,
         "generator_contexts": run.generator_contexts,
         "guardrail_history": run.guardrail_history,
         "execution_trace": run.trace,
-        "effective_limits": run.settings.model_dump(exclude={"openrouter_api_key"}),
+        "failures": run.failures,
+        "timings": {
+            "started_at": run.started_at,
+            "finished_at": datetime.now(UTC).isoformat(),
+            "duration_ms": round((time.monotonic() - run.started) * 1000, 3),
+        },
+        "usage": run.usage_summary(),
+        "effective_limits": run.settings.model_dump(
+            mode="json", exclude={"openrouter_api_key", "qdrant_api_key"}
+        ),
         "index_fingerprint": run.services.documents.fingerprint,
     }
 
